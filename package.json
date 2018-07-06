@@ -1,0 +1,17 @@
+{
+	"name": "knightlife-server",
+	"version": "1.0.0",
+	"main": "index.js",
+	"dependencies": {
+		"express": "^4.15.3",
+		"apn": "^2.2.0",
+		"mongoose": "^5.0.3"
+	},
+	"scripts": {
+		"start": "node index.js",
+		"heroku-postbuild": "cd client && npm install && npm run build"
+	},
+	"engines": {
+		"node": "^8.9.4"
+	}
+}
