@@ -9,7 +9,7 @@ module.exports.called = function(req, res) {
         return;
     }
     
-    let schema = require(`${__basedir}/database/mongo/models/device`)
+    let schema = require(`${__basedir}/database/models/device`)
     schema.findOne({
         token: token
     }, function(error, object) {
