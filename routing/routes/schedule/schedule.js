@@ -10,7 +10,7 @@ module.exports.called = function(req, res) {
         return
     }
     
-    require(`${__basedir}/database/mongo/models/schedule`).findOne(
+    require(`${__basedir}/database/models/schedule`).findOne(
         { date: date },
         function(error, object) {
             if (object) {
@@ -26,7 +26,7 @@ module.exports.called = function(req, res) {
                     
                     let key = [ "M", "T", "W", "Th", "F", "Sa", "Su" ][dayOfWeek];
                 
-                    require(`${__basedir}/database/mongo/models/template`).findOne(
+                    require(`${__basedir}/database/models/template`).findOne(
                     { },
                     function(error, object) {
                         if (error) {
