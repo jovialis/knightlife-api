@@ -10,7 +10,7 @@ module.exports.called = function(req, res) {
         return
     }
     
-    require(`${__basedir}/database/mongo/models/lunch`).findOne({
+    require(`${__basedir}/database/models/lunch`).findOne({
         date: date
     }, function(error, object) {
         if (object) {
