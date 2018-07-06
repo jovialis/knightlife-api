@@ -10,7 +10,7 @@ module.exports.called = function (req, res) {
 	notification.contentAvailable = 1;
 	notification.payload = {"type": 0};
 
-	require(`${__basedir}/database/mongo/models/device`).find(
+	require(`${__basedir}/database/models/device`).find(
 		function (error, object) {
 			if (error) throw error;
 
