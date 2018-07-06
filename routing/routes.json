@@ -1,3 +1,6 @@
 [
-	"sample/sample"
+	"schedule/schedule",
+	"schedule/template",
+	"push/message",
+	"lunch/lunch"
 ]
