@@ -4,7 +4,7 @@ module.exports.path = "push/message";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
-	if (!require(`${__basedir}/utils/verify-request`)) {
+	if (!require(`${__basedir}/utils/verify-request`)(req, res)) {
 		res.json("Authentication failed");
 		return;
 	}
