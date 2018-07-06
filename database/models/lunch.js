@@ -16,6 +16,6 @@ var schema = new mongoose.Schema({
 		select: true
 	},
 	items: mongoose.Schema.Types.Mixed
-}, { collection: "lunches" })
+}, {collection: "lunches"})
 
 module.exports = mongoose.model("Lunch", schema)

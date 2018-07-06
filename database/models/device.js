@@ -10,6 +10,6 @@ var schema = new mongoose.Schema({
 		required: true,
 		select: true
 	}
-}, { collection: "devices" })
+}, {collection: "devices"})
 
 module.exports = mongoose.model("Device", schema)

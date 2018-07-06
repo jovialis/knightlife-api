@@ -6,6 +6,6 @@ var schema = new mongoose.Schema({
 		select: false
 	},
 	days: mongoose.Schema.Types.Mixed
-}, { collection: "template" })
+}, {collection: "template"})
 
 module.exports = mongoose.model("Template", schema)

@@ -4,6 +4,11 @@ module.exports.path = "push/update";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
+	if (!require(`${__basedir}/utils/verify-request`)) {
+		res.json("Authentication failed");
+		return;
+	}
+
 	var notification = new apn.Notification();
 	notification.topic = 'MAD.BBN.KnightLife';
 	notification.badge = 0;

@@ -1,4 +1,4 @@
-module.exports = function(rawDate) {
+module.exports = function (rawDate) {
 	if (!rawDate) { // No date supplied
 		return null
 	}
