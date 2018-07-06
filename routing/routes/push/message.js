@@ -24,7 +24,7 @@ module.exports.called = function(req, res) {
         notification.payload = { "author": author };
     }
     
-    require(`${__basedir}/database/mongo/models/device`).find(
+    require(`${__basedir}/database/models/device`).find(
         function(error, object) {
             if (error) throw error;
 
