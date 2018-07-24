@@ -18,7 +18,9 @@ module.exports.called = function (req, res) {
 
 				res.json(object)
 			} else { // Gotta take the schedule from the template
-				let dayOfWeek = new Date(req.param("dt")).getDay()
+				console.log("Fetching schedule from template.");
+
+				let dayOfWeek = new Date(req.param("date")).getDay()
 				if (dayOfWeek === 0) { // If it's sunday, move it to end of week.
 					dayOfWeek = 7
 				}
