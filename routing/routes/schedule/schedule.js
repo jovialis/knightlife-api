@@ -26,7 +26,7 @@ module.exports.called = function (req, res) {
 				}
 				dayOfWeek--; // 0 = Monday, 6 = Sunday
 
-				let key = ["M", "T", "W", "Th", "F", "Sa", "Su"][dayOfWeek];
+				let key = ["m", "t", "w", "th", "f", "sa", "su"][dayOfWeek];
 
 				require(`${__basedir}/database/models/template`).findOne(
 					{},

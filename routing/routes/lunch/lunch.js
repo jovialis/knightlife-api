@@ -20,7 +20,7 @@ module.exports.called = function (req, res) {
 		}
 
 		let result = {
-			"menu": (object == null ? { "items": [] } : object)
+			"item": (object == null ? { "items": [] } : object)
 		};
 
 		res.json(result);
