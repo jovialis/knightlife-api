@@ -2,25 +2,29 @@ module.exports.path = "lunch";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
-	let date = require(`${__basedir}/utils/date-check`)(req.param("date"))
+	let date = require(`${__basedir}/utils/date-check`)(req.param("date"));
 
 	if (!date) { // No date supplied
-		res.json(null)
-		console.log("No date supplied!")
-		return
+		res.json(null);
+		console.log("No date supplied!");
+		return;
 	}
 
-	console.log(date)
+	console.log(date);
 
 	require(`${__basedir}/database/models/lunch`).findOne({
 		date: date
 	}, function (error, object) {
-		if (object) {
-			console.log(object)
-			res.json(object)
-		} else {
-			console.log("NO LUNCH OBJECT")
-			res.json(null)
+		if (error) {
+			console.log(error);
+			res.json(null);
+			return;
 		}
+
+		let result = {
+			"menu": (object == null ? { "items": [] } : object)
+		};
+
+		res.json(result);
 	})
-}
+};

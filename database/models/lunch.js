@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var schema = new mongoose.Schema({
+let schema = new mongoose.Schema({
 	_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		select: false
@@ -16,6 +16,6 @@ var schema = new mongoose.Schema({
 		select: true
 	},
 	items: mongoose.Schema.Types.Mixed
-}, {collection: "lunches"})
+}, {collection: "lunches"});
 
-module.exports = mongoose.model("Lunch", schema)
+module.exports = mongoose.model("Lunch", schema);
