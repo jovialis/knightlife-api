@@ -10,7 +10,7 @@ let schema = new mongoose.Schema({
 		required: true,
 		select: false
 	},
-	subtitle: {
+	description: {
 		type: String,
 		required: false,
 		select: true

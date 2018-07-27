@@ -36,8 +36,8 @@ module.exports.called = function (req, res) {
 							throw error;
 						}
 
-						for (day in object["days"]) {
-							if (object["days"][day]["id"] === key) {
+						for (day in object["items"]) {
+							if (object["items"][day]["id"] === key) {
 								delete object["days"][day]["id"]
 								res.json(object["days"][day])
 								return;

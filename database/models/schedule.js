@@ -10,7 +10,7 @@ var schema = new mongoose.Schema({
 		required: true,
 		select: false
 	},
-	subtitle: {
+	description: {
 		type: String,
 		required: false,
 		select: true
@@ -20,8 +20,8 @@ var schema = new mongoose.Schema({
 		required: false,
 		select: true
 	},
-	standinDayId: {
-		type: Number,
+	day: {
+		type: String,
 		required: false,
 		select: true
 	},
