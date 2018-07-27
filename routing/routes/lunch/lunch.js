@@ -6,14 +6,12 @@ module.exports.called = function (req, res) {
 
 	if (!date) { // No date supplied
 		res.json(null);
-		console.log("No date supplied!");
+		console.log("Invalid date supplied!");
 		return;
 	}
 
-	console.log(date);
-
 	require(`${__basedir}/database/models/lunch`).findOne({
-		date: date
+		date: String(date)
 	}, function (error, object) {
 		if (error) {
 			console.log(error);
