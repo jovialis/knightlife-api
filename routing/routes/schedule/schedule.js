@@ -11,7 +11,7 @@ module.exports.called = function (req, res) {
 	}
 
 	require(`${__basedir}/database/models/schedule`).find({
-			'date': date
+			date: date
 		}, function (error, object) {
 			if (object) {
 				console.log(object)
