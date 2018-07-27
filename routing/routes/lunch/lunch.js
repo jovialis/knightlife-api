@@ -11,7 +11,7 @@ module.exports.called = function (req, res) {
 	}
 
 	require(`${__basedir}/database/models/lunch`).findOne({
-		date: String(date)
+		'date': date
 	}, function (error, object) {
 		if (error) {
 			console.log(error);

@@ -26,6 +26,8 @@ var schema = new mongoose.Schema({
 		select: true
 	},
 	blocks: mongoose.Schema.Types.Mixed
-}, {collection: "schedules"})
+}, {
+	collection: "schedules"
+});
 
-module.exports = mongoose.model("Schedule", schema)
+module.exports = mongoose.model("Schedule", schema);

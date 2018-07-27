@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-const mongoose = require("./database/mongoose"); // Start mongo connection
+require("./database/mongoose"); // Start mongo connection
 
 require("./routing/routeloader")(app); // Initializes the route loader
 
