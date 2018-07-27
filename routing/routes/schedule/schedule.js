@@ -10,7 +10,7 @@ module.exports.called = function (req, res) {
 		return
 	}
 
-	require(`${__basedir}/database/models/schedule`).find({
+	require(`${__basedir}/database/models/schedule`).findOne({
 			date: date
 		}, function (error, object) {
 			if (object) {
