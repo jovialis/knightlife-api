@@ -38,7 +38,11 @@ module.exports.called = function (req, res) {
 
 						for (day in object["items"]) {
 							if (object["items"][day]["id"] === key) {
-								res.json(object["items"][day])
+								let result = {
+									"item": object["items"][day]
+								};
+
+								res.json(result)
 								return;
 							}
 						}
