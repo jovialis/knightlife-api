@@ -14,9 +14,10 @@ module.exports.called = function (req, res) {
 			date: date
 		}, function (error, object) {
 			if (object) {
-				console.log(object)
-
-				res.json(object)
+				let result = {
+					"item": object
+				};
+				res.json(result)
 			} else { // Gotta take the schedule from the template
 				console.log("Fetching schedule from template.");
 
