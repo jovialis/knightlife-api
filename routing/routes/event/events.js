@@ -2,12 +2,12 @@ module.exports.path = "events";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
-	let date = require(`${__basedir}/utils/date-check`)(req.param("date"));
+	const date = Date(req.param("date"));
+	if (!date) {
+		console.log("Invalid date requested: " + req.param("date") + ".");
 
-	if (!date) { // No date supplied
 		res.json(null);
-		console.log("Invalid date supplied!");
-		return;
+		return
 	}
 
 	// require(`${__basedir}/database/models/lunch`).findOne({

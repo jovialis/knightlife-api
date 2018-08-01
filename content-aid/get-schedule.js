@@ -1,6 +1,6 @@
 // Date is the date, callback is a function with one parameter, for the schedule object
 module.exports = function(date, callback) {
-	let dateString = require(`${__basedir}/utils/date-check`)(date);
+	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
 	console.log("Fetching schedule for date: " + dateString);
 

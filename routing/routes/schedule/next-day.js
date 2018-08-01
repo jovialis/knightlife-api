@@ -10,15 +10,15 @@ module.exports.called = function (req, res) {
 		return;
 	}
 
-	const nextDay = parsed.setDate(parsed.getDate() + 1);
-	if (!nextDay) {
+	parsed.setDate(parsed.getDate() + 1);
+	if (!parsed) {
 		console.log("Could not find the next day for " + parsed + ".");
 
 		res.json(null);
 		return
 	}
 
-	retrieveNextSchoolday(1, nextDay, function(schedule) {
+	retrieveNextSchoolday(1, parsed, function(schedule) {
 		if (schedule) {
 			res.json({
 				"item": schedule
@@ -39,7 +39,8 @@ function retrieveNextSchoolday(count, date, callback) {
 	require(`${__basedir}/content-aid/get-schedule`)(date, function(error, schedule) {
 		if (schedule) {
 			if (!schedule['blocks'] || schedule['blocks'].length < 1) {
-				retrieveNextSchoolday(count + 1, date.setDate(date.getDate() + 1), callback); // If no result, then
+				date.setDate(date.getDate() + 1); // Move date foreward one day
+				retrieveNextSchoolday(count + 1, date, callback); // If no result, then
 				// we try the
 				// next day
 			} else {

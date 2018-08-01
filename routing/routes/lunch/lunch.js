@@ -2,19 +2,21 @@ module.exports.path = "lunch";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
-	let date = require(`${__basedir}/utils/date-check`)(req.param("date"));
+	const date = Date(req.param("date"));
+	if (!date) {
+		console.log("Invalid date requested: " + req.param("date") + ".");
 
-	if (!date) { // No date supplied
 		res.json(null);
-		console.log("Invalid date supplied!");
-		return;
+		return
 	}
 
+	let dateString = require(`${__basedir}/utils/date-check`)(date);
 	require(`${__basedir}/database/models/lunch`).findOne({
-		date: date
+		date: dateString
 	}, function (error, object) {
 		if (error) {
 			console.log(error);
+
 			res.json(null);
 			return;
 		}
