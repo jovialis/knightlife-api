@@ -1,6 +1,7 @@
 [
 	"schedule/schedule",
 	"schedule/template",
+	"schedule/next-day",
 	"push/message",
 	"lunch/lunch",
 	"event/events"

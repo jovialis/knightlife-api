@@ -9,5 +9,5 @@ module.exports = function (rawDate) {
 		return null
 	}
 
-	return `${parsed.getFullYear()}-${parsed.getMonth()}-${parsed.getDate()}`
+	return `${parsed.getFullYear()}-${parsed.getMonth() + 1}-${parsed.getDate()}`
 }
