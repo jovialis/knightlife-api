@@ -16,7 +16,7 @@ module.exports.called = function (req, res) {
 		res.json(null);
 	}
 
-	self.retrieveNextSchoolday(1, nextDay, function(schedule) {
+	retrieveNextSchoolday(1, nextDay, function(schedule) {
 		if (schedule) {
 			res.json({
 				"item": schedule
@@ -37,7 +37,7 @@ function retrieveNextSchoolday(count, date, callback) {
 	require(`${__basedir}/content-aid/get-schedule`)(date, function(error, schedule) {
 		if (schedule) {
 			if (!schedule['blocks'] || schedule['blocks'].length < 1) {
-				self.retrieveNextSchoolday(count + 1, Date(date + 1), callback); // If no result, then we try the
+				retrieveNextSchoolday(count + 1, Date(date + 1), callback); // If no result, then we try the
 				// next day
 			} else {
 				callback(schedule);
