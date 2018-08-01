@@ -13,7 +13,7 @@ module.exports = function(date, callback) {
 		} else { // Gotta take the schedule from the template
 			console.log("Couldn't find schedule patch for date: " + dateString + ". Reading from schedule template.");
 
-			let dayOfWeek = date.getDay()
+			let dayOfWeek = date.getDay();
 			if (dayOfWeek === 0) { dayOfWeek = 7 } // If it's sunday, move it to end of week.
 			dayOfWeek--; // 0 = Monday, 6 = Sunday
 
