@@ -12,7 +12,7 @@ module.exports.called = function (req, res) {
 		return
 	}
 
-	let dateString = require(`${__basedir}/utils/date-check`)(date);
+	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 	require(`${__basedir}/database/models/lunch`).findOne({
 		date: dateString
 	}, function (error, object) {

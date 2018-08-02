@@ -12,7 +12,7 @@ module.exports.called = function (req, res) {
 		return
 	}
 
-	const dateString = require(`${__basedir}/utils/date-formatter`)(date);
+	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
 	let result = [];
 	res.json(formatter.success(result, "events", dateString));
