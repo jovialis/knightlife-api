@@ -42,6 +42,7 @@ module.exports = function(date, callback) {
 					}
 				}
 
+				console.log("Uh oh! We shouldn't be here.");
 				callback(null, null);
 			})
 		}

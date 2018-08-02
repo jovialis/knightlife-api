@@ -14,7 +14,7 @@ module.exports.called = function (req, res) {
 				return;
 			}
 
-			const result = object.days;
+			const result = object['days'];
 			if (!result) {
 				console.log("Template is set up incorrectly.");
 

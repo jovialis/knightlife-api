@@ -5,7 +5,7 @@ var schema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		select: false
 	},
-	items: mongoose.Schema.Types.Mixed
+	days: mongoose.Schema.Types.Mixed
 }, {collection: "template"})
 
 module.exports = mongoose.model("Template", schema)
