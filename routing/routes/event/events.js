@@ -23,7 +23,9 @@ module.exports.called = function (req, res) {
 			return;
 		}
 
-		const result = object ? object : [];
+		const cursorData = object.toArray();
+		const result = cursorData ? cursorData : [];
+		
 		res.json(formatter.success(result, "events", dateString));
 	});
 };
