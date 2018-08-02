@@ -23,6 +23,8 @@ module.exports.called = function (req, res) {
 			return;
 		}
 
-		res.json(formatter.success(object, "lunch", dateString));
+		const result = object ? object : {'items': []};
+
+		res.json(formatter.success(result, "lunch", dateString));
 	})
 };
