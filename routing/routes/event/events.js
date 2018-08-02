@@ -13,19 +13,10 @@ module.exports.called = function (req, res) {
 	}
 
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
-	require(`${__basedir}/database/models/event`).find({
+	const cursorData = require(`${__basedir}/database/models/event`).find({
 		date: dateString
-	}, function (error, object) {
-		if (error) {
-			console.log(error);
+	}).toArray();
 
-			res.json(formatter.error(error));
-			return;
-		}
-
-		const cursorData = object.toArray();
-		const result = cursorData ? cursorData : [];
-		
-		res.json(formatter.success(result, "events", dateString));
-	});
+	const result = cursorData ? cursorData : [];
+	res.json(formatter.success(result, "events", dateString));
 };
