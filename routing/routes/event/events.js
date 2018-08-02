@@ -26,7 +26,4 @@ module.exports.called = function (req, res) {
 		const result = object ? object : [];
 		res.json(formatter.success(result, "events", dateString));
 	});
-
-	let result = [];
-	res.json(formatter.success(result, "events", dateString));
 };
