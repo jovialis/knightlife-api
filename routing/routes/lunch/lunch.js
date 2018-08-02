@@ -8,7 +8,7 @@ module.exports.called = function (req, res) {
 	if (!date) {
 		console.log("Invalid date requested: " + req.param("date") + ".");
 
-		res.json(require(formatter.error("Invalid date requested"));
+		res.json(require(formatter.error("Invalid date requested")));
 		return
 	}
 
