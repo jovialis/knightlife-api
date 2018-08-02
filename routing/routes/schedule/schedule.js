@@ -2,23 +2,26 @@ module.exports.path = "schedule";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
-	let parsed = new Date(req.param("date"));
-	if (!parsed) {
+	const formatter = require(`${__basedir}/utils/response-formatter`);
+
+	let date = new Date(req.param("date"));
+	if (!date) {
 		console.log("Invalid date requested: " + req.param("data"));
 
-		res.json(null);
+		res.json(formatter.error("Invalid date requested"));
 		return;
 	}
 
 	//Fetch date
-	require(`${__basedir}/content-aid/get-schedule`)(parsed, function(error, schedule) {
+	require(`${__basedir}/content-aid/get-schedule`)(date, function(error, schedule) {
 		if (!schedule) {
-			res.json(null);
+			console.log("Failed to get schedule: " + error);
+
+			res.json(formatter.error("Could not get schedule."));
 			return;
 		}
 
-		res.json({
-			'item': schedule
-		})
+		const dateString = require(`${__basedir}/utils/date-formatter`)(date);
+		res.json(formatter.success(schedule, "schedule", dateString));
 	});
 };

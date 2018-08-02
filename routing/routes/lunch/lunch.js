@@ -2,11 +2,13 @@ module.exports.path = "lunch";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
+	let formatter = require(`${__basedir}/utils/response-formatter`);
+
 	const date = Date(req.param("date"));
 	if (!date) {
 		console.log("Invalid date requested: " + req.param("date") + ".");
 
-		res.json(null);
+		res.json(require(formatter.error("Invalid date requested"));
 		return
 	}
 
@@ -17,14 +19,10 @@ module.exports.called = function (req, res) {
 		if (error) {
 			console.log(error);
 
-			res.json(null);
+			res.json(formatter.error(error));
 			return;
 		}
 
-		let result = {
-			"item": (object == null ? { "items": [] } : object)
-		};
-
-		res.json(result);
+		res.json(formatter.success(object, "lunch", dateString));
 	})
 };

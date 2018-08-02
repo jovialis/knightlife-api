@@ -2,11 +2,13 @@ module.exports.path = "schedule/next";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
+	let formatter = require(`${__basedir}/utils/response-formatter`);
+
 	let parsed = new Date(req.param("date"));
 	if (!parsed) {
 		console.log("Invalid date requested: " + req.param("data"));
 
-		res.json(null);
+		res.json(formatter.error("Invalid date requested"));
 		return;
 	}
 
@@ -14,17 +16,16 @@ module.exports.called = function (req, res) {
 	if (!parsed) {
 		console.log("Could not find the next day for " + parsed + ".");
 
-		res.json(null);
+		res.json(formatter.error("Could not complete request"));
 		return
 	}
 
-	retrieveNextSchoolday(1, parsed, function(schedule) {
+	retrieveNextSchoolday(1, parsed, function(schedule, date) {
 		if (schedule) {
-			res.json({
-				"item": schedule
-			});
+			const dateString = require(`${__basedir}/utils/date-formatter`)(date);
+			res.json(formatter.success(schedule, "schedule", dateString));
 		} else {
-			res.json(null);
+			res.json(formatter.error("Could not complete request"));
 		}
 	});
 };
@@ -32,7 +33,7 @@ module.exports.called = function (req, res) {
 // RECURSION :O
 function retrieveNextSchoolday(count, date, callback) {
 	if (count > 7) { // Only check next 7 days
-		callback(null);
+		callback(null, null);
 		return;
 	}
 
@@ -40,11 +41,9 @@ function retrieveNextSchoolday(count, date, callback) {
 		if (schedule) {
 			if (!schedule['blocks'] || schedule['blocks'].length < 1) {
 				date.setDate(date.getDate() + 1); // Move date foreward one day
-				retrieveNextSchoolday(count + 1, date, callback); // If no result, then
-				// we try the
-				// next day
+				retrieveNextSchoolday(count + 1, date, callback); // If no result, then we try the next day
 			} else {
-				callback(schedule);
+				callback(schedule, date);
 			}
 		}
 	});

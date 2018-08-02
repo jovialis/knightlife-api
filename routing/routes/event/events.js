@@ -2,37 +2,18 @@ module.exports.path = "events";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
+	let formatter = require(`${__basedir}/utils/response-formatter`);
+
 	const date = Date(req.param("date"));
 	if (!date) {
 		console.log("Invalid date requested: " + req.param("date") + ".");
 
-		res.json(null);
+		res.json(formatter.error("Invalid date requested"));
 		return
 	}
 
-	// require(`${__basedir}/database/models/lunch`).findOne({
-	// 	date: date
-	// }, function (error, object) {
-	// 	if (error) {
-	// 		console.log(error);
-	// 		res.json(null);
-	// 		return;
-	// 	}
-	//
-	// 	let result = {
-	// 		"menu": (object == null ? { "items": [] } : object)
-	// 	};
-	//
-	// 	res.json(result);
-	// })
+	const dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
-	// 	let result = {
-	// 		"menu": (object == null ? { "items": [] } : object)
-	// 	};
-
-	let result = {
-		"items": []
-	};
-
-	res.json(result);
+	let result = [];
+	res.json(formatter.success(result, "events", dateString));
 };

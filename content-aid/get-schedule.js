@@ -8,6 +8,8 @@ module.exports = function(date, callback) {
 		date: dateString
 	}, function (error, object) {
 		if (object) {
+			delete object.date; // Remove date item
+
 			console.log("Found schedule patch for date: " + dateString);
 			callback(null, object);
 		} else { // Gotta take the schedule from the template
@@ -27,11 +29,13 @@ module.exports = function(date, callback) {
 					return
 				}
 
-				for (var dayIndex in object["items"]) {
-					let dayData = object["items"][dayIndex];
+				for (dayIndex in object["days"]) {
+					let dayData = object["days"][dayIndex];
 
 					if (dayData["id"] === dayKey) {
 						console.log("Retrieved schedule for " + dateString + " from schedule template.");
+
+						delete dayData.id;
 
 						callback(null, dayData);
 						return;

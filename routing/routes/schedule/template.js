@@ -2,14 +2,27 @@ module.exports.path = "schedule/template";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
+	let formatter = require(`${__basedir}/utils/response-formatter`);
+
 	require(`${__basedir}/database/models/template`).findOne(
 		{},
 		function (error, object) {
 			if (error) {
-				res.json(null)
-				throw error;
+				console.log("Could not fetch schedule template: " + error);
+
+				res.json(formatter.error(error));
+				return;
 			}
-			res.json(object);
+
+			const result = object.days;
+			if (!result) {
+				console.log("Template is set up incorrectly.");
+
+				res.json(formatter.error("Could not complete request"));
+				return;
+			}
+
+			res.json(formatter.success(result, "template", null));
 		}
 	)
-}
+};
