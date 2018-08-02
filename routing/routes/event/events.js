@@ -4,7 +4,7 @@ module.exports.method = "get";
 module.exports.called = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
-	const date = Date(req.param("date"));
+	let date = Date(req.param("date"));
 	if (!date) {
 		console.log("Invalid date requested: " + req.param("date") + ".");
 
