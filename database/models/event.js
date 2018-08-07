@@ -6,22 +6,15 @@ let schema = new mongoose.Schema({
 		select: false
 	},
 	date: {
-		type: String,
-		required: true,
+		type: Date,
 		select: false
 	},
-	block: {
-		type: String,
-		required: true,
-		select: true
-	},
-	description: {
-		type: String,
-		required: false,
-		select: true
-	},
-	audience: mongoose.Schema.Types.Mixed,
-	items: mongoose.Schema.Types.Mixed
+	block: String,
+	description: String,
+	audience: [{
+		grade: Number,
+		mandatory: Boolean
+	}]
 }, {
 	collection: "events"
 });

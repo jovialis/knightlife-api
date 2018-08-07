@@ -5,7 +5,15 @@ var schema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		select: false
 	},
-	days: mongoose.Schema.Types.Mixed
-}, {collection: "template"})
+	days: [{
+		id: { type: String, select: false },
+		blocks: [{
+			id: String,
+			start: String,
+			end: String,
+			variation: { type: Number, required: false }
+		}]
+	}]
+}, {collection: "template"});
 
-module.exports = mongoose.model("Template", schema)
+module.exports = mongoose.model("Template", schema);

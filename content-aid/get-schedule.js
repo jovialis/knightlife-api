@@ -5,12 +5,11 @@ module.exports = function(date, callback) {
 	console.log("Fetching schedule for date: " + dateString);
 
 	require(`${__basedir}/database/models/schedule`).findOne({
-		date: dateString
+		date: date
 	}, function (error, object) {
 		if (object) {
-			delete object.date; // Remove date item
-
 			console.log("Found schedule patch for date: " + dateString);
+
 			callback(null, object);
 		} else { // Gotta take the schedule from the template
 			console.log("Couldn't find schedule patch for date: " + dateString + ". Reading from schedule template.");
@@ -23,7 +22,7 @@ module.exports = function(date, callback) {
 
 			require(`${__basedir}/database/models/template`).findOne({}, function (error, object) {
 				if (error) {
-					console.log("An error occurred: " + error)
+					console.log("An error occurred: " + error);
 
 					callback(error, null);
 					return
@@ -34,8 +33,6 @@ module.exports = function(date, callback) {
 
 					if (dayData["id"] === dayKey) {
 						console.log("Retrieved schedule for " + dateString + " from schedule template.");
-
-						delete dayData.id;
 
 						callback(null, dayData);
 						return;

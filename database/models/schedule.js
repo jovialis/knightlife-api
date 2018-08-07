@@ -5,27 +5,28 @@ var schema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		select: false
 	},
-	date: {
-		type: String,
-		required: true,
-		select: false
-	},
-	description: {
-		type: String,
-		required: false,
-		select: true
-	},
-	changed: {
-		type: Boolean,
-		required: false,
-		select: true
-	},
-	day: {
-		type: String,
-		required: false,
-		select: true
-	},
-	blocks: mongoose.Schema.Types.Mixed
+	date: { type: Date, select: false },
+	description: { type: String, required: false },
+	changed: { type: Boolean, required: false },
+	day: { type: String, required: false },
+	notices: { type: [
+		{
+			priority: Number,
+			message: String
+		}], required: false},
+	blocks: [{
+		id: String,
+		start: String,
+		end: String,
+		variation: { type: Number, required: false },
+		custom: {
+			type: {
+				name: String,
+				color: String
+			},
+			required: false
+		}
+	}]
 }, {
 	collection: "schedules"
 });

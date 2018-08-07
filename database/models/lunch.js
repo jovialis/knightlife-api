@@ -1,21 +1,26 @@
 const mongoose = require("mongoose");
 
-let schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
 	_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		select: false
 	},
 	date: {
-		type: String,
-		required: true,
+		type: Date,
 		select: false
 	},
 	description: {
 		type: String,
-		required: false,
-		select: true
+		required: false
 	},
-	items: mongoose.Schema.Types.Mixed
+	items: [{
+		name: String,
+		type: String,
+		allergy: {
+			type: String,
+			required: false
+		}
+	}]
 }, {
 	collection: "lunches"
 });

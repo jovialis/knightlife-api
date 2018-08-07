@@ -1,4 +1,4 @@
-module.exports.path = "events";
+module.exports.path = "events/upcoming";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
@@ -14,7 +14,7 @@ module.exports.called = function (req, res) {
 
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 	require(`${__basedir}/database/models/event`).find({
-		date: date
+		date: { $gte: date }
 	}, function (error, events) {
 		if (error) {
 			console.log(error);
