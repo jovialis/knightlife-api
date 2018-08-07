@@ -4,5 +4,6 @@
 	"schedule/next-day",
 	"push/message",
 	"lunch/lunch",
-	"event/events"
+	"event/events",
+	"event/upcoming"
 ]
