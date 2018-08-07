@@ -4,7 +4,7 @@ module.exports.method = "get";
 module.exports.called = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
-	let date = new Date(req.param("date"));
+	let rawDate = new Date(req.param("date"));
 	if (!date) {
 		console.log("Invalid date requested: " + req.param("date") + ".");
 
@@ -12,7 +12,9 @@ module.exports.called = function (req, res) {
 		return
 	}
 
+	let date = Date(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate());
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
+
 	require(`${__basedir}/database/models/event`).find({
 		date: date
 	}, function (error, events) {

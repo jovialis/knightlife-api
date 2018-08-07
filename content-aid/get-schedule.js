@@ -31,6 +31,8 @@ module.exports = function(date, callback) {
 				for (dayIndex in object["days"]) {
 					let dayData = object["days"][dayIndex];
 
+					console.log(dayData["id"]);
+
 					if (dayData["id"] === dayKey) {
 						console.log("Retrieved schedule for " + dateString + " from schedule template.");
 
