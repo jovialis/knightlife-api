@@ -13,7 +13,7 @@ module.exports.called = function (req, res) {
 	}
 
 	let date = Date(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate());
-	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
+	let dateString = require(`${__basedir}/utils/date-formatter`)(rawDate);
 
 	require(`${__basedir}/database/models/event`).find({
 		date: date
@@ -26,7 +26,7 @@ module.exports.called = function (req, res) {
 		}
 
 		let resultList = [];
-		events.forEach(function (event) {
+		events.forEach(function(event) {
 			resultList.push(event);
 		});
 

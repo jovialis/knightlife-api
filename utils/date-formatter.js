@@ -1,6 +1,6 @@
 module.exports = function (date) {
 	if (!date) { // No date supplied
-		return null
+		return null;
 	}
 
 	const year = date.getFullYear();
