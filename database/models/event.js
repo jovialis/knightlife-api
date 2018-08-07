@@ -5,10 +5,7 @@ let schema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		select: false
 	},
-	date: {
-		type: Date,
-		select: false
-	},
+	date: Date,
 	block: String,
 	description: String,
 	audience: [{

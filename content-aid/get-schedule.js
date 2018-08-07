@@ -2,6 +2,8 @@
 module.exports = function(date, callback) {
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
+    console.log(date);
+    
 	console.log("Fetching schedule for date: " + dateString);
 
 	require(`${__basedir}/database/models/schedule`).findOne({
@@ -30,8 +32,6 @@ module.exports = function(date, callback) {
 
 				for (dayIndex in object["days"]) {
 					let dayData = object["days"][dayIndex];
-
-					console.log(dayData["id"]);
 
 					if (dayData["id"] === dayKey) {
                         delete dayData.id;

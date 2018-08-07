@@ -58,18 +58,86 @@ function fetchSchedule(date, endDate, then) {
 	require(`${__basedir}/database/models/schedule`).findOne({
 		date: { $gte: date, $lte: endDate }
 	}, function (error, object) {
-		then(error, object)
+        let resultList = [];
+		object.forEach(function(item) {
+			resultList.push({
+                'type': 'schedule',
+                'date': item["date"]
+            });
+		});
+        
+		then(error, resultList);
 	});
 }
 
 function fetchEvents(date, endDate, then) {
 	require(`${__basedir}/database/models/event`).find({
 		date: { $gte: date, $lte: endDate }
-	}, function (error, events) {
-		then(error, events)
+	}, function (error, object) {
+        let resultList = [];
+		object.forEach(function(item) {
+			resultList.push({
+                'type': 'event',
+                'date': item["date"]
+            });
+		});
+        
+		then(error, resultList);
 	});
 }
 
 function normalizeList(objects) {
-	
+    /*
+    objects: [{
+        'date': '-',
+        'type': '-'
+    }]
+    
+    converted through this method to layerA:
+    
+    '2018-8-7': {
+        'event': true,
+        'schedule': true
+    }
+    
+    converted to layerB:
+    
+    [{
+        'date': '-',
+        'modes': [0, 1]
+    }]
+    */
+    
+    let layerA = []
+    
+	for (let object in objects) {
+        const date = object['date'];
+        const type = object['type'];
+        
+        let layerObject = layerA[date];
+        if (layerObject) {
+            layerObject[type] = true;
+        } else {
+            let fillObject = { };
+            fillObject[type] = true;
+            layerA[date] = fillObject;
+        }
+    }
+    
+    let layerB = [];
+    for (const key in layerA) {
+        const hasSchedule = layerA[key]['schedule'];
+        const hasEvents = layerA[key]['event'];
+        
+        let modes = [];
+        if (hasSchedule) { modes.push(0); }
+        if (hasEvents) { modes.push(1) };
+        
+        layerB.push({
+            'date': key,
+            'mode': modes
+        });
+    }
+    
+    return layerB;
 }

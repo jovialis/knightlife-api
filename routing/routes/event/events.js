@@ -26,6 +26,7 @@ module.exports.called = function (req, res) {
 
 		let resultList = [];
 		events.forEach(function(event) {
+            delete event.date;
 			resultList.push(event);
 		});
 
