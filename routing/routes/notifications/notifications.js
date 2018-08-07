@@ -55,7 +55,7 @@ module.exports.called = function (req, res) {
 
 // then: (error, objects)
 function fetchSchedule(date, endDate, then) {
-	require(`${__basedir}/database/models/schedule`).findOne({
+	require(`${__basedir}/database/models/schedule`).find({
 		date: { $gte: date, $lte: endDate }
 	}, function (error, object) {
         let resultList = [];
