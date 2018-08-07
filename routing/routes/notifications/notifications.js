@@ -12,7 +12,7 @@ module.exports.called = function (req, res) {
 		return
 	}
 
-	const endDate = Date(date.getTime()).setDate(date.getDate() + 14);
+	const endDate = new Date(date).setDate(date.getDate() + 14);
 
 	const sample = {
 		'content': [
