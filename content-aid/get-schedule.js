@@ -34,6 +34,7 @@ module.exports = function(date, callback) {
 					console.log(dayData["id"]);
 
 					if (dayData["id"] === dayKey) {
+                        delete dayData.id;
 						console.log("Retrieved schedule for " + dateString + " from schedule template.");
 
 						callback(null, dayData);

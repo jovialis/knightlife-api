@@ -9,11 +9,12 @@ var schema = new mongoose.Schema({
 	description: { type: String, required: false },
 	changed: { type: Boolean, required: false },
 	day: { type: String, required: false },
-	notices: { type: [
-		{
+	notices: { 
+        type: [{
 			priority: Number,
 			message: String
-		}], required: false},
+		}], 
+        required: false},
 	blocks: [{
 		id: String,
 		start: String,

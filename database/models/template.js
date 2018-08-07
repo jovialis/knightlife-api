@@ -6,7 +6,7 @@ var schema = new mongoose.Schema({
 		select: false
 	},
 	days: [{
-		id: { type: String, select: false },
+		id: String,
 		blocks: [{
 			id: String,
 			start: String,
