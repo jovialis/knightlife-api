@@ -8,123 +8,33 @@ module.exports.called = function (req, res) {
 	if (!date) {
 		console.log("Invalid date requested: " + req.param("date") + ".");
 
-		res.json(require(formatter.error("Invalid date requested")));
-		return
+		res.json(formatter.error("Invalid date requested"));
+		return;
 	}
 
 	const endDate = new Date(date).setDate(date.getDate() + 14);
 
-	fetchSchedule(date, endDate, function(error, result) {
-		if (error) {
-			console.log(error);
-
-			res.json(formatter.error(error));
-			return;
-		}
-
-		let objectList = result;
-
-		fetchEvents(date, endDate, function(error, result) {
-			if (error) {
-				console.log(error);
-
-				res.json(formatter.error(error));
-				return;
-			}
-
-			objectList.push(result);
-
-			const normalizedList = normalizeList(objectList);
-			res.json(formatter.success(normalizedList, "notification stack", date));
-		});
-	});
-};
-
-// then: (error, objects)
-function fetchSchedule(date, endDate, then) {
-	require(`${__basedir}/database/models/schedule`).find({
-		date: { $gte: date, $lte: endDate }
+    require(`${__basedir}/database/models/schedule`).find({
+		date: { 
+            $gte: date, 
+            $lte: endDate 
+        },
+        changed: true // Only fetch Schedules that have the Changed flag for a changed schedule.
 	}, function (error, object) {
-        let resultList = [];
-		object.forEach(function(item) {
-			resultList.push({
-                'type': 'schedule',
-                'date': item["date"]
-            });
-		});
-        
-		then(error, resultList);
-	});
-}
-
-function fetchEvents(date, endDate, then) {
-	require(`${__basedir}/database/models/event`).find({
-		date: { $gte: date, $lte: endDate }
-	}, function (error, object) {
-        let resultList = [];
-		object.forEach(function(item) {
-			resultList.push({
-                'type': 'event',
-                'date': item["date"]
-            });
-		});
-        
-		then(error, resultList);
-	});
-}
-
-function normalizeList(objects) {
-    /*
-    objects: [{
-        'date': '-',
-        'type': '-'
-    }]
-    
-    converted through this method to layerA:
-    
-    '2018-8-7': {
-        'event': true,
-        'schedule': true
-    }
-    
-    converted to layerB:
-    
-    [{
-        'date': '-',
-        'modes': [0, 1]
-    }]
-    */
-    
-    let layerA = []
-    
-	for (let object in objects) {
-        const date = object['date'];
-        const type = object['type'];
-        
-        let layerObject = layerA[date];
-        if (layerObject) {
-            layerObject[type] = true;
-        } else {
-            let fillObject = { };
-            fillObject[type] = true;
-            layerA[date] = fillObject;
+        if (error) {
+            console.log("Failed to fetch upcoming changed days.");
+            
+            res.json(formatter.error("Failed to fetch upcoming changed days."));
+            return;
         }
-    }
-    
-    let layerB = [];
-    for (const key in layerA) {
-        const hasSchedule = layerA[key]['schedule'];
-        const hasEvents = layerA[key]['event'];
         
-        let modes = [];
-        if (hasSchedule) { modes.push(0); }
-        if (hasEvents) { modes.push(1) };
+        const dateFormatter = require(`${__basedir}/utils/date-formatter`);
+        let resultList = [];
         
-        layerB.push({
-            'date': key,
-            'mode': modes
-        });
-    }
-    
-    return layerB;
-}
+		object.forEach(function(item) {
+			resultList.push(dateFormatter(item["date"]));
+		});
+        
+        res.json(formatter.success(resultList, "notification dates", dateFormatter(date)));
+    });
+};
