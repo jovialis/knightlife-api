@@ -12,10 +12,7 @@ const LunchItem = new mongoose.Schema({
 });
 
 const Lunch = new mongoose.Schema({
-	date: {
-		type: Date,
-		select: false
-	},
+	date: Date,
 	description: {
 		type: String,
 		required: false

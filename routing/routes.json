@@ -2,10 +2,15 @@
 	"schedule/schedule",
 	"schedule/template",
 	"schedule/next-day",
+    "schedule/special",
+    
 	"push/message",
+    
 	"lunch/lunch",
+    
 	"event/events",
-	"event/upcoming",
-    "notifications/notifications",
-	"submit/lunch"
+    
+    "upcoming/upcoming"
+    
+    "submit/lunch"
 ]

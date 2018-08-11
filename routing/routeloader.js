@@ -19,7 +19,7 @@ module.exports = function (app) {
 		}
 
 		if (success) {
-			console.log(`Mapped ${files[path]} to ${route.path}`);
+			console.log(`Registered route ${route.path}`);
 		}
 	}
 };

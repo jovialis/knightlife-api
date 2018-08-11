@@ -31,10 +31,7 @@ const Block = new mongoose.Schema({
 });
 
 const Schedule = new mongoose.Schema({
-	date: {
-        type: Date, 
-        select: false 
-    },
+	date: Date,
 	description: { 
         type: String, 
         required: false 

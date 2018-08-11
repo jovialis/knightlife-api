@@ -9,23 +9,25 @@ module.exports.called = function (req, res) {
 		return;
 	}
 
-	let schema = require(`${__basedir}/database/models/device`)
-	schema.findOne({
+	const Device = require(`${__basedir}/database/models/device`)
+	Device.findOne({
 		token: token
 	}, function (error, object) {
-		if (error || !object) {
-			schema.create({
-				token: token
-			}, function (error, object) {
-				if (error) {
-					res.json(false);
-					throw error;
-				} else {
-					res.json(true);
-				}
-			})
-		} else {
-			res.json(true)
-		}
+        if (object) {
+            res.json(true);
+            return;
+        }
+        
+        const newDevice = new Device({
+            token: token
+        });
+
+        newDevice.save(function(error, object) {
+            if (error) {
+                res.json(false);
+            } else {
+                res.json(true);
+            }
+        });
 	})
 }

@@ -1,22 +1,29 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var schema = new mongoose.Schema({
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		select: false
-	},
-	days: [{
-		id: String,
-		blocks: [{
-			id: String,
-			start: String,
-			end: String,
-			variation: { type: Number, required: false }
-		}]
-	}]
+const Block = new mongoose.Schema({
+    id: String,
+    start: String,
+    end: String,
+    variation: {
+        type: Number,
+        required: false
+    }
+}, {
+    _id: false
+});
+
+const Day = new mongoose.Schema({
+    id: String,
+    blocks: [Block]
+}, {
+    _id: false
+});
+
+const Template = new mongoose.Schema({
+	days: [Day]
 }, {
     collection: "template",     
     versionKey: false
 });
 
-module.exports = mongoose.model("Template", schema);
+module.exports = mongoose.model("Template", Template);

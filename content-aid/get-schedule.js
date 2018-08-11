@@ -8,7 +8,7 @@ module.exports = function(date, callback) {
 
 	require(`${__basedir}/database/models/schedule`).findOne({
 		date: date
-	}, "-_id", function (error, object) {
+	}, { _id: 0, date: 0 }, function (error, object) {
 		if (object) {
 			console.log("Found schedule patch for date: " + dateString);
 

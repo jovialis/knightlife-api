@@ -1,4 +1,4 @@
-module.exports.path = "notify";
+module.exports.path = "schedule/special";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
@@ -12,12 +12,9 @@ module.exports.called = function (req, res) {
 		return;
 	}
 
-	const endDate = new Date(date).setDate(date.getDate() + 14);
-
     require(`${__basedir}/database/models/schedule`).find({
 		date: { 
             $gte: date, 
-            $lte: endDate 
         },
         changed: true // Only fetch Schedules that have the Changed flag for a changed schedule.
 	}, function (error, object) {
@@ -32,7 +29,12 @@ module.exports.called = function (req, res) {
         let resultList = [];
         
 		object.forEach(function(item) {
-			resultList.push(dateFormatter(item["date"]));
+            const date = item["date"];
+            const dateString = dateFormatter(date);
+            
+            item["date"] = dateString;
+            
+			resultList.push(item);
 		});
         
         res.json(formatter.success(resultList, "notification dates", dateFormatter(date)));
