@@ -120,7 +120,7 @@ function getEvents(date, list, callback) {
 		date: { 
             $gte: date, 
         },
-    }, function (error, events) {
+    }, "-_id", function (error, events) {
         if (error) {
             callback(error, null);
             return;
@@ -128,7 +128,7 @@ function getEvents(date, list, callback) {
 
         events.forEach(function(event) {
             const eventDate = event["date"];
-            delete event.date;
+            delete event["date"];
             
 			list.push(buildItem("event", eventDate, event));
 		});
