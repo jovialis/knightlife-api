@@ -93,7 +93,7 @@ function getChangedSchedules(date, callback) {
 
 function getScheduleNotices(date, list, callback) {
     require(`${__basedir}/database/models/schedule`).find({
-		date: { 
+		date: {
             $gte: date, 
         },
         notices: {
@@ -106,9 +106,9 @@ function getScheduleNotices(date, list, callback) {
         }
         
 		object.forEach(function(item) {
-            for (const notice in item["notices"]) {
+            item["notices"].forEach(function(notice) {
                 list.push(buildItem("notice", item["date"], notice));
-            }
+            });
 		});
         
         getEvents(date, list, callback);
