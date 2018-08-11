@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
 	},
 	items: [{
 		name: String,
-		type: String,
+		itemType: String,
 		allergy: {
 			type: String,
 			required: false
