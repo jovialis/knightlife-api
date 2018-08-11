@@ -1,4 +1,4 @@
-var apn = require("apn");
+const mongoose = require("mongoose");
 
 module.exports.path = "submit/lunch";
 module.exports.method = "get";
@@ -22,6 +22,9 @@ module.exports.called = function (req, res) {
 		return;
 	}
 
+	const objectId = mongoose.Types.ObjectId();
+
+	data["_id"] = objectId;
 	data["date"] = date;
 
 	const Lunch = require(`${__basedir}/database/models/lunch`);
