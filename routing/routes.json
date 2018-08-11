@@ -6,5 +6,6 @@
 	"lunch/lunch",
 	"event/events",
 	"event/upcoming",
-    "notifications/notifications"
+    "notifications/notifications",
+	"submit/lunch"
 ]

@@ -14,19 +14,6 @@ module.exports.called = function (req, res) {
 
 	const endDate = new Date(date).setDate(date.getDate() + 14);
 
-	const sample = {
-		'content': [
-			{
-				'date': '2018-8-5',
-				'mode': [0, 2] // 0 = patch, 1 = events
-			},
-			{
-				'date': '2018-8-6',
-				'mode': [1]
-			}
-		]
-	};
-
 	fetchSchedule(date, endDate, function(error, result) {
 		if (error) {
 			console.log(error);
