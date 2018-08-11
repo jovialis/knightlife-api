@@ -127,8 +127,9 @@ function getEvents(date, list, callback) {
         }
 
         events.forEach(function(event) {
-            const eventDate = event["date"];
-            delete event["date"];
+            let eventDate = new Date(event["date"]);
+
+            delete event['date'];
             
 			list.push(buildItem("event", eventDate, event));
 		});
