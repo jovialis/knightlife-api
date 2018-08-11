@@ -125,14 +125,15 @@ function getEvents(date, list, callback) {
             callback(error, null);
             return;
         }
+        
+        const eventsObject = events.toObject();
 
-        events.forEach(function(event) {
-            let eventClone = Object.assign({}, event); // I think that the mongoose object is immutable, so if I want to delete the date, I have to clone it.
-            delete eventClone.date;
+        eventsObject.forEach(function(event) {
+            let eventDate = event["date"];
+
+            delete event['date'];
             
-            let eventDate = new Date(event["date"]);
-            
-			list.push(buildItem("event", eventDate, eventClone));
+			list.push(buildItem("event", eventDate, event));
 		});
 
 		callback(null, list);
