@@ -117,18 +117,16 @@ function getScheduleNotices(date, list, callback) {
 
 function getEvents(date, list, callback) {
     require(`${__basedir}/database/models/event`).find({
-		date: { 
+		date: {
             $gte: date, 
         },
-    }, "-_id", function (error, events) {
+    }).lean().select({ _id: 0 }).exec(function (error, events) {
         if (error) {
             callback(error, null);
             return;
         }
         
-        const eventsObject = events.toObject();
-
-        eventsObject.forEach(function(event) {
+        events.forEach(function(event) {
             let eventDate = event["date"];
 
             delete event['date'];
