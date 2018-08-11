@@ -15,7 +15,7 @@ module.exports.called = function (req, res) {
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 	require(`${__basedir}/database/models/lunch`).findOne({
 		date: date
-	}, function (error, object) {
+	}, "-_id", function (error, object) {
 		if (error) {
 			console.log(error);
 

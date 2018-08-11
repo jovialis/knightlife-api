@@ -14,6 +14,9 @@ var schema = new mongoose.Schema({
 			variation: { type: Number, required: false }
 		}]
 	}]
-}, {collection: "template"});
+}, {
+    collection: "template",     
+    versionKey: false
+});
 
 module.exports = mongoose.model("Template", schema);

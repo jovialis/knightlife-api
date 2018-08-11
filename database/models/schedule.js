@@ -29,7 +29,8 @@ var schema = new mongoose.Schema({
 		}
 	}]
 }, {
-	collection: "schedules"
+	collection: "schedules",
+    versionKey: false
 });
 
 module.exports = mongoose.model("Schedule", schema);

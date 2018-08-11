@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		select: false
-	},
 	date: {
 		type: Date,
 		select: false
@@ -22,7 +18,8 @@ const schema = new mongoose.Schema({
 		}
 	}]
 }, {
-	collection: "lunches"
+	collection: "lunches",
+    versionKey: false
 });
 
 module.exports = mongoose.model("Lunch", schema);

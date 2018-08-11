@@ -7,7 +7,8 @@ const schema = new mongoose.Schema({
 	},
 	token: String
 }, {
-	collection: "devices"
+	collection: "devices",
+    versionKey: false
 });
 
 module.exports = mongoose.model("Device", schema);

@@ -13,7 +13,8 @@ let schema = new mongoose.Schema({
 		mandatory: Boolean
 	}]
 }, {
-	collection: "events"
+	collection: "events",
+    versionKey: false
 });
 
 module.exports = mongoose.model("Event", schema);
