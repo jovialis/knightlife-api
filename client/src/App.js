@@ -7,18 +7,18 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-                <button onClick={this.handleClick}></button>
+                <button onClick={this.handleLunch}>Lunch</button>
 			</div>
 		);
 	}
 
-	handleClick() {
+	handleLunch() {
 		const data = JSON.stringify({
 			"description": "Taco Tuesday",
 			"items": [
 				{
 					"name": "Taco",
-					"type": "main",
+					"itemType": "main",
 					"allergy": "A lot of allergies are here."
 				}
 			]

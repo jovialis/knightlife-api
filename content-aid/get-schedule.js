@@ -8,7 +8,7 @@ module.exports = function(date, callback) {
 
 	require(`${__basedir}/database/models/schedule`).findOne({
 		date: date
-	}, function (error, object) {
+	}, "-_id", function (error, object) {
 		if (object) {
 			console.log("Found schedule patch for date: " + dateString);
 
@@ -22,7 +22,7 @@ module.exports = function(date, callback) {
 
 			let dayKey = ["m", "t", "w", "th", "f", "sa", "su"][dayOfWeek];
 
-			require(`${__basedir}/database/models/template`).findOne({}, function (error, object) {
+			require(`${__basedir}/database/models/template`).findOne({}, "-_id", function (error, object) {
 				if (error) {
 					console.log("An error occurred: " + error);
 

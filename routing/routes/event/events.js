@@ -16,7 +16,7 @@ module.exports.called = function (req, res) {
 
 	require(`${__basedir}/database/models/event`).find({
 		date: date
-	}, function (error, events) {
+	}, "-_id", function (error, events) {
 		if (error) {
 			console.log(error);
 

@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
-let schema = new mongoose.Schema({
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		select: false
-	},
+const Audience = new mongoose.Schema({
+    grade: Number,
+    mandatory: Boolean
+}, {
+    _id: false
+});
+
+const Event = new mongoose.Schema({
 	date: Date,
 	block: String,
 	description: String,
-	audience: [{
-		grade: Number,
-		mandatory: Boolean
-	}]
+	audience: [Audience]
 }, {
 	collection: "events",
     versionKey: false
 });
 
-module.exports = mongoose.model("Event", schema);
+module.exports = mongoose.model("Event", Event);

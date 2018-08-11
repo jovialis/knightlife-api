@@ -1,36 +1,60 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var schema = new mongoose.Schema({
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		select: false
-	},
-	date: { type: Date, select: false },
-	description: { type: String, required: false },
-	changed: { type: Boolean, required: false },
-	day: { type: String, required: false },
+const Notice = new mongoose.Schema({
+    priority: Number,
+    message: String
+}, {
+    _id: false
+});
+
+const Custom = new mongoose.Schema({
+    name: String,
+    color: String
+}, {
+    _id: false
+})
+
+const Block = new mongoose.Schema({
+    id: String,
+    start: String,
+    end: String,
+    variation: { 
+        type: Number, 
+        required: false 
+    },
+    custom: {
+        type: Custom,
+        required: false
+    }
+}, {
+    _id: false
+});
+
+const Schedule = new mongoose.Schema({
+	date: {
+        type: Date, 
+        select: false 
+    },
+	description: { 
+        type: String, 
+        required: false 
+    },
+	changed: { 
+        type: Boolean, 
+        required: false 
+    },
+	day: { 
+        type: String, 
+        required: false 
+    },
 	notices: { 
-        type: [{
-			priority: Number,
-			message: String
-		}], 
-        required: false},
-	blocks: [{
-		id: String,
-		start: String,
-		end: String,
-		variation: { type: Number, required: false },
-		custom: {
-			type: {
-				name: String,
-				color: String
-			},
-			required: false
-		}
-	}]
+        type: [Notice], 
+        required: false
+    },
+	blocks: [Block]
 }, {
 	collection: "schedules",
     versionKey: false
 });
 
-module.exports = mongoose.model("Schedule", schema);
+module.exports = mongoose.model("Schedule", Schedule);

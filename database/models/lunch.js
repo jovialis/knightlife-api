@@ -1,6 +1,17 @@
 const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema({
+const LunchItem = new mongoose.Schema({
+    name: String,
+    itemType: String,
+    allergy: {
+        type: String,
+        required: false
+    }
+}, {
+    _id: false
+});
+
+const Lunch = new mongoose.Schema({
 	date: {
 		type: Date,
 		select: false
@@ -9,17 +20,10 @@ const schema = new mongoose.Schema({
 		type: String,
 		required: false
 	},
-	items: [{
-		name: String,
-		itemType: String,
-		allergy: {
-			type: String,
-			required: false
-		}
-	}]
+	items: [LunchItem]
 }, {
 	collection: "lunches",
     versionKey: false
 });
 
-module.exports = mongoose.model("Lunch", schema);
+module.exports = mongoose.model("Lunch", Lunch);

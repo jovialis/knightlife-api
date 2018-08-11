@@ -15,7 +15,7 @@ module.exports.called = function (req, res) {
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 	require(`${__basedir}/database/models/event`).find({
 		date: { $gte: date }
-	}, function (error, events) {
+	}, "-_id", function (error, events) {
 		if (error) {
 			console.log(error);
 
