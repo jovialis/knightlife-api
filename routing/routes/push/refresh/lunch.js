@@ -1,6 +1,6 @@
 var apn = require("apn");
 
-module.exports.path = "push/refresh/schedule";
+module.exports.path = "push/refresh/lunch";
 module.exports.method = "get";
 
 module.exports.called = function (req, res) {
