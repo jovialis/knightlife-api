@@ -3,14 +3,17 @@
 	"schedule/template",
 	"schedule/next-day",
     "schedule/special",
-    
-	"push/message",
-    
+        
+    "upcoming/upcoming",
+
 	"lunch/lunch",
-    
 	"event/events",
     
-    "upcoming/upcoming",
+    "push/message",
+
+    "push/refresh/events",
+    "push/refresh/lunch",
+    "push/refresh/schedule",
     
     "submit/lunch"
 ]

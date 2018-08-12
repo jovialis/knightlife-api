@@ -8,6 +8,7 @@ class App extends Component {
 		return (
 			<div className="App">
                 <button onClick={this.handleLunch}>Lunch</button>
+                <button onClick={this.updateLunch}>UPDATE LUNCH</button>
 			</div>
 		);
 	}
@@ -25,6 +26,10 @@ class App extends Component {
 		});
 
 		fetch('https://knightlife-server.herokuapp.com/api/submit/lunch?date=2018-08-10&data=' + data);
+	}
+    
+    updateLunch() {
+		fetch('https://knightlife-server.herokuapp.com/api/push/refresh/lunch?date=2018-08-16');
 	}
 }
 

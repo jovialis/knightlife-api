@@ -9,7 +9,11 @@ const Notice = new mongoose.Schema({
 
 const Custom = new mongoose.Schema({
     name: String,
-    color: String
+    color: String,
+    location: {
+        type: String,
+        required: false
+    }
 }, {
     _id: false
 })
