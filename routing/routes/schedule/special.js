@@ -17,7 +17,7 @@ module.exports.called = function (req, res) {
             $gte: date, 
         },
         changed: true // Only fetch Schedules that have the Changed flag for a changed schedule.
-	}, "-_id", function (error, object) {
+	}).lean().select({ _id: 0 }).exec(function (error, object) {
         if (error) {
             console.log("Failed to fetch upcoming changed days.");
             
