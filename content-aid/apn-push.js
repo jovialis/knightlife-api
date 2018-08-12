@@ -2,7 +2,7 @@ const apn = require("apn");
 
 // Then: (Error)
 module.exports = function(payload, then) {
-    var notification = new apn.Notification();
+    let notification = new apn.Notification();
 	notification.topic = 'MAD.BBN.KnightLife';
 	notification.badge = 0;
 	notification.contentAvailable = 1;

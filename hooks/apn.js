@@ -1,5 +1,5 @@
-var apn = require("apn");
-var provider = new apn.Provider(
+const apn = require("apn");
+const provider = new apn.Provider(
 	{
 		token: {
 			key: process.env.APN_KEY, // Path to the key p8 file
@@ -11,3 +11,5 @@ var provider = new apn.Provider(
 		production: false // Set to true if sending a notification to a production iOS app
 	}
 );
+
+module.exports = provider;
