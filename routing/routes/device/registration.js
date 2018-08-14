@@ -9,7 +9,7 @@ module.exports.called = function (req, res) {
 		return;
 	}
 
-	const Device = require(`${__basedir}/database/models/device`)
+	const Device = require(`${__basedir}/database/models/device`);
 	Device.findOne({
 		token: token
 	}, function (error, object) {
@@ -29,5 +29,5 @@ module.exports.called = function (req, res) {
                 res.json(true);
             }
         });
-	})
+	});
 }
