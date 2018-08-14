@@ -23,6 +23,6 @@ module.exports.called = function (req, res) {
 		}
         
         const url = object.url;
-		res.json(formatter.success(url, "survey", null));
+		res.json(formatter.success({ "url": url }, "survey", null));
 	})
 };
