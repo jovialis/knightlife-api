@@ -15,5 +15,7 @@
     "push/refresh/lunch",
     "push/refresh/schedule",
     
-    "submit/lunch"
+    "submit/lunch",
+    
+    "device/registration"
 ]
