@@ -7,9 +7,26 @@ const Audience = new mongoose.Schema({
     _id: false
 });
 
+const EventTime = new mongoose.Schema({
+    start: String,
+    end: {
+        type: String,
+        required: false
+    }
+}, {
+    _id: false
+});
+
 const Event = new mongoose.Schema({
 	date: Date,
-	block: String,
+	block: {
+        type: String,
+        required: false
+    },
+    time: {
+        type: EventTime,
+        required: false
+    },
 	description: String,
 	audience: [Audience]
 }, {

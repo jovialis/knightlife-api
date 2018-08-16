@@ -2,9 +2,13 @@
 	"name": "client",
 	"version": "0.1.0",
 	"dependencies": {
-		"react": "^16.4.1",
-		"react-dom": "^16.4.1",
-		"react-scripts": "1.1.4"
+		"react": "latest",
+		"react-dom": "latest",
+		"react-scripts": "latest",
+        "react-router-dom": "latest",
+        "redux-react-session": "latest",
+        "passport": "latest",
+        "passport-google-oauth": "latest"
 	},
 	"scripts": {
 		"start": "react-scripts start",
@@ -12,5 +16,5 @@
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject"
 	},
-	"proxy": "https://knightlife-server.herokuapp.com"
+	"proxy": "https://www.bbnknightlife.com"
 }
