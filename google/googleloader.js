@@ -11,13 +11,22 @@ module.exports = function() {
         callbackURL: "https://www.bbnknightlife.com/login/auth/google/callback"
     }, function(accessToken, refreshToken, profile, cb) {
         const WebUser = require(`${__basedir}/database/models/webuser`)
-
-        const newUser = new WebUser({
-            googleId: profile.id
-        });
-        
-        newUser.save(function(error, object) {
-            cb(error, object);
-        });
+        const profileId = profile.id;
+              
+        WebUser.findOne({
+            googleId: profileId
+        }, function(err, obj) {
+            if (obj) {
+                cb(null, obj);
+            } else {
+                const newUser = new WebUser({
+                    googleId: profileId
+                });
+                
+                newUser.save(function(error, object) {
+                    cb(error, object);
+                });
+            }
+        })
     }));
 }
