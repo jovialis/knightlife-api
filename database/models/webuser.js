@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const WebUser = new mongoose.Schema({
-	token: {
-        googleId: String,
+	tokenId: {
+        type: String,
         unique: true
     }
 }, {
