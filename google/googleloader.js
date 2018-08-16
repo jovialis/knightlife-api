@@ -18,15 +18,16 @@ module.exports = function() {
         }, function(err, obj) {
             if (obj) {
                 cb(null, obj);
-            } else {
-                const newUser = new WebUser({
-                    googleId: profileId
-                });
-                
-                newUser.save(function(error, object) {
-                    cb(error, object);
-                });
+                return;
             }
-        })
+            
+            const newUser = new WebUser({
+                googleId: profileId
+            });
+
+            newUser.save(function(error, object) {
+                cb(error, object);
+            });
+        });
     }));
 }

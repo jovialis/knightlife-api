@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const WebUser = new mongoose.Schema({
-	tokenId: {
+	googleId: {
         type: String,
         unique: true
     }
