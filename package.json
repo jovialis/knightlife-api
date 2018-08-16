@@ -7,6 +7,7 @@
         "body-parser": "latest",
 		"apn": "latest",
 		"mongoose": "latest",
+        "passport": "latest",
         "express-validator": "latest"
 	},
 	"scripts": {
