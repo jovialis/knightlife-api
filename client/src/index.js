@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './index.css';
 
 // Imports
-import { Home } from './pages/Home';
-import { Login } from './pages/Login';
+import Home from './pages/Home';
+import Login from './pages/Login';
 
 ReactDOM.render(
   <Router>
