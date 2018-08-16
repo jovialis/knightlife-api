@@ -30,7 +30,7 @@ module.exports = function (app) {
     
     app.get('/api/device/register', require('./routes/device/registration'));
     
-    app.get('/login/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }))
+    app.get('/login/auth/google', passport.authenticate('google', { scope: ['profile'] }))
     app.get('/login/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
         res.redirect('/');
     });
