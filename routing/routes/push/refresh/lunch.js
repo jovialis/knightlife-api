@@ -1,9 +1,6 @@
 var apn = require("apn");
 
-module.exports.path = "push/refresh/lunch";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
     const formatter = require(`${__basedir}/utils/response-formatter`);
 
     const date = new Date(req.param("date"));

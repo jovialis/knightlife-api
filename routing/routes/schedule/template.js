@@ -1,7 +1,4 @@
-module.exports.path = "schedule/template";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
 	require(`${__basedir}/database/models/template`).findOne({}, "-_id", function (error, object) {

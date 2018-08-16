@@ -1,7 +1,4 @@
-module.exports.path = "lunch";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
 	const date = new Date(req.param("date"));

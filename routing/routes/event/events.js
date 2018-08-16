@@ -1,7 +1,4 @@
-module.exports.path = "events";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
 	let date = new Date(req.param("date"));

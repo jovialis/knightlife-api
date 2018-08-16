@@ -1,9 +1,6 @@
-var apn = require("apn");
+const apn = require("apn");
 
-module.exports.path = "push/message";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
 	if (!require(`${__basedir}/utils/verify-request`)(req, res)) {
 		res.json("Authentication failed");
 		return;

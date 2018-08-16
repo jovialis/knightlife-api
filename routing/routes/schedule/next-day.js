@@ -1,7 +1,4 @@
-module.exports.path = "schedule/next";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
 	let parsed = new Date(req.param("date"));

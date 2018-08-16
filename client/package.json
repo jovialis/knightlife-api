@@ -6,7 +6,6 @@
 		"react-dom": "latest",
 		"react-scripts": "latest",
         "react-router-dom": "latest",
-        "redux-react-session": "latest",
         "passport": "latest",
         "passport-google-oauth": "latest"
 	},

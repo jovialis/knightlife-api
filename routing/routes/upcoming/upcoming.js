@@ -3,40 +3,7 @@
 // Upcoming events
 // upcomingType: 'schedule' ; 'notice' ; 'event'
 
-/*
-    {
-        "upcomingType": "schedule",
-        "date": "2018-08-10"
-        "data": {}
-    }, 
-    {
-        "upcomingType": "notice",
-        "date": "2018-08-10"
-        "data": {
-            "priority: "1",
-            "message": "this is the message"
-        }
-    },
-    {
-        "upcomingType": "event",
-        "date": "2018-08-10",
-        "data": {
-            "message": "This is the message",
-            "block": "a",
-            "audience": [
-                {
-                    "grade": 0,
-                    "mandatory": false
-                }
-            ]
-        }
-    }
-*/
-
-module.exports.path = "upcoming";
-module.exports.method = "get";
-
-module.exports.called = function (req, res) {
+module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
 	const date = new Date(req.param("date"));

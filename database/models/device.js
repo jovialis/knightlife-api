@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-	token: String
+	token: {
+        type: String,
+        unique: true
+    }
 }, {
 	collection: "devices",
     versionKey: false
