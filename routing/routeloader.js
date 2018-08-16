@@ -1,13 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const passport = require('passport');
+const GooglePassportStrategy = require('passport-google-oauth').OAuth2Strategy;
+
 module.exports = function (app) {
     
     // Register GET
     app.get('/api/schedule', require('./routes/schedule/schedule'));
     app.get('/api/schedule/next', require('./routes/schedule/next-day'));
     app.get('/api/schedule/special', require('./routes/schedule/special'));
-    app.get('/api/schedule/template', require('./routes/template'));
+    app.get('/api/schedule/template', require('./routes/schedule/template'));
     
     app.get('/api/lunch', require('./routes/lunch/lunch'));
     app.get('/api/events', require('./routes/event/events'));
@@ -27,5 +30,21 @@ module.exports = function (app) {
     app.post('/api/push/message', require('./routes/push/message'));
     
     app.get('/api/device/register', require('./routes/device/registration'));
+    
+    // Setup google
+    passport.use(new GoogleStrategy({
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://www.example.com/auth/google/callback"
+    }, function(accessToken, refreshToken, profile, cb) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+            return cb(err, user);
+        });
+    }));
+    
+    app.get('/login/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }))
+    app.get('/login/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
+        res.redirect('/');
+    });
     
 };
