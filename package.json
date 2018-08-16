@@ -8,7 +8,8 @@
 		"apn": "latest",
 		"mongoose": "latest",
         "passport": "latest",
-        "express-validator": "latest"
+        "express-validator": "latest",
+        "passport-google-oauth20": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",
