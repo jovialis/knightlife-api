@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema({
+const Device = new mongoose.Schema({
 	token: {
         type: String,
         unique: true
@@ -10,4 +10,4 @@ const schema = new mongoose.Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model("Device", schema);
+module.exports = mongoose.model("Device", Device);
