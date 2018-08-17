@@ -24,7 +24,7 @@ module.exports = function() {
             
             const newUser = new WebUser({
                 name: profile.displayName,
-                email: profile.emails[0],
+                email: profile.emails[0].value,
                 image: profile.picture,
                 gid: profileId
             });
