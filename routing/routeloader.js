@@ -33,7 +33,11 @@ module.exports = function (app) {
     // Setup Google Auth via passport
     app.use(passport.initialize());
     
-    app.get('/login/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+    app.get('/login/auth/google', passport.authenticate('google', { scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ]}));
+    
     app.get('/login/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
         res.redirect('/');
     });

@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 
 const WebUser = new mongoose.Schema({
     name: String,
-    email: {
-        type: String,
-        required: false
-    },
+    email: String,
     image: {
         type: String,
         required: false
