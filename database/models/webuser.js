@@ -1,7 +1,16 @@
 const mongoose = require("mongoose");
 
 const WebUser = new mongoose.Schema({
-	googleId: {
+    name: String,
+    email: {
+        type: String,
+        required: false
+    },
+    image: {
+        type: String,
+        required: false
+    },
+	gid: {
         type: String,
         unique: true
     }

@@ -13,9 +13,9 @@ module.exports = function() {
         callbackURL: "https://www.bbnknightlife.com/login/auth/google/callback"
     }, function(accessToken, refreshToken, profile, cb) {
         const profileId = profile.id;
-              
+        
         WebUser.findOne({
-            googleId: profileId
+            gid: profileId
         }, { _id: 0 }, function(err, obj) {
             if (obj) {
                 cb(null, obj);
@@ -23,7 +23,10 @@ module.exports = function() {
             }
             
             const newUser = new WebUser({
-                googleId: profileId
+                name: profile.displayName,
+                email: profile.emails[0],
+                image: profile.picture,
+                gid: profileId
             });
 
             newUser.save(function(error, object) {
