@@ -7,15 +7,24 @@ module.exports = function (req, res) {
 	}
 
 	const Device = require(`${__basedir}/database/models/device`);
-    const newDevice = new Device({
+    Device.findOne({
         token: token
-    });
-
-    newDevice.save(function(error, object) {
-        if (error) {
-            res.json(false);
-        } else {
+    }, function(err, obj) {
+        if (obj) {
             res.json(true);
+            return;
         }
+        
+        const newDevice = new Device({
+            token: token
+        });
+        
+        newDevice.save(function(err, obj) {
+            if (obj) {
+                res.json(true);
+            } else {
+                res.json(false);
+            }
+        });
     });
 }
