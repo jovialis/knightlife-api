@@ -8,7 +8,7 @@ class Dashboard extends Component {
 		return (
 			<div className="dashboard">
                 <span>Home</span>
-                <button onClick={refreshLunch}>Update Lunch</button>
+                <button onClick={this.refreshLunch}>Update Lunch</button>
 			</div>
 		);
 	}
