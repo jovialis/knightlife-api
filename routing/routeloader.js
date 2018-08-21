@@ -23,10 +23,10 @@ module.exports = function (app) {
     app.use(bodyParser.json());
     
     // Register POST
-    app.post('/api/push/refresh/events', loggedIn, require('./routes/push/refresh/events'));
-    app.post('/api/push/refresh/lunch', loggedIn, require('./routes/push/refresh/lunch'));
-    app.post('/api/push/refresh/schedule', loggedIn, require('./routes/push/refresh/schedule'));
-    app.post('/api/push/message', loggedIn, require('./routes/push/message'));
+    app.post('/api/push/refresh/events', passport.authenticate('google'), require('./routes/push/refresh/events'));
+    app.post('/api/push/refresh/lunch', passport.authenticate('google'), require('./routes/push/refresh/lunch'));
+    app.post('/api/push/refresh/schedule', passport.authenticate('google'), require('./routes/push/refresh/schedule'));
+    app.post('/api/push/message', passport.authenticate('google'), require('./routes/push/message'));
     
     app.post('/api/device/register', require('./routes/device/registration'));
     
