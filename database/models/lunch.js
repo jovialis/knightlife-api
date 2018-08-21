@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const LunchItem = new mongoose.Schema({
     name: String,
-    itemType: String,
     allergy: {
         type: String,
         required: false
