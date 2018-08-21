@@ -14,7 +14,19 @@ class Dashboard extends Component {
 	}
     
     refreshLunch() {
-        fetch('/api/push/refresh/lunch?date=2018-08-21');
+        const data = {
+            'items': [
+                {
+                    'name': "Potato"
+                }
+            ]
+        }
+        
+        const dataString = JSON.stringify(data);
+        
+        fetch(`/api/submit/lunch?date=2018-08-21,data=${dataString}`, {
+            method: 'POST'
+        });
     }
 }
 
