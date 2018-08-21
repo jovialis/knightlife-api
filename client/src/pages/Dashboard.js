@@ -8,12 +8,12 @@ class Dashboard extends Component {
 		return (
 			<div className="dashboard">
                 <span>Home</span>
-                <button onClick= { refreshLunch }>Update Lunch</button>
+                <button onClick={refreshLunch}>Update Lunch</button>
 			</div>
 		);
 	}
     
-    refreshLunch = () => {
+    refreshLunch() {
         fetch('/api/push/refresh/lunch?date=2018-08-21');
     }
 }
