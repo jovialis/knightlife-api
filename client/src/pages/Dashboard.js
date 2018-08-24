@@ -15,9 +15,9 @@ class Dashboard extends Component {
     
     refreshLunch() {
         const data = {
-            'items': [
+            "items": [
                 {
-                    'name': "Potato"
+                    "name": "Potato"
                 }
             ]
         }

@@ -9,7 +9,8 @@
 		"mongoose": "latest",
         "passport": "latest",
         "express-validator": "latest",
-        "passport-google-oauth20": "latest"
+        "passport-google-oauth20": "latest",
+        "express-sslify": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",
