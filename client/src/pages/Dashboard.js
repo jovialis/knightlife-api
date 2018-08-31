@@ -18,11 +18,11 @@ class Dashboard extends Component {
 			<div className="dashboard">
                 <h1>Send updates</h1>
                 <form>
-                    <input type="date" value={ this.state.date } onchange={ this.updateSelectedDate }/>
+                    <input type="date" value={ this.state.date } onChange={ this.updateSelectedDate }/>
                 </form>
-                <button onclick={ this.sendScheduleUpdate }>Schedule</button>
-                <button onclick={ this.sendEventsUpdate }>Events</button>
-                <button onclick={ this.sendLunchUpdate }>Lunch</button>
+                <button onClick={ this.sendScheduleUpdate }>Schedule</button>
+                <button onClick={ this.sendEventsUpdate }>Events</button>
+                <button onClick={ this.sendLunchUpdate }>Lunch</button>
             </div>
 		);
 	}
