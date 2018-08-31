@@ -11,6 +11,8 @@ class Dashboard extends Component {
         this.state = {
             date: ''
         }
+        
+        this.handleClick = this.handleClick.bind(this);
     }
 
 	render() {
@@ -27,7 +29,7 @@ class Dashboard extends Component {
 		);
 	}
 
-    updateSelectedDate(event) {
+    updateSelectedDate = (event) => {
         console.log("Updating selected date to: " + event.target.value);
         
         this.setState({
@@ -35,7 +37,7 @@ class Dashboard extends Component {
         })
     }
 
-    sendScheduleUpdate() {
+    sendScheduleUpdate = () => {
         console.log("Sending schedule update with date: " + this.state.date);
         
         fetch('https://bbnknightlife.com/api/push/refresh/schedule', {
@@ -50,7 +52,7 @@ class Dashboard extends Component {
         }); 
     }
 
-    sendEventsUpdate() {
+    sendEventsUpdate = () => {
         console.log("Sending events update with date: " + this.state.date);
 
         fetch('https://bbnknightlife.com/api/push/refresh/events', {
@@ -65,7 +67,7 @@ class Dashboard extends Component {
         });
     }
     
-    sendLunchUpdate() {
+    sendLunchUpdate = () => {
         console.log("Sending lunch update with date: " + this.state.date);
 
         fetch('https://bbnknightlife.com/api/push/refresh/lunch', {
