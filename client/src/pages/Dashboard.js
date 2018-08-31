@@ -17,8 +17,8 @@ class Dashboard extends Component {
 		return (
 			<div className="dashboard">
                 <h1>Send updates</h1>
-                <form method="post" enctype="multipart/form-data">
-                    <input type="date" value={ this.state.date } onChange={ this.updateSelectedDate }/>
+                <form>
+                    <input type="date" value={ this.state.date } onchange={ this.updateSelectedDate }/>
                 </form>
                 <button onclick={ this.sendScheduleUpdate }>Schedule</button>
                 <button onclick={ this.sendEventsUpdate }>Events</button>
@@ -27,13 +27,17 @@ class Dashboard extends Component {
 		);
 	}
 
-    updateSelectedDate(date) {
+    updateSelectedDate(event) {
+        console.log("Updating selected date to: " + event.target.value);
+        
         this.setState({
-            date: date.target.value
+            date: event.target.value
         })
     }
 
     sendScheduleUpdate() {
+        console.log("Sending schedule update with date: " + this.state.date);
+        
         fetch('https://bbnknightlife.com/api/push/refresh/schedule', {
             method: 'POST',
             headers: {
@@ -47,6 +51,8 @@ class Dashboard extends Component {
     }
 
     sendEventsUpdate() {
+        console.log("Sending events update with date: " + this.state.date);
+
         fetch('https://bbnknightlife.com/api/push/refresh/events', {
             method: 'POST',
             headers: {
@@ -60,6 +66,8 @@ class Dashboard extends Component {
     }
     
     sendLunchUpdate() {
+        console.log("Sending lunch update with date: " + this.state.date);
+
         fetch('https://bbnknightlife.com/api/push/refresh/lunch', {
             method: 'POST',
             headers: {
