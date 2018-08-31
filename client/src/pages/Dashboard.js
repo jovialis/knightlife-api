@@ -38,7 +38,7 @@ class Dashboard extends Component {
     sendScheduleUpdate = () => {
         console.log("Sending schedule update with date: " + this.state.date);
         
-        fetch('https://bbnknightlife.com/api/push/refresh/schedule', {
+        fetch('https://bbnknightlife-server.com/api/push/refresh/schedule', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -53,11 +53,11 @@ class Dashboard extends Component {
     sendEventsUpdate = () => {
         console.log("Sending events update with date: " + this.state.date);
 
-        fetch('https://bbnknightlife.com/api/push/refresh/events', {
+        fetch('https://bbnknightlife-server.com/api/push/refresh/events', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
             body: JSON.stringify({
                 date: this.state.date
@@ -68,11 +68,11 @@ class Dashboard extends Component {
     sendLunchUpdate = () => {
         console.log("Sending lunch update with date: " + this.state.date);
 
-        fetch('https://bbnknightlife.com/api/push/refresh/lunch', {
+        fetch('https://bbnknightlife-server.com/api/push/refresh/lunch', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
             body: JSON.stringify({
                 date: this.state.date
