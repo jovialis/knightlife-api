@@ -5,8 +5,6 @@ import './dashboard/Dashboard.css';
 
 class Dashboard extends Component {
     
-    const baseUrl = 'https://bbnknightlife.com/api/';
-    
     constructor() {
         super();
         
@@ -36,7 +34,7 @@ class Dashboard extends Component {
     }
 
     sendScheduleUpdate() {
-        fetch(baseUrl + 'push/refresh/schedule', {
+        fetch('https://bbnknightlife.com/api/push/refresh/schedule', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -49,7 +47,7 @@ class Dashboard extends Component {
     }
 
     sendEventsUpdate() {
-        fetch(baseUrl + 'push/refresh/events', {
+        fetch('https://bbnknightlife.com/api/push/refresh/events', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -62,7 +60,7 @@ class Dashboard extends Component {
     }
     
     sendLunchUpdate() {
-        fetch(baseUrl + 'push/refresh/lunch', {
+        fetch('https://bbnknightlife.com/api/push/refresh/lunch', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
