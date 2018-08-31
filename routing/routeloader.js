@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 
 const passport = require('passport');
 
-const cors = require('cors');
-
 module.exports = function (app) {
     
     // Register GET
@@ -23,9 +21,7 @@ module.exports = function (app) {
     // Setup POST decryption middleware
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
-    
-    app.use(cors());
-    
+        
     // Register POST
     app.post('/api/push/refresh/events', passport.authenticate('google'), require('./routes/push/refresh/events'));
     app.post('/api/push/refresh/lunch', passport.authenticate('google'), require('./routes/push/refresh/lunch'));
