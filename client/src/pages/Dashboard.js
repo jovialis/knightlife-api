@@ -17,9 +17,9 @@ class Dashboard extends Component {
 		return (
 			<div className="dashboard">
                 <h1>Send updates</h1>
-                <form method="post" enctype="multipart/form-data" target="https://bbnknightlife.com/api/push/update/">
+                <form method="post" enctype="multipart/form-data">
                     <input type="date" value={ this.state.date } onChange={ this.updateSelectedDate }>
-                </table>
+                </form>
                 <button onclick={ this.sendScheduleUpdate }>Schedule</button>
                 <button onclick={ this.sendEventsUpdate }>Events</button>
                 <button onclick={ this.sendLunchUpdate }>Lunch</button>
