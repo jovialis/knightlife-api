@@ -10,9 +10,7 @@ class Dashboard extends Component {
         
         this.state = {
             date: ''
-        }
-        
-        this.handleClick = this.handleClick.bind(this);
+        }        
     }
 
 	render() {
