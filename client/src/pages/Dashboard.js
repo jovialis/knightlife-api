@@ -41,8 +41,7 @@ class Dashboard extends Component {
         fetch('https://bbnknightlife-server.com/api/push/refresh/schedule', {
             method: 'POST',
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data'
             },
             body: JSON.stringify({
                 date: this.state.date
@@ -56,8 +55,7 @@ class Dashboard extends Component {
         fetch('https://bbnknightlife-server.com/api/push/refresh/events', {
             method: 'POST',
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data'
             },
             body: JSON.stringify({
                 date: this.state.date
@@ -71,8 +69,7 @@ class Dashboard extends Component {
         fetch('https://bbnknightlife-server.com/api/push/refresh/lunch', {
             method: 'POST',
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data'
             },
             body: JSON.stringify({
                 date: this.state.date
