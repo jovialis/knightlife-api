@@ -19,7 +19,7 @@ module.exports = function (req, res) {
 			return;
 		}
         
-        if (!object.url) {
+        if (!object["url"]) {
             console.log("Couldn't get URL from object: " + object);
             return;
         }
