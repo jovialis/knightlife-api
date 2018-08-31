@@ -10,7 +10,8 @@
         "passport": "latest",
         "express-validator": "latest",
         "passport-google-oauth20": "latest",
-        "express-sslify": "latest"
+        "express-sslify": "latest",
+        "cors": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",
