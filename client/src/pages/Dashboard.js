@@ -18,7 +18,7 @@ class Dashboard extends Component {
 			<div className="dashboard">
                 <h1>Send updates</h1>
                 <form method="post" enctype="multipart/form-data">
-                    <input type="date" value={ this.state.date } onChange={ this.updateSelectedDate }>
+                    <input type="date" value={ this.state.date } onChange={ this.updateSelectedDate }/>
                 </form>
                 <button onclick={ this.sendScheduleUpdate }>Schedule</button>
                 <button onclick={ this.sendEventsUpdate }>Events</button>
