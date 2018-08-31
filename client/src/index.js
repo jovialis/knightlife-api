@@ -12,13 +12,11 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
 ReactDOM.render(
-  <Router>
-      <div>
+    <Router>
         <Route exact path="/" component={ Home } />
         <Route exact path="/help" component={ Help } />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/dashboard" component={ Dashboard } />
-      </div>
-  </Router>,
-  document.getElementById('root')
+    </Router>,
+    document.getElementById('root')
 );

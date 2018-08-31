@@ -19,6 +19,11 @@ module.exports = function (req, res) {
 			return;
 		}
         
+        if (!object.url) {
+            console.log("Couldn't get URL from object: " + object);
+            return;
+        }
+        
         const url = object.url;
 		res.json(formatter.success({ "url": url }, "survey", null));
 	})
