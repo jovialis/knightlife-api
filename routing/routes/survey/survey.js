@@ -12,6 +12,11 @@ module.exports = function (req, res) {
 	require(`${__basedir}/database/models/survey`).findOne({
 		version: version
 	}, { _id: 0 }, function (error, object) {
+        if (!object) {
+            res.json(formatter.error("No survey provided"));
+            return;
+        }
+        
 		if (error) {
 			console.log(error);
 
