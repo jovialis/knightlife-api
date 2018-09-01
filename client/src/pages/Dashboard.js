@@ -43,9 +43,9 @@ class Dashboard extends Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 date: this.state.date
-            }
+            })
         }); 
     }
 
@@ -57,9 +57,9 @@ class Dashboard extends Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 date: this.state.date
-            }
+            })
         });
     }
     
@@ -71,9 +71,9 @@ class Dashboard extends Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 date: this.state.date
-            }
+            })
         });
     }
 }
