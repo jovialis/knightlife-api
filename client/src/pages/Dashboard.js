@@ -41,7 +41,7 @@ class Dashboard extends Component {
         fetch('/api/push/refresh/schedule', {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             },
             body: {
                 date: this.state.date
@@ -55,7 +55,7 @@ class Dashboard extends Component {
         fetch('/api/push/refresh/events', {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             },
             body: {
                 date: this.state.date
@@ -69,7 +69,7 @@ class Dashboard extends Component {
         fetch('/api/push/refresh/lunch', {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             },
             body: {
                 date: this.state.date

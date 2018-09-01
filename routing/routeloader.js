@@ -19,7 +19,7 @@ module.exports = function (app) {
     app.get('/api/survey', require('./routes/survey/survey'));
 
     // Setup POST decryption middleware
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
         
     // Register POST
