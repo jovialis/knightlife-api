@@ -3,7 +3,7 @@ var apn = require("apn");
 module.exports = function (req, res) {
     const formatter = require(`${__basedir}/utils/response-formatter`);
 
-    console.log(req.body.date);
+    console.log(req.body);
     
     const date = new Date(req.body.date);
 	if (!date) {

@@ -44,7 +44,7 @@ class Dashboard extends Component {
                 'Content-Type': 'multipart/form-data'
             },
             body: {
-                'date': this.state.date
+                date: this.state.date
             }
         }); 
     }
@@ -58,7 +58,7 @@ class Dashboard extends Component {
                 'Content-Type': 'multipart/form-data'
             },
             body: {
-                'date': this.state.date
+                date: this.state.date
             }
         });
     }
@@ -72,7 +72,7 @@ class Dashboard extends Component {
                 'Content-Type': 'multipart/form-data'
             },
             body: {
-                'date': this.state.date
+                date: this.state.date
             }
         });
     }
