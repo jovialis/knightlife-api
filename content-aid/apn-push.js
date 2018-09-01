@@ -24,10 +24,8 @@ module.exports = function(payload, then) {
             });
             
             apnHook.send(notification, tokenList).then((result) => {
-                if (result.failed) {
-                    console.log("Failed to send tokens: " + result);
-                    then(result.failed);
-                    return;
+                if (result.failed !== undefined && result.failed.length > 0) {
+                    console.log("Failed to send " + result.failed.length + " tokens.");
                 }
                 
                 then(null);
