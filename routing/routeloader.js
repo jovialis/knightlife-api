@@ -23,9 +23,9 @@ module.exports = function (app) {
     app.use(bodyParser.json());
         
     // Register POST
-    app.post('/api/push/refresh/events', passport.authenticate('google'), require('./routes/push/refresh/events'));
-    app.post('/api/push/refresh/lunch', passport.authenticate('google'), require('./routes/push/refresh/lunch'));
-    app.post('/api/push/refresh/schedule', passport.authenticate('google'), require('./routes/push/refresh/schedule'));
+    app.post('/api/push/refresh/events', require('./routes/push/refresh/events'));
+    app.post('/api/push/refresh/lunch', require('./routes/push/refresh/lunch'));
+    app.post('/api/push/refresh/schedule', require('./routes/push/refresh/schedule'));
     app.post('/api/push/message', passport.authenticate('google'), require('./routes/push/message'));
     
     app.post('/api/submit/lunch', passport.authenticate('google'), require('./routes/submit/lunch'));
