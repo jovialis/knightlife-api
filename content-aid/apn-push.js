@@ -28,6 +28,10 @@ module.exports = function(payload, then) {
                     console.log("Failed to send " + result.failed.length + " tokens.");
                 }
                 
+                if (result.sent !== undefined) {
+                    console.log("Sent " + result.sent.length + " tokens.");
+                }
+                
                 then(null);
             });
 		}
