@@ -10,7 +10,7 @@ class Dashboard extends Component {
         
         this.state = {
             date: '',
-            message: ''
+            message: '',
             username: '',
             password: '',
         }
@@ -125,7 +125,7 @@ class Dashboard extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                date: this.state.date
+                date: this.state.date,
                 username: this.state.username,
                 password: this.state.password
             })
