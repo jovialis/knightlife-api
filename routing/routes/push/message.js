@@ -17,5 +17,5 @@ module.exports = function (req, res) {
         require(`${__basedir}/content-aid/apn-push`).message(message, function(error) {
             res.json(true);
         });
-    }
+    });
 };
