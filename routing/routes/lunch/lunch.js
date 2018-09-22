@@ -22,5 +22,5 @@ module.exports = function (req, res) {
 
 		const result = object ? object : {'items': []};
 		res.json(formatter.success(result, "lunch", dateString));
-	})
+	});
 };

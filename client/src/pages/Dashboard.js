@@ -21,7 +21,10 @@ class Dashboard extends Component {
 			<div className="dashboard">
                 <h1>Login</h1>
                 <form>
+                    <span>Username</span>
                     <input type="email" value={ this.state.username } onChange={ this.usernameChanged } name="username"/>
+                    <br>
+                    <span>Password</span>
                     <input type="password" value={ this.state.password } onChange={ this.passwordChanged } name="password"/>
                 </form>
                 <h2>Send updates</h2>
@@ -35,7 +38,7 @@ class Dashboard extends Component {
                 <form>
                     <input type="text" value={ this.state.message } onChange={ this.messageChanged }/>
                 </form>
-                <button onClick={ this.sendMessage }>Push Message</button>
+                <button onClick={ this.sendMessage }>Send</button>
             </div>
 		);
 	}

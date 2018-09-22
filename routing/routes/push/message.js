@@ -1,9 +1,11 @@
 const apn = require("apn");
 
 module.exports = function (req, res) {
+    const formatter = require(`${__basedir}/utils/response-formatter`);
+
     require(`${__basedir}/content-aid/verify-credentials`)(req, function(success) {
         if (!success) {
-            res.json(require(formatter.error("Invalid authentication")));
+            res.json(formatter.error("Invalid authentication"));
             return;
         } 
 

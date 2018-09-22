@@ -5,7 +5,7 @@ module.exports = function (req, res) {
     
     require(`${__basedir}/content-aid/verify-credentials`)(req, function(success) {
         if (!success) {
-            res.json(require(formatter.error("Invalid authentication")));
+            res.json(formatter.error("Invalid authentication"));
             return;
         } 
         
@@ -13,8 +13,8 @@ module.exports = function (req, res) {
         if (!date) {
             console.log("Invalid date requested: " + req.body.date + ".");
 
-            res.json(require(formatter.error("Invalid date requested")));
-            return
+            res.json(formatter.error("Invalid date requested"));
+            return;
         }
 
         console.log("Pushing schedule data for date: " + date);
