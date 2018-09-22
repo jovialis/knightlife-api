@@ -13,5 +13,5 @@ module.exports = function(req, then) {
         } else {
             then(false);
         }
-    }
+    });
 }
