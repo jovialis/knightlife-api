@@ -23,7 +23,7 @@ class Dashboard extends Component {
                 <form>
                     <span>Username</span>
                     <input type="email" value={ this.state.username } onChange={ this.usernameChanged } name="username"/>
-                    <br>
+                    <br/>
                     <span>Password</span>
                     <input type="password" value={ this.state.password } onChange={ this.passwordChanged } name="password"/>
                 </form>
