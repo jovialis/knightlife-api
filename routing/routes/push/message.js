@@ -1,43 +1,21 @@
 const apn = require("apn");
 
 module.exports = function (req, res) {
-	if (!require(`${__basedir}/utils/verify-request`)(req, res)) {
-		res.json("Authentication failed");
-		return;
-	}
+    require(`${__basedir}/content-aid/verify-credentials`)(req, function(success) {
+        if (!success) {
+            res.json(require(formatter.error("Invalid authentication")));
+            return;
+        } 
 
-	const message = req.param("message");
-	if (!message) {
-		console.log("Recieved a push message with no content");
-		res.json(false);
-		return;
-	}
-
-	var author = req.param("author");
-
-	var notification = new apn.Notification();
-	notification.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-	notification.sound = "ping.aiff";
-	notification.alert = message;
-	notification.badge = 0;
-	notification.topic = "MAD.BBN.KnightLife";
-
-	if (author) {
-		notification.payload = {"author": author};
-	}
-
-	require(`${__basedir}/database/models/device`).find(
-		function (error, object) {
-			if (error) throw error;
-
-			for (index in object) {
-				let token = object[index]["token"];
-				require(`${__basedir}/hooks/apn`).send(notification, token).then((result) => {
-					console.log(result)
-				});
-			}
-		}
-	);
-
-	res.json(true);
+        const message = req.body.message;
+        if (!message) {
+            console.log("Recieved a push message with no content");
+            res.json(false);
+            return;
+        }
+        
+        require(`${__basedir}/content-aid/apn-push`).message(message, function(error) {
+            res.json(true);
+        });
+    }
 };

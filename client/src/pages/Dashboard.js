@@ -9,63 +9,116 @@ class Dashboard extends Component {
         super();
         
         this.state = {
-            date: ''
-        }        
+            date: '',
+            message: ''
+            username: '',
+            password: '',
+        }
     }
 
 	render() {
 		return (
 			<div className="dashboard">
-                <h1>Send updates</h1>
+                <h1>Login</h1>
+                <form>
+                    <input type="email" value={ this.state.username } onChange={ this.usernameChanged } name="username">
+                    <input type="password" value={ this.state.password } onChange={ this.passwordChanged } name="password">
+                </form>
+                <h2>Send updates</h2>
                 <form>
                     <input type="date" value={ this.state.date } onChange={ this.updateSelectedDate }/>
                 </form>
                 <button onClick={ this.sendScheduleUpdate }>Schedule</button>
                 <button onClick={ this.sendEventsUpdate }>Events</button>
                 <button onClick={ this.sendLunchUpdate }>Lunch</button>
+                <h3>Send message</h3>
+                <form>
+                    <input type="text" value={ this.state.message } onChange={ this.messageChanged }>
+                </form>
+                <button onClick={ this.sendMessage }>Push Message</button>
             </div>
 		);
 	}
 
-    updateSelectedDate = (event) => {
-        console.log("Updating selected date to: " + event.target.value);
-        
+    usernameChanged = (event) => {
         this.setState({
-            date: event.target.value
+            date: this.state.date,
+            message: this.state.message,
+            username: event.target.value,
+            password: this.state.password
         })
     }
 
-    sendScheduleUpdate = () => {
-        console.log("Sending schedule update with date: " + this.state.date);
-        
+    passwordChanged = (event) => {
+        this.setState({
+            date: this.state.date,
+            message: this.state.message,
+            username: this.state.username,
+            password: event.target.value
+        })
+    }
+
+    messageChanged = (event) => {
+        this.setState({
+            date: this.state.date,
+            message: event.target.value,
+            username: this.state.username,
+            password: this.state.password
+        })
+    }
+
+    updateSelectedDate = (event) => {        
+        this.setState({
+            date: event.target.value,
+            message: this.state.message,
+            username: this.state.username,
+            password: this.state.password
+        })
+    }
+                
+    sendMessage = () => {
+        fetch('/api/push/message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: this.state.message,
+                username: this.state.username,
+                password: this.state.password
+            })
+        }); 
+    }
+
+    sendScheduleUpdate = () => {        
         fetch('/api/push/refresh/schedule', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                date: this.state.date
+                date: this.state.date,
+                username: this.state.username,
+                password: this.state.password
             })
         }); 
     }
 
     sendEventsUpdate = () => {
-        console.log("Sending events update with date: " + this.state.date);
-
         fetch('/api/push/refresh/events', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                date: this.state.date
+                date: this.state.date,
+                username: this.state.username,
+                password: this.state.password
             })
         });
     }
     
     sendLunchUpdate = () => {
-        console.log("Sending lunch update with date: " + this.state.date);
-
         fetch('/api/push/refresh/lunch', {
             method: 'POST',
             headers: {
@@ -73,6 +126,8 @@ class Dashboard extends Component {
             },
             body: JSON.stringify({
                 date: this.state.date
+                username: this.state.username,
+                password: this.state.password
             })
         });
     }
