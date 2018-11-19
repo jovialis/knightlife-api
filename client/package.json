@@ -5,9 +5,7 @@
 		"react": "latest",
 		"react-dom": "latest",
 		"react-scripts": "latest",
-        "react-router-dom": "latest",
-        "passport": "latest",
-        "passport-google-oauth": "latest"
+        "react-router-dom": "latest"
 	},
 	"scripts": {
 		"start": "react-scripts start",

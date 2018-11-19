@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // Styles
-import './dashboard/Dashboard.css';
+import './Dashboard.css';
 
 class Dashboard extends Component {
     

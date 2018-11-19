@@ -1,23 +1,23 @@
 {
-	"name": "knightlife-server",
-	"version": "1.0.0",
-	"main": "index.js",
-	"dependencies": {
-		"express": "latest",
-        "body-parser": "latest",
-		"apn": "latest",
-		"mongoose": "latest",
-        "passport": "latest",
-        "express-validator": "latest",
-        "passport-google-oauth20": "latest",
-        "express-sslify": "latest",
-        "cors": "latest"
+	'name': 'Knight Life',
+	'version': '1.0.0',
+    'private': true,
+	'main': 'index.js',
+	'dependencies': {
+		'express': 'latest',
+        'body-parser': 'latest',
+		'apn': 'latest',
+		'mongoose': 'latest',
+        'express-sslify': 'latest',
+        'cors': 'latest',
+        'shortid': 'latest',
+        'jsonwebtoken': 'latest'
 	},
-	"scripts": {
-		"start": "node index.js",
-		"heroku-postbuild": "cd client && npm install && npm run build"
+	'scripts': {
+		'start': 'node index.js',
+		'heroku-postbuild': 'cd client && npm install && npm run build'
 	},
-	"engines": {
-		"node": "latest"
+	'engines': {
+		'node': 'latest'
 	}
 }
