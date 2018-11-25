@@ -1,5 +1,5 @@
 {
-	'name': 'Knight Life',
+	'name': 'server',
 	'version': '1.0.0',
     'private': true,
 	'main': 'index.js',
@@ -11,7 +11,8 @@
         'express-sslify': 'latest',
         'cors': 'latest',
         'shortid': 'latest',
-        'jsonwebtoken': 'latest'
+        'jsonwebtoken': 'latest',
+        'bcrypt': 'latest'
 	},
 	'scripts': {
 		'start': 'node index.js',

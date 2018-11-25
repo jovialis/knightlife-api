@@ -1,0 +1,137 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    
+    background-color: white;
+}
+
+.gradient {
+    background-color: #4481eb;
+    
+    background: rgb(68,129,235);
+    background: -webkit-gradient(linear, left top, right top, from(rgba(68,129,235,1)), to(rgba(4,190,254,1)));
+    background: linear-gradient(90deg, rgba(68,129,235,1) 0%, rgba(4,190,254,1) 100%);
+}
+
+#header {
+    width: 100%;
+}
+
+#header #dummy {
+    z-index: -1;
+}
+
+#header #active {
+    width: inherit;
+    position: absolute;
+}
+
+#header #active .flex-wrapper {
+    height: 100%;
+    width: 100%;
+    
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+#header #active .align-left {
+    margin-right: auto;
+    margin-left: 10px;
+    left: 0;
+}
+
+#header #active #logo {
+    height: 100%;
+}
+
+#header #active .align-right {
+    margin-left: auto;
+    margin-right: 10px;
+    right: 0;
+}
+
+#header #active .align-right table {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    
+    height: 100%;
+}
+
+#header #active .align-right td {
+    padding-left: 15px;
+    height: 100%;
+}
+
+#header #active a {
+    height: 100%;
+        
+    font-family: sans-serif;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    
+    text-decoration: none;
+}
+
+#header #active a:active {
+    border-bottom: 2px solid white;
+}
+
+#header #active #header-link-spacer {
+    width: 1px;
+    height: 15px;
+    
+    background-color: white;
+}
+
+#header #dummy {
+    position: relative;
+}
+
+#header .header-element {
+    height: 50px;
+}
+
+/*-------------------------------------------------------------*/
+
+#sidebar-left {
+    width: 75px;
+    height: 100%;
+    
+    background-color: #EFEFF4;
+    
+    position: absolute;
+}
+
+#sidebar-left table {
+    margin-top: 50px;
+    width: 100%;    
+}
+
+#sidebar-left td {
+    text-align: center;
+}
+
+#sidebar-left a {
+    text-decoration: none;
+    color: gray;
+    font-family: sans-serif;
+    
+    text-transform: uppercase;
+    
+    font-size: 11px;
+    font-weight: 400;
+}
+
+#sidebar-left .sidebar-space {
+    height: 20px;
+}
