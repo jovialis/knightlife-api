@@ -8,10 +8,16 @@ module.exports.register = (app) => {
         try {
             const account = await require(`${ global.__interface }/auth/validate-token`).validate(token); 
 
+            console.log('About to get overview');
+
             const overview = await require(`${ global.__interface }/account/retrieve-account-overview`).retrieve(account);
-            
+
+            console.log('About to get modules');
+
             const modules = await require(`${ global.__interface }/modules/modules`).retrieveUserModules(account);
-            
+
+            console.log('Finished getting modules.');
+
             res.json({
                 index: {
                     overview: overview,
@@ -20,9 +26,9 @@ module.exports.register = (app) => {
             });
         } catch (err) {
             console.log(err);
-            
+
             res.status(500);
-            
+
             // Account validation issue
             if (err.invalid) {
                 res.json({
