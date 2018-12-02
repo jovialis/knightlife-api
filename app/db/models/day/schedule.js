@@ -3,28 +3,19 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid');
 
-const BlockDetails = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-        enum: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'x', 'lunch', 'activities', 'lab', 'class_meeting', 'assembly', 'advisory', 'custom']
-    },
-    name: String,
-    color: String,
-    location: String
-}, {
-    versionKey: false,
-    _id: false
-});
-
 const Block = new mongoose.Schema({
     badge: {
         type: String,
         default: shortid.generate
     },
-    details: {
-        type: BlockDetails,
+    id: {
+        type: String,
         required: true,
+        enum: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'x', 'lunch', 'activities', 'lab', 'class_meeting', 'assembly', 'advisory', 'custom']
+    },
+    variation: {
+        type: Number, 
+        required: false 
     },
     time: {
         start: {
@@ -35,10 +26,6 @@ const Block = new mongoose.Schema({
             type: Date,
             required: true
         }
-    },
-    variation: {
-        type: Number, 
-        required: false 
     }
 }, {
     versionKey: false,

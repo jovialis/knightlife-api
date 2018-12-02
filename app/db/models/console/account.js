@@ -6,24 +6,19 @@ const Account = new mongoose.Schema({
         type: String,
         default: shortid.generate
     },
-    displayname: {
-        type: String,
-        required: true
-    },
     username: {
         type: String,
         required: true
     },
-    passhash: {
-        type: String,
-        required: false
-    },
+    name: String,
+    picture: String,
+    passhash: String,
     state: {
         type: String,
         default: shortid.generate
     }
 }, {
-	collection: "accounts",
+    collection: "accounts",
     versionKey: false
 });
 

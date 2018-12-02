@@ -31,5 +31,6 @@ module.exports.init = () => {
 };
 
 function register(app) {
-    
+    // Console
+    require('./routes/portal/post-submit-login').register(app);
 }

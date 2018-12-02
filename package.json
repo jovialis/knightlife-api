@@ -1,24 +1,26 @@
 {
-	'name': 'server',
-	'version': '1.0.0',
-    'private': true,
-	'main': 'index.js',
-	'dependencies': {
-		'express': 'latest',
-        'body-parser': 'latest',
-		'apn': 'latest',
-		'mongoose': 'latest',
-        'express-sslify': 'latest',
-        'cors': 'latest',
-        'shortid': 'latest',
-        'jsonwebtoken': 'latest',
-        'bcrypt': 'latest'
+	"name": "server",
+	"version": "1.0.0",
+    "private": true,
+	"main": "index.js",
+	"dependencies": {
+		"express": "latest",
+        "body-parser": "latest",
+		"apn": "latest",
+		"mongoose": "latest",
+        "express-sslify": "latest",
+        "cors": "latest",
+        "shortid": "latest",
+        "jsonwebtoken": "latest",
+        "bcrypt": "latest",
+        "uuid": "latest",
+        "googleapis": "latest"
 	},
-	'scripts': {
-		'start': 'node index.js',
-		'heroku-postbuild': 'cd client && npm install && npm run build'
+	"scripts": {
+		"start": "node index.js",
+		"heroku-postbuild": "cd client && npm install && npm run build"
 	},
-	'engines': {
-		'node': 'latest'
+	"engines": {
+		"node": "latest"
 	}
 }

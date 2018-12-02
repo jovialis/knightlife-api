@@ -6,22 +6,17 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './index.css';
 
 // Imports
-import Home from './pages/Home';
-import Help from './pages/Help';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Privacy from './pages/Privacy';
+import PageLogin from './pages/login/page';
+import PageGoogleLogin from './pages/login/google/login/page';
+import PageGoogleRedirect from './pages/login/google/redirect/page';
 
 ReactDOM.render(
     <Router>
-        <div>
-            <Route exact path="/" component={ Home } />
-            <Route exact path="/help" component={ Help } />
-            <Route exact path="/login" component={ Login } />
-            <Route exact path="/privacy" component={ Privacy } />
-            <Route exact path="/dashboard" component={ Dashboard } />
-        
+        <div className='page-wrapper'>
+            <Route path="/login" component={ PageLogin } />
+            <Route path="/login/google" component={ PageGoogleLogin } />
+            <Route path="/login/google/redirect" component={ PageGoogleRedirect } />
         </div>
     </Router>,
-    document.getElementById('root')
+    document.getElementById('container')
 );
