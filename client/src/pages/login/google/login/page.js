@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import axios from 'axios';
 
 export default class PageGoogleLogin extends Component {
 
+    state = {
+        redirect: false,
+        location: null
+    };
+    
     componentDidMount() {
         axios.post('/dashboard/do/auth/login/google', {}, (res) => {
             const data = res.data;
@@ -15,7 +19,10 @@ export default class PageGoogleLogin extends Component {
                 if (index) {
                     const redirect = index.redirect;
                     
-                    window.location.href = redirect; // Do redirect
+                    this.setState({
+                        redirect: true,
+                        location: redirect
+                    });
                 }
             }
         });
@@ -26,5 +33,11 @@ export default class PageGoogleLogin extends Component {
             <div className='page-google-login'></div>
         );
 	}
+
+    componentDidUpdate() {
+        if (this.state.redirect) {
+            window.location.href = this.state.location; // Do redirect
+        }
+    }
     
 }

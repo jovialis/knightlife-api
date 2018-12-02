@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import axios from 'axios';
+import queryString from 'query-string';
 
 export default class PageGoogleRedirect extends Component {
 
@@ -10,7 +11,7 @@ export default class PageGoogleRedirect extends Component {
     };
 
     componentDidMount() {
-        const code = this.props.location.query.code;
+        const code = queryString.parse(this.props.location.search, { ignoreQueryPrefix: true }).code;
 
         axios.post('/dashboard/do/auth/login/google/login', {
             code: code
