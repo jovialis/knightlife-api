@@ -14,6 +14,8 @@ module.exports.register = (app) => {
                 }
             });
         } catch (err) {
+            console.log(err);
+            
             res.status(500);
             res.json({
                 error: 'An internal error occurred.'

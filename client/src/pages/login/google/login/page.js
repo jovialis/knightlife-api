@@ -4,13 +4,8 @@ import axios from 'axios';
 
 export default class PageGoogleLogin extends Component {
 
-    state = {
-        redirect: false,
-        location: null
-    };
-    
     componentDidMount() {
-        axios.post('/dashboard/do/auth/login/google', {}, (res) => {
+        axios.post('/dashboard/do/auth/login/google', {}).then(res => {
             const data = res.data;
             
             if (data) {
@@ -19,10 +14,8 @@ export default class PageGoogleLogin extends Component {
                 if (index) {
                     const redirect = index.redirect;
                     
-                    this.setState({
-                        redirect: true,
-                        location: redirect
-                    });
+                    // Do redirect
+                    window.location.href = redirect;
                 }
             }
         });
@@ -33,11 +26,5 @@ export default class PageGoogleLogin extends Component {
             <div className='page-google-login'></div>
         );
 	}
-
-    componentDidUpdate() {
-        if (this.state.redirect) {
-            window.location.href = this.state.location; // Do redirect
-        }
-    }
     
 }

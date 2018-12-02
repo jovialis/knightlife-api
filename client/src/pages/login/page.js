@@ -20,6 +20,14 @@ export default class PageLogin extends Component {
     componentDidMount() {
         document.title = 'KL - Login';
         
+        // Don't validate token if there isn't one to validate.
+        if (this.getAuthToken() === null) {
+            this.setState({
+                loading: false
+            });
+            return;
+        }
+        
         this.validateToken().then((valid) => {
             if (valid) {
                 this.setState({
