@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports.hasPermission = (account, permission) => {
     return new Promise((resolve, reject) => {
-        const Permission = mongoose.require('Permission');
+        const Permission = mongoose.model('Permission');
         
         Permission.find({
             account: account._id
@@ -16,7 +16,7 @@ module.exports.hasPermission = (account, permission) => {
                 if (adequate(userPermission, permission)) {
                     resolve(true);
                     return;
-                }                
+                }
             }
             
             resolve(false);
