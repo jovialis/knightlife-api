@@ -16,7 +16,7 @@
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
     },
-    "proxy": "https://www.bbnknightlife.com",
+    "proxy": "https://dev.dylanhanson.com",
     "browserslist": [
         ">0.2%",
         "not dead",

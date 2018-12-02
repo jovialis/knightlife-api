@@ -14,7 +14,7 @@ function load() {
     require('./models/services/user');
     require('./models/services/survey');
 
-    require('./models/day/day');
+//    require('./models/day/day');
     require('./models/day/lunch');
     require('./models/day/schedule');
 
