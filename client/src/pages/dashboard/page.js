@@ -89,7 +89,7 @@ export default class PageDashboard extends Component {
             );
         } else if (this.state.redirect) {
             return (
-                <Redirect to='/dashboard'></Redirect>
+                <Redirect to='/login'></Redirect>
             );
         } else if (this.state.loading) {
             return (
@@ -107,6 +107,7 @@ export default class PageDashboard extends Component {
                     <h2>{ this.state.overview.name }</h2>
                     <h5>{ this.state.overview.username }</h5>
                     <img src={ this.state.overview.picture } style={{ width: '200px', height: 'auto' }}></img>
+                    <button onClick={ this.doLogout } style={{ color: 'red' }}>Logout</button>
                 </section>
                 <section id='section-modules'>
                     { this.state.modules.map(module => (
@@ -155,9 +156,23 @@ export default class PageDashboard extends Component {
             });
         });
     }
+    
+    doLogout = (event) => {
+        event.preventDefault();
+        
+        this.setAuthToken(null);
+        
+        this.setState({
+            redirect: true
+        });
+    }
 
     getAuthToken = () => {
         return sessionStorage.getItem('_a');
+    }
+    
+    setAuthToken = (token) => {
+        return sessionStorage.setItem('_a', token);
     }
 
 }

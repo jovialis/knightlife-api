@@ -19,7 +19,7 @@ ReactDOM.render(
             <Route exact path="/login/google" component={ PageGoogleLogin } />
             <Route path="/login/google/redirect" component={ PageGoogleRedirect } />
 
-            <Route path='/dashboard' component={ PageDashboard } />
+            <Route exact path='/dashboard' component={ PageDashboard } />
         </Switch>
     </Router>,
     document.getElementById('container')

@@ -31,11 +31,14 @@ module.exports.retrieveUserModules = (account) => {
         let userModules = [];
 
         for (const module of modules) {
+            let add = true;
+
             for (const modulePermission of module.permissions) {
                 try {
                     const valid = await guard.hasPermission(account, modulePermission);
 
                     if (!valid) {
+                        add = false;
                         break;
                     }
                 } catch (err) {
@@ -43,8 +46,10 @@ module.exports.retrieveUserModules = (account) => {
                 }
             }
 
-            // If we get to the end without breaking, add a clone to list.
-            userModules.push(module);
+            if (add) {
+                // If we get to the end without breaking, add to list.
+                userModules.push(module);
+            }
         }
 
         resolve(userModules);
