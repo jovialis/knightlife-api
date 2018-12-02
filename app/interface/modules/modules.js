@@ -30,34 +30,15 @@ module.exports.retrieveUserModules = (account) => {
     return new Promise(async (resolve, reject) => {
         let userModules = [];
 
-        console.log('About to iterate through modules');
-
         for (const module of modules) {
-            let add = true;
-
-            console.log('Checking module ' + module.id);
-
-            for (const modulePermission of module.permissions) {
-
-                console.log('Checking whether user has permission: ' + modulePermission);
-
-                try {
-                    const valid = await guard.hasPermission(account, modulePermission);
-
-                    console.log('User has permission ' + modulePermission + ': ' + valid);
-
-                    if (!valid) {
-                        add = false;
-                        break;
-                    }
-                } catch (err) {
-                    reject(err);
+            try {
+                const valid = await guard.hasPermission(account, module.permissions);
+                
+                if (valid) {
+                    userModules.push(module);
                 }
-            }
-
-            if (add) {
-                // If we get to the end without breaking, add to list.
-                userModules.push(module);
+            } catch (err) {
+                reject(err);
             }
         }
 

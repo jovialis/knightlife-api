@@ -1,33 +1,42 @@
 const mongoose = require('mongoose');
 
-module.exports.hasPermission = (account, permission) => {
+module.exports.hasPermission = (account, requiredPermissions) => {
     return new Promise((resolve, reject) => {
         const Permission = mongoose.model('Permission');
 
         Permission.find({
             account: account._id
         }, (err, permissions) => {
-
-            console.log('Found ' + permissions.length + ' for user.');
-
             if (err) {
                 reject(err);
                 return;
             }
 
-            for (const userPermission of permissions) { 
-                console.log('About to test whether user permission ' + userPermission.permission + ' is valid for: ' + permission);
+            let permissionsToCheck = requiredPermissions;
 
-                if (adequate(userPermission.permission, permission)) {
-                    console.log('It is valid!');
-                    
-                    resolve(true);
+            // If user didn't provide a list of permissions we put that into a list.
+            if (typeof requiredPermissions[Symbol.iterator] !== 'function') {
+                permissionsToCheck = [ requiredPermissions ];
+            }
+
+            for (const permissionToCheck of permissionsToCheck) {
+                let valid = false;
+                
+                for (const userPermission of permissions) { 
+                    if (adequate(userPermission.permission, permissionToCheck)) {                    
+                        valid = true;
+                        break;
+                    }
+                }
+                
+                // If the user doesn't have a valid permission for this item we return.
+                if (!valid) {
+                    resolve(false);
                     return;
                 }
             }
 
-            console.log('User does not have permission!');
-            resolve(false);
+            resolve(true);
         });
     });
 }
@@ -82,6 +91,8 @@ function adequate(userPermission, requiredPermission) {
         if (curUserPermission.toUpperCase() !== curRequiredPermission.toUpperCase()) {
             return false;
         }
+
+        i++;
     }
 
     return true;
