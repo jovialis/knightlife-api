@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-function hasPermission(account, permission) {
+module.exports.hasPermission = (account, permission) => {
     return new Promise((resolve, reject) => {
         const Permission = mongoose.require('Permission');
         

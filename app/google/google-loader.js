@@ -42,6 +42,7 @@ function getConnectionUrl(auth) {
 /**
  * Create the google url to be sent to the client.
  */
+module.exports.urlGoogle = urlGoogle;
 function urlGoogle() {
     const auth = createConnection(); // this is from previous step
     const url = getConnectionUrl(auth);
@@ -58,6 +59,7 @@ function getGooglePlusApi(auth) {
 /**
  * Extract the email and id of the google account from the "code" parameter.
  */
+module.exports.getGoogleAccountFromCode = getGoogleAccountFromCode;
 async function getGoogleAccountFromCode(code) {
 
     // get the auth "tokens" from the request
