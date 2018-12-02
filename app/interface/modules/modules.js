@@ -21,7 +21,7 @@ const modules = [
     
     // Secondary modules
     new Module('colorwars', 'Color Wars', [ 'event.category.colorwars' ], 'zap'),
-    new Module('snowdays', 'Snow Days', [ 'news.add', 'schedule' ], 'cloud-snow');
+    new Module('snowdays', 'Snow Days', [ 'news.add', 'schedule' ], 'cloud-snow')
 ];
 
 module.exports.retrieveUserModules = (account) => {

@@ -15,7 +15,7 @@ export default class PageGoogleRedirect extends Component {
 
         axios.post('/dashboard/do/auth/login/google/login', {
             code: code
-        }, (res) => {
+        }).then((res) => {
             const data = res.data;
 
             if (data) {
