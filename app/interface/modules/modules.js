@@ -30,7 +30,7 @@ module.exports.retrieveUserModules = (account) => {
     return new Promise(async (resolve, reject) => {
         let userModules = [];
 
-        for (const module of this.modules) {
+        for (const module of modules) {
             for (const modulePermission of module.permissions) {
                 try {
                     const valid = await guard.hasPermission(account, modulePermission);
