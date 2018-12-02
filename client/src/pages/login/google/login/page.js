@@ -15,7 +15,7 @@ export default class PageGoogleLogin extends Component {
                 if (index) {
                     const redirect = index.redirect;
                     
-                    window.location = redirect; // Do redirect
+                    window.location.href = redirect; // Do redirect
                 }
             }
         });

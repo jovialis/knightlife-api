@@ -17,7 +17,7 @@ ReactDOM.render(
         <Switch>
             <Route exact path="/login" component={ PageLogin } />
             <Route exact path="/login/google" component={ PageGoogleLogin } />
-            <Route exact path="/login/google/redirect" component={ PageGoogleRedirect } />
+            <Route path="/login/google/redirect" component={ PageGoogleRedirect } />
 
             <Route path='/dashboard' component={ PageDashboard } />
         </Switch>
