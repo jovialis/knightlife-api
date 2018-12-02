@@ -7,8 +7,8 @@ const Complication = new mongoose.Schema({
         required: true
     },
     document: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: this.type
+        type: mongoose.Schema.Types.ObjectId
+//        ref: this.type
     }
 }, {
     versionKey: false
