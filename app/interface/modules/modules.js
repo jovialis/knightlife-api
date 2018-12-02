@@ -30,16 +30,10 @@ module.exports.retrieveUserModules = (account) => {
     return new Promise(async (resolve, reject) => {
         let userModules = [];
 
-        for (const module in this.modules) {
-            console.log(module.id);
-
-            for (const modulePermission in module.permissions) {
-                console.log(modulePermission);
-
+        for (const module of this.modules) {
+            for (const modulePermission of module.permissions) {
                 try {
                     const valid = await guard.hasPermission(account, modulePermission);
-
-                    console.log('valid:' + valid);
 
                     if (!valid) {
                         break;
@@ -52,9 +46,6 @@ module.exports.retrieveUserModules = (account) => {
             // If we get to the end without breaking, add a clone to list.
             userModules.push(module);
         }
-
-        console.log(userModules);
-
 
         resolve(userModules);
     });

@@ -10,7 +10,7 @@ module.exports.register = (app) => {
 
             res.json({
                 index: {
-                    valid: token
+                    valid: true
                 }
             });
         } catch (err) {
