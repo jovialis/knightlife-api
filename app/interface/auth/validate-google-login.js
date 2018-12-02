@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 module.exports.validate = (code) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const details = require(`${ __basedir }/app/google/google-loader`).getGoogleAccountFromCode(code);
-
+            const details = await require(`${ __basedir }/app/google/google-loader`).getGoogleAccountFromCode(code);
+            
             const id = details.id;
             const email = details.email;
             const name = details.name;
