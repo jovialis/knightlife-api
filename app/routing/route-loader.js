@@ -31,6 +31,13 @@ module.exports.init = () => {
 };
 
 function register(app) {
-    // Console
-    require('./routes/portal/post-submit-login').register(app);
+    // Auth
+    require('./routes/portal/auth/post-submit-login').register(app);
+    require('./routes/portal/auth/post-retrieve-session-validation').register(app);
+    
+    require('./routes/portal/auth/google/post-retrieve-google-url').register(app);
+    require('./routes/portal/auth/google/post-submit-google-login').register(app);
+    
+    // Dashboard
+    require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
 }

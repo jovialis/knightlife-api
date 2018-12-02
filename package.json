@@ -1,20 +1,20 @@
 {
 	"name": "server",
 	"version": "1.0.0",
-    "private": true,
+	"private": true,
 	"main": "index.js",
 	"dependencies": {
 		"express": "latest",
-        "body-parser": "latest",
+		"body-parser": "latest",
 		"apn": "latest",
 		"mongoose": "latest",
-        "express-sslify": "latest",
-        "cors": "latest",
-        "shortid": "latest",
-        "jsonwebtoken": "latest",
-        "bcrypt": "latest",
-        "uuid": "latest",
-        "googleapis": "latest"
+		"express-sslify": "latest",
+		"cors": "latest",
+		"shortid": "latest",
+		"jsonwebtoken": "latest",
+		"bcrypt": "latest",
+		"uuid": "latest",
+		"googleapis": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",
