@@ -41,8 +41,8 @@ export default class PageDashboard extends Component {
     }
 
     componentDidUpdate() {
-        // If we're no longer validating, and we don't have to redirect
-        if (!this.state.validating && !this.state.redirect) {
+        // If we're no longer validating, and we don't have to redirect and we haven't loaded yet
+        if (!this.state.validating && !this.state.redirect && this.state.loading) {
             axios.post('/dashboard/page/home', {
                 _a: this.getAuthToken()
             }).then(res => {
@@ -53,14 +53,22 @@ export default class PageDashboard extends Component {
 
                     if (index) {
                         this.setState({
-                            loading: false,
                             overview: index.overview,
-                            modules: index.modules
+                            modules: index.modules,
+                            loading: false
                         });
 
                         return;
                     }
                 }
+                
+                this.setState({
+                    loading: false
+                });
+            }, err => {
+                this.setState({
+                    loading: false
+                });
             });
         }
     }
