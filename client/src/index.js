@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Styles
 import './index.css';
@@ -14,13 +14,13 @@ import PageDashboard from './pages/dashboard/page';
 
 ReactDOM.render(
     <Router>
-        <div className='page-wrapper'>
-            <Route path="/login" component={ PageLogin } />
-            <Route path="/login/google" component={ PageGoogleLogin } />
-            <Route path="/login/google/redirect" component={ PageGoogleRedirect } />
-            
+        <Switch>
+            <Route exact path="/login" component={ PageLogin } />
+            <Route exact path="/login/google" component={ PageGoogleLogin } />
+            <Route exact path="/login/google/redirect" component={ PageGoogleRedirect } />
+
             <Route path='/dashboard' component={ PageDashboard } />
-        </div>
+        </Switch>
     </Router>,
     document.getElementById('container')
 );
