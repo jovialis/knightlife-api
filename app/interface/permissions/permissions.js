@@ -13,7 +13,7 @@ module.exports.hasPermission = (account, permission) => {
             }
             
             for (const userPermission of permissions) {                
-                if (adequate(userPermission, permission)) {
+                if (adequate(userPermission.permission, permission)) {
                     resolve(true);
                     return;
                 }
