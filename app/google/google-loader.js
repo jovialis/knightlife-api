@@ -1,6 +1,6 @@
 // https://medium.com/@jackrobertscott/how-to-use-google-auth-api-with-node-js-888304f7e3a0
 
-import { google } from 'googleapis';
+const { google } = require('googleapis');
 
 const googleConfig = {
     clientId: process.env.GOOGLE_CLIENT_ID,
