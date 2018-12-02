@@ -3,6 +3,9 @@ import { Redirect, Link } from 'react-router-dom';
 
 import axios from 'axios';
 
+import Navigation from '../../components/navigation/component';
+import Google from './components/google/component';
+
 // Styles
 import './styles.css';
 
@@ -41,7 +44,7 @@ export default class PageLogin extends Component {
     render() {
         return (
             <div className='page-login'>
-                <h1>Dashboard Login</h1>
+                <Navigation />
                 { this.renderPage() }
             </div>
         );
@@ -68,23 +71,22 @@ export default class PageLogin extends Component {
     renderMain = () => {
         return (
             <div className='page-content'>
-                { this.renderError() }
-                <form onSubmit={ this.submitLogin }>
-                    <label>
-                        Username:
-                        <input type='text' value={ this.state.username } onChange={ this.updateUsernameField } required></input>
-                    </label>
-                    <br></br>
-                    <label>
-                        Password:
-                        <input type='password' value={ this.state.password } onChange={ this.updatePasswordField } required></input>
-                    </label>
-                    <br></br>
-                    <label>
-                        <input type='submit' value='Submit'></input>
-                    </label>
-                </form>
-                <Link to='/login/google'>Sign in with Google</Link>
+                <div className='content-section-google content-section'>
+                    <Google/>
+                </div>
+                <div className='content-section-or content-section'>
+                    <div>
+                        <span>or</span>
+                    </div>
+                </div>
+                <div className='content-section-manual content-section'>
+                    { this.renderError() }
+                    <form onSubmit={ this.submitLogin }>
+                        <input type='text' value={ this.state.username } onChange={ this.updateUsernameField } placeholder='Username' required></input>
+                        <input type='password' value={ this.state.password } onChange={ this.updatePasswordField } placeholder='Password' required></input>
+                        <input type='submit' value='Login'></input>
+                    </form>
+                </div>
             </div>
         );
     }

@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import feather from 'feather-icons';
 
+import Navigation from '../../components/navigation/component';
+
 // Styles
 import './styles.css';
 
@@ -76,6 +78,7 @@ export default class PageDashboard extends Component {
     render() {
         return (
             <div className='page-dashboard'>
+                <Navigation />
                 <h1>Dashboard</h1>
                 { this.renderPage() }
             </div>

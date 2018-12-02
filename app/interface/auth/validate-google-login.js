@@ -9,6 +9,9 @@ module.exports.validate = (code) => {
             const email = details.email;
             const name = details.name;
             const image = details.image;
+            
+            // Fix default image sizing
+            image = image.replace('sz=50', '');
 
             const Account = mongoose.model('Account');
 
