@@ -22,7 +22,7 @@ export default class PageGoogleRedirect extends Component {
                 const index = data.index;
 
                 if (index) {
-                    const token = index._a;
+                    const token = index['_a'];
                     this.setAuthToken(token);
 
                     this.setState({

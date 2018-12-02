@@ -19,15 +19,7 @@ export default class PageLogin extends Component {
 
     componentDidMount() {
         document.title = 'KL - Login';
-        
-        // Don't validate token if there isn't one to validate.
-        if (this.getAuthToken() === null) {
-            this.setState({
-                loading: false
-            });
-            return;
-        }
-        
+
         this.validateToken().then((valid) => {
             if (valid) {
                 this.setState({
@@ -115,6 +107,11 @@ export default class PageLogin extends Component {
         return new Promise((resolve, reject) => {
             const token = this.getAuthToken();
 
+            if (!token) {
+                resolve(false);
+                return;
+            }
+            
             axios.post('/dashboard/do/auth/session/validate', {
                 _a: token
             }).then(res => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -11,31 +11,58 @@ import './styles.css';
 export default class PageDashboard extends Component {
 
     state = {
+        redirect: false,
+        validating: true,
         loading: true,
         overview: null,
         modules: null
     }
 
     componentDidMount() {
-        axios.post('/dashboard/page/home', {
-            _a: this.getAuthToken()
-        }).then(res => {
-            const data = res.data;
-            
-            if (data) {
-                const index = data.index;
-                
-                if (index) {
-                    this.setState({
-                        loading: false,
-                        overview: index.overview,
-                        modules: index.modules
-                    });
-                    
-                    return;
-                }
+        document.title = 'KL - Dashboard';
+
+        this.validateToken().then((valid) => {
+            if (valid) {
+                this.setState({
+                    validating: false
+                });
+            } else {
+                this.setState({
+                    redirect: true,
+                    validating: false
+                });
             }
-        })
+        }, (error) => {
+            this.setState({
+                redirect: true,
+                validating: false
+            });
+        });
+    }
+
+    componentDidUpdate() {
+        // If we're no longer validating, and we don't have to redirect
+        if (!this.state.validating && !this.state.redirect) {
+            axios.post('/dashboard/page/home', {
+                _a: this.getAuthToken()
+            }).then(res => {
+                const data = res.data;
+
+                if (data) {
+                    const index = data.index;
+
+                    if (index) {
+                        this.setState({
+                            loading: false,
+                            overview: index.overview,
+                            modules: index.modules
+                        });
+
+                        return;
+                    }
+                }
+            });
+        }
     }
 
     render() {
@@ -48,7 +75,15 @@ export default class PageDashboard extends Component {
     }
 
     renderPage = () => {
-        if (this.state.loading) {
+        if (this.state.validating) {
+            return (
+                <span>Authenticating...</span>
+            );
+        } else if (this.state.redirect) {
+            return (
+                <Redirect to='/dashboard'></Redirect>
+            );
+        } else if (this.state.loading) {
             return (
                 <span>Loading...</span>
             );
@@ -56,7 +91,7 @@ export default class PageDashboard extends Component {
             return this.renderMain();
         }
     }
-    
+
     renderMain = () => {
         return (
             <div className='page-content'>
@@ -80,9 +115,41 @@ export default class PageDashboard extends Component {
             </div>
         );
     }
-    
+
+    validateToken = () => {
+        return new Promise((resolve, reject) => {
+            const token = this.getAuthToken();
+
+            if (!token) {
+                resolve(false);
+                return;
+            }
+
+            axios.post('/dashboard/do/auth/session/validate', {
+                _a: token
+            }).then(res => {
+                const data = res.data;
+
+                if (data) {
+                    const index = data.index;
+
+                    if (index) {
+                        const valid = index.valid;
+                        resolve(valid);
+
+                        return;
+                    }
+                }
+
+                reject('An error occurred.');
+            }, err => {
+                reject(err.message);
+            });
+        });
+    }
+
     getAuthToken = () => {
         return sessionStorage.getItem('_a');
     }
-    
+
 }
