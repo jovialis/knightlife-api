@@ -104,9 +104,9 @@ export default class PageDashboard extends Component {
         return (
             <div className='page-content'>
                 <section id='section-overview'>
-                    <h2>{ this.state.name }</h2>
-                    <h5>{ this.state.username }</h5>
-                    <img src={ this.state.picture } style={{ width: '200px', height: 'auto' }}></img>
+                    <h2>{ this.state.overview.name }</h2>
+                    <h5>{ this.state.overview.username }</h5>
+                    <img src={ this.state.overview.picture } style={{ width: '200px', height: 'auto' }}></img>
                 </section>
                 <section id='section-modules'>
                     { this.state.modules.map(module => (

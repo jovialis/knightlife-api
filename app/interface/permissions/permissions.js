@@ -13,9 +13,16 @@ module.exports.hasPermission = (account, permission) => {
             }
             
             for (const userPermission in permissions) {
-                if (adequate(userPermission, permission)) {
+                console.log('user has permission': userPermission);
+                
+                if (this.adequate(userPermission, permission)) {
+                                console.log('adequate')
+
                     resolve(true);
+                    return;
                 }
+                
+                console.log('not adequate')
             }
             
             resolve(false);
