@@ -62,12 +62,13 @@ function getGooglePlusApi(auth) {
 module.exports.getGoogleAccountFromCode = getGoogleAccountFromCode;
 async function getGoogleAccountFromCode(code) {
 
-    // get the auth "tokens" from the request
-    const data = await auth.getToken(code);
-    const tokens = data.tokens;
-
     // add the tokens to the google api so we have access to the account
     const auth = createConnection();
+    
+        // get the auth "tokens" from the request
+    const data = await auth.getToken(code);
+    
+    const tokens = data.tokens;
     auth.setCredentials(tokens);
 
     // connect to google plus - need this to get the user's email
