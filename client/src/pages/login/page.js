@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -84,6 +84,7 @@ export default class PageLogin extends Component {
                         <input type='submit' value='Submit'></input>
                     </label>
                 </form>
+                <Link to='/login/google'>Sign in with Google</Link>
             </div>
         );
     }

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-module.exports.overview = (account) => {
+module.exports.retrieve = (account) => {
     return new Promise((resolve, reject) => {
         resolve(digestAccount(account));
     });
 }
 
-module.exports.overviewByBadge = (badge) => {
+module.exports.retrieveByBadge = (badge) => {
     return new Promise((resolve, reject) => {
         const Account = mongoose.model('Account');
 

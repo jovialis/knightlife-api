@@ -1,22 +1,5 @@
 const mongoose = require('mongoose');
 
-const permissions = {
-    // Admin modules
-    'OP': '*',
-
-    // Top-level modules
-    'Scheduling': 'schedule',
-    'Push Messaging': 'messaging',
-    'Lunch Menu': 'lunch',
-    'Event': 'event',
-    'News': 'news',
-    'Accounts': 'accounts',
-
-    // Sub-modules
-    'Color Wars': 'event.category.colorwars',
-    'Snow Days': 'schedule.snowday,news.snowday'
-};
-
 function hasPermission(account, permission) {
     return new Promise((resolve, reject) => {
         const Permission = mongoose.require('Permission');
@@ -29,7 +12,13 @@ function hasPermission(account, permission) {
                 return;
             }
             
+            for (const userPermission in permissions) {
+                if (adequate(userPermission, permission)) {
+                    resolve(true);
+                }
+            }
             
+            resolve(false);
         });
     });
 }
