@@ -15,8 +15,8 @@ const modules = [
     new Module('schedule', 'Scheduling', [ 'schedule' ], 'clock'),
     new Module('messages', 'Push Messages', [ 'messaging' ], 'message-square'),
     new Module('lunch', 'Lunch Menus', [ 'lunch' ], 'coffee'),
-    new Module('events', 'Events', [ 'event' ], 'globe'),
-    new Module('news', 'News', [ 'news' ], 'calendar'),
+    new Module('events', 'Events', [ 'event' ], 'calendar'),
+    new Module('news', 'News', [ 'news' ], 'globe'),
     new Module('accounts', 'Accounts', [ 'accounts' ], 'users'),
 
     // Secondary modules

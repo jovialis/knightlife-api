@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import axios from 'axios';
 
-import FeatherIcon from 'feather-icons-react';
+import feather from 'feather-icons';
 
 // Styles
 import './styles.css';
@@ -113,7 +113,7 @@ export default class PageDashboard extends Component {
                     { this.state.modules.map(module => (
                         <div id={ `modules-item-${ module.id }` } className='modules-item' style={{ border: '1px solid gray' }}>
                             <Link to={ `/dashboard/${ module.id }` }>
-                                <FeatherIcon icon={ module.icon }></FeatherIcon>
+                                <div className='modules-item-icon-wrapper' dangerouslySetInnerHTML={{ __html: feather.icons[module.icon].toSvg() }}></div>
                                 <div className='modules-item-body'>
                                     <b>{ module.name }</b>
                                 </div>

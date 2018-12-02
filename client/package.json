@@ -8,7 +8,7 @@
         "react-scripts": "latest",
         "react-router-dom": "latest",
         "axios": "latest",
-        "feather-icons-react": "latest",
+        "feather-icons": "latest",
         "query-string": "latest"
     },
     "scripts": {
