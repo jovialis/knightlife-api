@@ -9,7 +9,7 @@ export default class Google extends Component {
     render() {
         return (
             <div className="component-google">
-                <Link to='/login/google'>
+                <a href='/login/google'>
                     <div className='google-scaffold'>
                         <div className='google-section-left google-section'>
                             <img src='/assets/google.png' alt='Google'></img>
@@ -18,7 +18,7 @@ export default class Google extends Component {
                             <span>Sign in with Google</span>
                         </div>
                     </div>
-                </Link>
+                </a>
             </div>
         );
     }
