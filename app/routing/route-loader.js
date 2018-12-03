@@ -35,7 +35,7 @@ function register(app) {
     require('./routes/portal/auth/post-submit-login').register(app);
     require('./routes/portal/auth/post-retrieve-session-validation').register(app);
     
-    require('./routes/portal/auth/google/post-retrieve-google-url').register(app);
+    require('./routes/portal/auth/google/post-retrieve-google-redirect').register(app);
     require('./routes/portal/auth/google/post-submit-google-login').register(app);
     
     // Dashboard
