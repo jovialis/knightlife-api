@@ -7,7 +7,6 @@ import './index.css';
 
 // Imports
 import PageLogin from './pages/login/page';
-import PageGoogleLogin from './pages/login/google/login/page';
 import PageGoogleRedirect from './pages/login/google/redirect/page';
 
 import PageDashboard from './pages/dashboard/page';
