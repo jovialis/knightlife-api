@@ -8,7 +8,7 @@ module.exports.validate = (code) => {
             const id = details.id;
             const email = details.email;
             const name = details.name;
-            const image = details.image;
+            let image = details.image;
             
             // Fix default image sizing
             image = image.replace('sz=50', '');
