@@ -43,8 +43,8 @@ module.exports.retrieve = (date) => {
 
             // Chain populate queries
             let query = day;
-            for (const path of complications) {
-                query = query.populate(`complications.${ require(path) }`);
+            for (const complication of complications) {
+                query = query.populate(`complications.${ complication.path }`);
             }
 
             query.populate((err, doc) => {
