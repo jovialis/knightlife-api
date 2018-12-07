@@ -59,7 +59,7 @@ module.exports.retrieve = (date) => {
     });
 }
 
-function ensureDefaults(day) {
+async function ensureDefaults(day) {
     return new Promise(async (resolve, reject) => {
         let changed = false;
 
