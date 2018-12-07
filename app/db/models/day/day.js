@@ -21,4 +21,4 @@ const Day = new mongoose.Schema({
     collection: 'days'
 });
 
-mongoose.model(Day, 'Day');
+mongoose.model('Day', Day);
