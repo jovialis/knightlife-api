@@ -1,5 +1,5 @@
 {
-    "blocks": ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'x', 'lunch', 'activities', 'lab', 'class_meeting', 'assembly', 'advisory', 'custom'],
+    "blocks": ["a", "b", "c", "d", "e", "f", "g", "x", "lunch", "activities", "lab", "class_meeting", "assembly", "advisory", "custom"],
     "days": [
         {
             "blocks": [
