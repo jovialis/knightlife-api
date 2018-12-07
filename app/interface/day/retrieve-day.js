@@ -60,7 +60,7 @@ module.exports.retrieve = (date) => {
 }
 
 function ensureDefaults(day) {
-    return Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         let changed = false;
 
         for (const path of complications) {
