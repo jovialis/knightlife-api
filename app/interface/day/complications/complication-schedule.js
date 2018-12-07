@@ -12,12 +12,8 @@ module.exports.create = (day) => {
         const template = require('./schedule-template.json');
         const dayBlocks = template.days[dayIndex].blocks;
 
-        console.log('Building schedule for date ' + date);
-
         // We try to find one first; we don't return a new instance if one already exists
-        
-        console.log(dayBlocks);
-        
+
         Schedule.create({
             schedules: [
                 {
@@ -25,9 +21,6 @@ module.exports.create = (day) => {
                 }
             ]
         }, (err, schedule) => {
-            console.log('Err: ' + err + ' ' + schedule);
-
-
             if (err) {
                 reject(err);
                 return;

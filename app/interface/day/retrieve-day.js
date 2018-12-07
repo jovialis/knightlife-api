@@ -66,27 +66,16 @@ async function ensureDefaults(day) {
         for (const complication of complications) {
             const path = complication.path;
 
-            console.log(path);
-            console.log(day);
-
             // Complication doesn't exist so we have to make it
-            if (!(path in day.complications)) {
-                console.log('Not present in day complications');
-
+            if (!('complications' in day) || !(path in day.complications)) {
                 try {
-                    console.log('Creating document');
-
                     const document = await complication.create(day);
                     const docId = document._id;
-
-                    console.log('Made a document for id: ' + docId);
 
                     day.complications[path] = docId;
 
                     changed = true;
                 } catch (err) {
-                    console.log('An error occurred. Woops!' + err);
-
                     reject(err);
                     return;
                 }
