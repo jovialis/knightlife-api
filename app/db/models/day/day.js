@@ -13,7 +13,7 @@ const Day = new mongoose.Schema({
             ref: 'Schedule'
         },
         lunch: {
-            type: mongoose.Schema.Types.ObjeectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Lunch'
         }
     }
