@@ -67,6 +67,7 @@ async function ensureDefaults(day) {
             const path = complication.path;
 
             console.log(path);
+            console.log(day);
 
             // Complication doesn't exist so we have to make it
             if (!(path in day.complications)) {
