@@ -25,7 +25,6 @@ const Permission = new mongoose.Schema({
         required: true
     }
 }, {
-    versionKey: false,
     collection: 'permissions'
 });
 

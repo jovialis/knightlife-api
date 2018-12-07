@@ -3,6 +3,27 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid');
 
+const Annotation = new mongoose.Schema({
+    badge: {
+        type: String,
+        default: shortid.generate
+    },
+    message: {
+        type: String,
+        required: true
+    },
+    target: {
+        type: Number,
+        default: 0
+    },
+    meta: {
+        location: String,
+        color: String
+    }
+}, {
+    _id: false
+});
+
 const Block = new mongoose.Schema({
     badge: {
         type: String,
@@ -11,24 +32,40 @@ const Block = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        enum: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'x', 'lunch', 'activities', 'lab', 'class_meeting', 'assembly', 'advisory', 'custom']
+        enum: require(`${ global.__interface }/day/complications/schedule-template.json`).blocks
     },
     variation: {
-        type: Number, 
+        type: Number,
         required: false 
     },
     time: {
         start: {
-            type: Date,
+            type: String,
             required: true
         },
         end: {
-            type: Date,
+            type: String,
             required: true
         }
+    },
+    annotations: {
+        type: [ Annotation ],
+        default: []
     }
 }, {
-    versionKey: false,
+    _id: false
+});
+
+const BlockList = new mongoose.Schema({
+    blocks: {
+        type: [ Block ]
+    },
+    target: { // 0 = all school, 1 = freshman, etc. 5 = other.
+        type: Number,
+        default: 0
+    },
+    title: String // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
+}, {
     _id: false
 });
 
@@ -37,18 +74,13 @@ const Schedule = new mongoose.Schema({
         type: String,
         default: shortid.generate
     },
-    blocks: {
-        type: [ Block ],
+    schedules: {
+        type: [ BlockList ],
         required: true
     },
-    day: {
-        type: String,
-        required: false,
-        enum: ['m', 't', 'w', 'th', 'f', 'sa', 'su']
-    }
+    day: Number
 }, {
-    collection: 'schedules',
-    versionKey: false
+    collection: 'schedules'
 });
 
-mongoose.model('Schedule', Schedule)
+mongoose.model('Schedule', Schedule);

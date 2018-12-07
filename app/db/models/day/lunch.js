@@ -9,7 +9,6 @@ const Food = new mongoose.Schema({
     },
     allergy: String
 }, {
-    versionKey: false,
     collection: 'foods'
 });
 
@@ -21,7 +20,6 @@ const Lunch = new mongoose.Schema({
         default: []
     }
 }, {
-    versionKey: false,
     collection: 'lunches'
 });
 

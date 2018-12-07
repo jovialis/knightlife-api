@@ -4,8 +4,7 @@ const Survey = new mongoose.Schema({
     version: String,
     url: String,
 }, {
-    collection: "surveys",
-    versionKey: false
+    collection: "surveys"
 });
 
 mongoose.model("Survey", Survey);

@@ -6,8 +6,7 @@ const Device = new mongoose.Schema({
         required: true
     }
 }, {
-    collection: 'devices',
-    versionKey: false
+    collection: 'devices'
 });
 
 mongoose.model('Device', Device);

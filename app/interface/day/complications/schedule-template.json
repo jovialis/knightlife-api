@@ -1,0 +1,395 @@
+/**
+    badge: {
+        type: String,
+        default: shortid.generate
+    },
+    id: {
+        type: String,
+        required: true,
+        enum: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'x', 'lunch', 'activities', 'lab', 'class_meeting', 'assembly', 'advisory', 'custom']
+    },
+    variation: {
+        type: Number, 
+        required: false 
+    },
+    time: {
+        start: {
+            type: Date,
+            required: true
+        },
+        end: {
+            type: Date,
+            required: true
+        }
+    }
+**/
+{
+    "blocks": ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'x', 'lunch', 'activities', 'lab', 'class_meeting', 'assembly', 'advisory', 'custom'],
+    "days": [
+        {
+            "blocks": [
+                {
+                    "id": "assembly",
+                    "time": {
+                        "start": "08-00",
+                        "end": "08-15"
+                    }
+                },
+                {
+                    "id": "d",
+                    "time": {
+                        "start": "08-20",
+                        "end": "09-05"
+                    }
+                },
+                {
+                    "id": "b",
+                    "time": {
+                        "start": "09-10",
+                        "end": "10-00"
+                    }
+                },
+                {
+                    "id": "lab",
+                    "time": {
+                        "start": "10-00",
+                        "end": "10-20"
+                    }
+                },
+                {
+                    "id": "f",
+                    "time": {
+                        "start": "10-25",
+                        "end": "11-10"
+                    }
+                },
+                {
+                    "id": "a",
+                    "variation": 0,
+                    "time": {
+                        "start": "11-15",
+                        "end": "12-05"
+                    }
+                },
+                {
+                    "id": "lunch",
+                    "variation": 0,
+                    "time": {
+                        "start": "12-10",
+                        "end": "12-35"
+                    }
+                },
+                {
+                    "id": "lunch",
+                    "variation": 1,
+                    "time": {
+                        "start": "11-15",
+                        "end": "11-40"
+                    }
+                },
+                {
+                    "id": "a",
+                    "variation": 1,
+                    "time": {
+                        "start": "11-45",
+                        "end": "12-35"
+                    }
+                },
+                {
+                    "id": "x",
+                    "time": {
+                        "start": "12-40",
+                        "end": "13-25"
+                    }
+                },
+                {
+                    "id": "c",
+                    "time": {
+                        "start": "13-30",
+                        "end": "14-20"
+                    }
+                },
+                {
+                    "id": "g",
+                    "time": {
+                        "start": "14-25",
+                        "end": "15-10"
+                    }
+                }
+            ]
+        },
+        {
+            "blocks": [
+                {
+                    "id": "advisory",
+                    "start": "08-00",
+                    "end": "08-15"
+                },
+                {
+                    "id": "e",
+                    "start": "08-20",
+                    "end": "09-05"
+                },
+                {
+                    "id": "c",
+                    "start": "09-10",
+                    "end": "10-00"
+                },
+                {
+                    "id": "lab",
+                    "start": "10-00",
+                    "end": "10-20"
+                },
+                {
+                    "id": "d",
+                    "start": "10-25",
+                    "end": "11-10"
+                },
+                {
+                    "id": "b",
+                    "variation": 0,
+                    "start": "11-15",
+                    "end": "12-05"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 0,
+                    "start": "12-10",
+                    "end": "12-35"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 1,
+                    "start": "11-15",
+                    "end": "11-40"
+                },
+                {
+                    "id": "b",
+                    "variation": 1,
+                    "start": "11-45",
+                    "end": "12-35"
+                },
+                {
+                    "id": "x",
+                    "start": "12-40",
+                    "end": "13-20"
+                },
+                {
+                    "id": "f",
+                    "start": "13-25",
+                    "end": "14-15"
+                },
+                {
+                    "id": "lab",
+                    "start": "14-15",
+                    "end": "14-35"
+                },
+                {
+                    "id": "a",
+                    "start": "14-40",
+                    "end": "15-25"
+                }
+            ]
+        },
+        {
+            "blocks": [
+                {
+                    "id": "class_meeting",
+                    "start": "08-00",
+                    "end": "08-15"
+                },
+                {
+                    "id": "g",
+                    "start": "08-20",
+                    "end": "09-05"
+                },
+                {
+                    "id": "e",
+                    "start": "09-10",
+                    "end": "10-00"
+                },
+                {
+                    "id": "lab",
+                    "start": "10-00",
+                    "end": "10-20"
+                },
+                {
+                    "id": "c",
+                    "start": "10-25",
+                    "end": "11-10"
+                },
+                {
+                    "id": "f",
+                    "variation": 0,
+                    "start": "11-15",
+                    "end": "12-05"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 0,
+                    "start": "12-10",
+                    "end": "12-35"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 1,
+                    "start": "11-15",
+                    "end": "11-40"
+                },
+                {
+                    "id": "f",
+                    "variation": 1,
+                    "start": "11-45",
+                    "end": "12-35"
+                },
+                {
+                    "id": "activities",
+                    "start": "12-40",
+                    "end": "13-25"
+                }
+            ]
+        },
+        {
+            "blocks": [
+                {
+                    "id": "f",
+                    "start": "08-20",
+                    "end": "09-05"
+                },
+                {
+                    "id": "a",
+                    "start": "09-10",
+                    "end": "10-00"
+                },
+                {
+                    "id": "lab",
+                    "start": "10-00",
+                    "end": "10-20"
+                },
+                {
+                    "id": "x",
+                    "start": "10-25",
+                    "end": "11-05"
+                },
+                {
+                    "id": "g",
+                    "variation": 0,
+                    "start": "11-10",
+                    "end": "12-00"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 0,
+                    "start": "12-05",
+                    "end": "12-30"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 1,
+                    "start": "11-10",
+                    "end": "11-35"
+                },
+                {
+                    "id": "g",
+                    "variation": 1,
+                    "start": "11-40",
+                    "end": "12-30"
+                },
+                {
+                    "id": "e",
+                    "start": "12-35",
+                    "end": "13-20"
+                },
+                {
+                    "id": "d",
+                    "start": "13-25",
+                    "end": "14-15"
+                },
+                {
+                    "id": "lab",
+                    "start": "14-15",
+                    "end": "14-35"
+                },
+                {
+                    "id": "b",
+                    "start": "14-40",
+                    "end": "15-25"
+                }
+            ]
+        },
+        {
+            "blocks": [
+                {
+                    "id": "advisory",
+                    "start": "08-00",
+                    "end": "08-15"
+                },
+                {
+                    "id": "c",
+                    "start": "08-20",
+                    "end": "09-05"
+                },
+                {
+                    "id": "g",
+                    "start": "09-10",
+                    "end": "10-00"
+                },
+                {
+                    "id": "lab",
+                    "start": "10-00",
+                    "end": "10-20"
+                },
+                {
+                    "id": "b",
+                    "start": "10-25",
+                    "end": "11-10"
+                },
+                {
+                    "id": "d",
+                    "variation": 0,
+                    "start": "11-15",
+                    "end": "12-05"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 0,
+                    "start": "12-10",
+                    "end": "12-35"
+                },
+                {
+                    "id": "lunch",
+                    "variation": 1,
+                    "start": "11-15",
+                    "end": "11-40"
+                },
+                {
+                    "id": "d",
+                    "variation": 1,
+                    "start": "11-45",
+                    "end": "12-35"
+                },
+                {
+                    "id": "a",
+                    "start": "12-40",
+                    "end": "13-25"
+                },
+                {
+                    "id": "e",
+                    "start": "13-30",
+                    "end": "14-20"
+                },
+                {
+                    "id": "x",
+                    "start": "14-25",
+                    "end": "15-10"
+                }
+            ]
+        },
+        {
+            "blocks": []
+        },
+        {
+            "blocks": []
+        }
+    ]
+}

@@ -18,8 +18,7 @@ const Account = new mongoose.Schema({
         default: shortid.generate
     }
 }, {
-    collection: "accounts",
-    versionKey: false
+    collection: "accounts"
 });
 
 mongoose.model("Account", Account);

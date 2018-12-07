@@ -1,35 +1,24 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid');
 
-const Complication = new mongoose.Schema({
-    type: {
-        type: String,
-        required: true
-    },
-    document: {
-        type: mongoose.Schema.Types.ObjectId
-//        ref: this.type
-    }
-}, {
-    versionKey: false
-});
-
 const Day = new mongoose.Schema({
-    badge: {
-        type: String,
-        default: shortid.generate
-    },
     date: {
         type: Date,
-        required: true
+        required: true,
+        unique: true
     },
     complications: {
-        type: [ Complication ],
-        default: []
+        schedule: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Schedule'
+        },
+        lunch: {
+            type: mongoose.Schema.Types.ObjeectId,
+            ref: 'Lunch'
+        }
     }
 }, {
-    collection: 'days',
-    versionKey: false
+    collection: 'days'
 });
 
 mongoose.model(Day, 'Day');
