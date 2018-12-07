@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const complications = [
-    './complications/complication-schedule',
-    './complications/complication-lunch'
+    require('./complications/complication-schedule'),
+    require('./complications/complication-lunch')
 ];
 
 module.exports.retrieve = (date) => {
@@ -63,9 +63,7 @@ async function ensureDefaults(day) {
     return new Promise(async (resolve, reject) => {
         let changed = false;
 
-        for (const path of complications) {
-            const complication = require(path);
-
+        for (const complication of complications) {
             const path = complication.path;
 
             // Complication doesn't exist so we have to make it
