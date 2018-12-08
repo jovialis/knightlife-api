@@ -67,7 +67,7 @@ async function ensureDefaults(day) {
             const path = complication.path;
             
             // Complication doesn't exist so we have to make it
-            if (!day.hasOwnProperty('complications') || !day.complications.hasOwnProperty(path)) {
+            if (day.complications === undefined || day.complications[path] === undefined) {
                 try {
                     const document = await complication.create(day);
                     const docId = document._id;
