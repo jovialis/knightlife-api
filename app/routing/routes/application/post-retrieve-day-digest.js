@@ -16,7 +16,7 @@ module.exports.register = (app) => {
         
         try {
             let outline = await require(`${ global.__interface }/day/retrieve-day`).retrieve(date);
-            require(`${ __basedir }/app/utils/sanitize-keys`).sanitize(outline, [ '_id', '__v' ]);
+            await require(`${ __basedir }/app/utils/sanitize-keys`).sanitize(outline, [ '_id', '__v' ]);
             
             res.json({
                 index: outline
