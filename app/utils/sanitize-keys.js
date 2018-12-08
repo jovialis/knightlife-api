@@ -1,16 +1,12 @@
-module.exports.sanitize = async (object, keys) => {
-    return new Promise(resolve => {
-        sanitizeKeys(object, keys);
-        resolve();
-    });
+module.exports.sanitize = (object, key) => {
+    removeKey(object, key);
 }
 
-function sanitizeKeys(object, keys) {
-    for (let key in object) {
-        if (typeof object[key] === "object") {
-            sanitizeKeys(object[key], keys);
-        } else if (keys.includes(key)) {
-            delete object[key];
-        }
+function removeKey(obj, searchKey) {
+    for (const objKey in obj) {
+        if (objKey === searchKey)
+            delete obj[objKey];
+        else if (typeof obj[objKey] === 'object')
+            removeKey(obj[objKey], searchKey);
     }
 }
