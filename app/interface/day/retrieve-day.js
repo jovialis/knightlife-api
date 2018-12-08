@@ -68,8 +68,8 @@ async function ensureDefaults(day) {
             
             console.log(day);
             
-            console.log('Complication in day': ('complications' in day));
-            console.log('Path in day complications': (path in day.complications));
+            console.log('Complication in day:' + String('complications' in day));
+            console.log('Path in day complications:' + String(path in day.complications));
 
             // Complication doesn't exist so we have to make it
             if (!('complications' in day) || !(path in day.complications)) {
