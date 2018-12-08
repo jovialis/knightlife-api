@@ -1,11 +1,11 @@
 module.exports.sanitize = async (object, keys) => {
-    return new Promise(async resolve => {
-        await sanitizeKeys(object, keys);
+    return new Promise(resolve => {
+        sanitizeKeys(object, keys);
         resolve();
     });
 }
 
-async function sanitizeKeys(object, keys) {
+function sanitizeKeys(object, keys) {
     for (let key in object) {
         if (typeof object[key] === "object") {
             sanitizeKeys(object[key], keys);
