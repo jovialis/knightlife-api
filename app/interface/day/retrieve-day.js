@@ -11,7 +11,7 @@ module.exports.retrieve = (date) => {
 
         Day.findOne({
             date: date
-        }, { _id: false }, async (err, day) => {
+        }, async (err, day) => {
             if (err) {
                 reject(err);
                 return;
@@ -66,29 +66,16 @@ async function ensureDefaults(day) {
         for (const complication of complications) {
             const path = complication.path;
             
-            console.log(day);
-            
-            console.log('Complication in day:' + String('complications' in day));
-            console.log('Path in day complications:' + String(path in day.complications));
-
             // Complication doesn't exist so we have to make it
             if (!day.hasOwnProperty('complications') || !day.complications.hasOwnProperty(path)) {
-                console.log('Not present in day complications');
-
                 try {
-                    console.log('Creating document');
-
                     const document = await complication.create(day);
                     const docId = document._id;
-
-                    console.log('Made a document for id: ' + docId);
 
                     day.complications[path] = docId;
 
                     changed = true;
                 } catch (err) {
-                    console.log('An error occurred. Woops!' + err);
-
                     reject(err);
                     return;
                 }
