@@ -7,7 +7,7 @@ module.exports.create = (day) => {
         const Schedule = mongoose.model('Schedule');
 
         const date = day.date;
-        const dayIndex = date.getDay() - 1; // So monday is 0, sunday is 6
+        let dayIndex = date.getDay() - 1; // So monday is 0, sunday is 6
         
         // Sunday wrap around, because mod doesn't work in JS.
         if (dayIndex === -1) {
