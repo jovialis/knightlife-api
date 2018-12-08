@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 module.exports.path = 'schedule';
+module.exports.model = 'Schedule';
 
 module.exports.create = (day) => {
     return new Promise((resolve, reject) => {

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const complications = [
-    require('./complications/complication-schedule'),
-    require('./complications/complication-lunch')
+    require('./complications/schedule/complication-schedule'),
+    require('./complications/lunch/complication-lunch')
 ];
 
 module.exports.retrieve = (date) => {
@@ -38,20 +38,24 @@ module.exports.retrieve = (date) => {
                 return;
             }
 
-            // Chain populate queries
-            let query = day;
+            // Populate complications
             for (const complication of complications) {
-                query = query.populate(`complications.${ complication.path }`);
-            }
+                try {
+                    await mongoose.model(complication.model).populate(day, {
+                        path: `complications.${ complication.path }`,
+                        model: complication.model
+                    });
 
-            query.populate((err, doc) => {
-                if (err) {
+                    if (complication.populate !== undefined) {
+                        await complication.populate(`complications.${ complication.path }.`, day);
+                    }
+                } catch (err) {
                     reject(err);
                     return;
                 }
-
-                resolve(doc);
-            });
+            }
+            
+            resolve(day);
         });
     });
 }

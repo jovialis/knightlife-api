@@ -15,7 +15,10 @@
 		"bcrypt": "latest",
 		"uuid": "latest",
 		"googleapis": "latest",
-        "key-del": "latest"
+        "key-del": "latest",
+        "ical-toolkit": "latest",
+        "download": "latest",
+        "redis": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",
