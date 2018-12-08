@@ -72,7 +72,7 @@ async function ensureDefaults(day) {
             console.log('Path in day complications:' + String(path in day.complications));
 
             // Complication doesn't exist so we have to make it
-            if (!('complications' in day) || !(path in day.complications)) {
+            if (!day.hasOwnProperty('complications') || !day.complications.hasOwnProperty(path)) {
                 console.log('Not present in day complications');
 
                 try {
