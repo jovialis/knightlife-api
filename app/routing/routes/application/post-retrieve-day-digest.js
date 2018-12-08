@@ -18,6 +18,8 @@ module.exports.register = (app) => {
         
         try {
             let outline = await require(`${ global.__interface }/day/retrieve-day`).retrieve(date);
+            outline = outline.toObject();
+            
             deleteKey(outline, ['__v', '_id'], { copy: false });
             
             res.json({
