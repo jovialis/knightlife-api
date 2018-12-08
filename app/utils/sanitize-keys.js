@@ -1,5 +1,5 @@
 module.exports.sanitize = (object, keys) => {
-    return sanitizeKeys(object, keys);
+    sanitizeKeys(object, keys);
 }
 
 function sanitizeKeys(object, keys) {
@@ -10,5 +10,4 @@ function sanitizeKeys(object, keys) {
             delete object[key];
         }
     }
-    return object;
 }
