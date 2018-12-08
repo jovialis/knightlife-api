@@ -1,5 +1,5 @@
 module.exports.sanitize = async (object, keys) => {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
         await sanitizeKeys(object, keys);
         resolve();
     });
