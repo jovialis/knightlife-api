@@ -1,3 +1,5 @@
+const deleteKey = require('key-del');
+
 module.exports.register = (app) => {
     app.get('/api/data/digest/:year/:month/:day', async (req, res) => {
         const year = req.param('year');
@@ -16,8 +18,7 @@ module.exports.register = (app) => {
         
         try {
             let outline = await require(`${ global.__interface }/day/retrieve-day`).retrieve(date);
-            require(`${ __basedir }/app/utils/sanitize-keys`).sanitize(outline, '_id');
-            require(`${ __basedir }/app/utils/sanitize-keys`).sanitize(outline, '__v');
+            deleteKey(outline, ['__v', '_id'], { copy: false });
             
             res.json({
                 index: outline

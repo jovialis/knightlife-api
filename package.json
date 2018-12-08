@@ -14,7 +14,8 @@
 		"jsonwebtoken": "latest",
 		"bcrypt": "latest",
 		"uuid": "latest",
-		"googleapis": "latest"
+		"googleapis": "latest",
+        "key-del": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",
