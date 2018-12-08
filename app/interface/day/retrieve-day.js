@@ -19,17 +19,14 @@ module.exports.retrieve = (date) => {
 
             // Need to create a Day object
             if (!day) {
-                const newDay = await Day.create({
-                    date: date
-                });
-
                 try {
-                    await ensureDefaults(newDay);
-                    resolve(newDay);
+                    day = await Day.create({
+                        date: date
+                    });
                 } catch (err) {
                     reject(err);
+                    return;
                 }
-                return;
             }
 
             // Day object exists, ensure defaults
@@ -65,7 +62,7 @@ async function ensureDefaults(day) {
 
         for (const complication of complications) {
             const path = complication.path;
-            
+
             // Complication doesn't exist so we have to make it
             if (day.complications === undefined || day.complications[path] === undefined) {
                 try {
