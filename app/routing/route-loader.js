@@ -42,5 +42,5 @@ function register(app) {
     require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
     
     // App
-    require('./routes/application/post-retrieve-day-digest').register(app);
+    require('./routes/application/day/post-retrieve-day-digest').register(app);
 }
