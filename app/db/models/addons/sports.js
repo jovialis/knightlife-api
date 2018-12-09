@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
+const uuid = require('uuid/v4');
 
 const Team = new mongoose.Schema({
     badge: {
         type: String,
-        default: shortid
+        default: uuid
     },
     name: {
         type: String,

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
 
 const Day = new mongoose.Schema({
     date: {

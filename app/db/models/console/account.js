@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
+const uuid = require('uuid/v4');
 
 const Account = new mongoose.Schema({
     badge: {
         type: String,
-        default: shortid.generate
+        default: uuid
     },
     username: {
         type: String,
@@ -15,7 +15,7 @@ const Account = new mongoose.Schema({
     passhash: String,
     state: {
         type: String,
-        default: shortid.generate
+        default: uuid
     }
 }, {
     collection: "accounts"

@@ -1,12 +1,12 @@
 // Complication
 
 const mongoose = require('mongoose');
-const shortid = require('shortid');
+const uuid = require('uuid/v4');
 
 const Annotation = new mongoose.Schema({
     badge: {
         type: String,
-        default: shortid.generate
+        default: uuid
     },
     message: {
         type: String,
@@ -27,7 +27,7 @@ const Annotation = new mongoose.Schema({
 const Block = new mongoose.Schema({
     badge: {
         type: String,
-        default: shortid.generate
+        default: uuid
     },
     id: {
         type: String,
@@ -72,7 +72,7 @@ const BlockList = new mongoose.Schema({
 const Schedule = new mongoose.Schema({
     badge: {
         type: String,
-        default: shortid.generate
+        default: uuid
     },
     schedules: {
         type: [ BlockList ],

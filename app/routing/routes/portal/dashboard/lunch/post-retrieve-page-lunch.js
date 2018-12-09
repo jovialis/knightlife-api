@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const deleteKey = require('key-del');
 
 module.exports.register = (app) => {
     app.get('/dashboard/page/lunch/:year/:month/:day', async (req, res) => {
@@ -20,11 +21,13 @@ module.exports.register = (app) => {
 //                return;
 //            }
 
-            const complication = await require(`${ global.__interface }/day/retrieve-day`).retrieveComplication(date, 'lunch');
+            let complication = await require(`${ global.__interface }/day/retrieve-day`).retrieveComplication(date, 'lunch');
+
+            deleteKey(complication, [ '_id' ], { copy: false });
 
             res.json({
                 index: {
-                    complication: complication
+                    lunch: complication
                 }
             });
         } catch (err) {

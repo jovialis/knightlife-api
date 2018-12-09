@@ -1,8 +1,13 @@
 // Complication
 
 const mongoose = require('mongoose');
+const uuid = require('uuid/v4');
 
 const Food = new mongoose.Schema({
+    badge: {
+        type: String,
+        default: uuid
+    },
     name: {
         type: String,
         required: true
@@ -13,6 +18,10 @@ const Food = new mongoose.Schema({
 });
 
 const Lunch = new mongoose.Schema({
+    badge: {
+        type: String,
+        default: uuid
+    },
     title: String,
     items: {
         type: [ mongoose.Schema.Types.ObjectId ],

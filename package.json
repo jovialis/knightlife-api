@@ -10,7 +10,6 @@
 		"mongoose": "latest",
 		"express-sslify": "latest",
 		"cors": "latest",
-		"shortid": "latest",
 		"jsonwebtoken": "latest",
 		"bcrypt": "latest",
 		"uuid": "latest",
