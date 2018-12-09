@@ -17,45 +17,27 @@ module.exports.retrieve = (date) => {
                 return;
             }
 
-            // Need to create a Day object
-            if (!day) {
-                try {
+            try { 
+                // Need to create a Day object
+                if (!day) {
                     day = await Day.create({
                         date: date
                     });
-                } catch (err) {
-                    reject(err);
-                    return;
                 }
-            }
 
-            // Day object exists, ensure defaults
-
-            try {
+                // Day object exists, ensure defaults
                 await ensureDefaults(day);
+
+                // Populate complications
+                for (const complication of complications) {
+                    await populateComplication(day, complication);
+                }
+
+                resolve(day);
             } catch (err) {
                 reject(err);
                 return;
             }
-
-            // Populate complications
-            for (const complication of complications) {
-                try {
-                    await mongoose.model(complication.model).populate(day, {
-                        path: `complications.${ complication.path }`,
-                        model: complication.model
-                    });
-
-                    if (complication.populate !== undefined) {
-                        await complication.populate(`complications.${ complication.path }.`, day);
-                    }
-                } catch (err) {
-                    reject(err);
-                    return;
-                }
-            }
-
-            resolve(day);
         });
     });
 }
@@ -65,7 +47,7 @@ module.exports.retrieveComplication = (date, desiredComplication) => {
         for (const complication of complications) {
             if (complication.path === desiredComplication) {
                 const Day = mongoose.model('Day');
-                
+
                 Day.findOne({
                     date: date
                 }, async (err, day) => {
@@ -73,42 +55,30 @@ module.exports.retrieveComplication = (date, desiredComplication) => {
                         reject(err);
                         return;
                     }
-                    
-                    if (!day) {
-                        try {
+
+                    try {
+                        if (!day) {
                             day = await Day.create({
                                 date: date
                             });
-                        } catch (err) {
-                            reject(err);
-                            return;
                         }
-                    }
-                    
-                    let changed = false;
-                    try {
-                        changed = await ensureDefault(day, complication);
+
+                        let changed = await ensureDefault(day, complication);
+
+                        if (changed) {
+                            await day.save();
+                        }
+
+                        resolve(await populateComplication(day, complication));
                     } catch (err) {
                         reject(err);
-                        return;
                     }
-                    
-                    if (changed) {
-                        try {
-                            await day.save();
-                        } catch (err) {
-                            reject(err);
-                            return;
-                        }
-                    }
-                    
-                    resolve(day.complications[complication.path]);
                 });
                 return;
             }
         }
         reject('Invalid complication name.');
-    })
+    });
 }
 
 async function ensureDefaults(day) {
@@ -156,5 +126,25 @@ async function ensureDefault(day, complication) {
             }
         }
         resolve(false);
+    });
+}
+
+async function populateComplication(day, complication) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await mongoose.model(complication.model).populate(day, {
+                path: `complications.${ complication.path }`,
+                model: complication.model
+            });
+
+            if (complication.populate !== undefined) {
+                await complication.populate(`complications.${ complication.path }.`, day);
+            }
+
+            resolve(day.complications[complication.path]);
+        } catch (err) {
+            reject(err);
+            return;
+        }
     });
 }
