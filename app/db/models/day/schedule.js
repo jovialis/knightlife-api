@@ -32,7 +32,7 @@ const Block = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        enum: require(`${ global.__interface }/day/complications/schedule-template.json`).blocks
+        enum: require(`${ global.__interface }/day/complications/schedule/schedule-template.json`).blocks
     },
     variation: {
         type: Number,
