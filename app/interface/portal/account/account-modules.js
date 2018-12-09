@@ -25,7 +25,7 @@ const modules = [
 ];
 
 module.exports.retrieveUserModules = (account) => {
-    const guard = require(`${ global.__interface }/permissions/permissions`);
+    const guard = require('./account-permissions');
 
     return new Promise(async (resolve, reject) => {
         let userModules = [];
@@ -33,7 +33,7 @@ module.exports.retrieveUserModules = (account) => {
         for (const module of modules) {
             try {
                 const valid = await guard.hasPermission(account, module.permissions);
-                
+
                 if (valid) {
                     userModules.push(module);
                 }
@@ -43,5 +43,25 @@ module.exports.retrieveUserModules = (account) => {
         }
 
         resolve(userModules);
+    });
+}
+
+module.exports.hasModule = (account, moduleName) => {
+    const guard = require('./account-permissions');
+
+    return new Promise(async (resolve, reject) => {
+        for (const module of modules) {
+            if (module.id === moduleName) {
+                try { 
+                    const valid = await guard.hasPermission(account, module.permissions);
+                    resolve(valid);
+                    return;
+                } catch (err) {
+                    reject(err);
+                    return;
+                }
+            }
+        }
+        resolve(false);
     });
 }

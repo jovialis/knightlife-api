@@ -40,7 +40,8 @@ function register(app) {
     
     // Dashboard
     require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
+    require('./routes/portal/dashboard/lunch/post-retrieve-page-lunch').register(app);
     
     // App
-    require('./routes/application/day/post-retrieve-day-digest').register(app);
+    require('./routes/application/day/post-retrieve-day').register(app);
 }

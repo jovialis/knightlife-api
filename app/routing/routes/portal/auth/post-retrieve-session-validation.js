@@ -6,7 +6,7 @@ module.exports.register = (app) => {
         const token = req.body._a;
 
         try {
-            const account = await require(`${ global.__interface }/auth/validate-token`).validate(token); 
+            const account = await require(`${ global.__interface }/portal/auth/auth-token`).validate(token); 
 
             res.json({
                 index: {

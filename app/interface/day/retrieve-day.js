@@ -54,10 +54,61 @@ module.exports.retrieve = (date) => {
                     return;
                 }
             }
-            
+
             resolve(day);
         });
     });
+}
+
+module.exports.retrieveComplication = (date, desiredComplication) => {
+    return new Promise(async (resolve, reject) => {
+        for (const complication of complications) {
+            if (complication.path === desiredComplication) {
+                const Day = mongoose.model('Day');
+                
+                Day.findOne({
+                    date: date
+                }, async (err, day) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    
+                    if (!day) {
+                        try {
+                            day = await Day.create({
+                                date: date
+                            });
+                        } catch (err) {
+                            reject(err);
+                            return;
+                        }
+                    }
+                    
+                    let changed = false;
+                    try {
+                        changed = await ensureDefault(day, complication);
+                    } catch (err) {
+                        reject(err);
+                        return;
+                    }
+                    
+                    if (changed) {
+                        try {
+                            await day.save();
+                        } catch (err) {
+                            reject(err);
+                            return;
+                        }
+                    }
+                    
+                    resolve(day.complications[complication.path]);
+                });
+                return;
+            }
+        }
+        reject('Invalid complication name.');
+    })
 }
 
 async function ensureDefaults(day) {
@@ -65,22 +116,7 @@ async function ensureDefaults(day) {
         let changed = false;
 
         for (const complication of complications) {
-            const path = complication.path;
-
-            // Complication doesn't exist so we have to make it
-            if (day.complications === undefined || day.complications[path] === undefined) {
-                try {
-                    const document = await complication.create(day);
-                    const docId = document._id;
-
-                    day.complications[path] = docId;
-
-                    changed = true;
-                } catch (err) {
-                    reject(err);
-                    return;
-                }
-            }
+            changed = await ensureDefault(day, complication);
         }
 
         // Only save if we changed something.
@@ -97,5 +133,28 @@ async function ensureDefaults(day) {
         }
 
         resolve();
+    });
+}
+
+async function ensureDefault(day, complication) {
+    return new Promise(async (resolve, reject) => {
+        const path = complication.path;
+
+        // Complication doesn't exist so we have to make it
+        if (day.complications === undefined || day.complications[path] === undefined) {
+            try {
+                const document = await complication.create(day);
+                const docId = document._id;
+
+                day.complications[path] = docId;
+
+                resolve(true);
+                return;
+            } catch (err) {
+                reject(err);
+                return;
+            }
+        }
+        resolve(false);
     });
 }

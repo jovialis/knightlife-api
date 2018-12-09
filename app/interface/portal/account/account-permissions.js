@@ -19,10 +19,18 @@ module.exports.hasPermission = (account, requiredPermissions) => {
                 permissionsToCheck = [ requiredPermissions ];
             }
 
+            const now = new Date();
             for (const permissionToCheck of permissionsToCheck) {
                 let valid = false;
                 
-                for (const userPermission of permissions) { 
+                for (const userPermission of permissions) {
+                    // If the permission has an expiration date
+                    if (userPermission.expiration !== undefined && userPermission.expiration !== null) {
+                        if (userPermission.expiration < now) {
+                            continue;
+                        }
+                    }
+                    
                     if (adequate(userPermission.permission, permissionToCheck)) {                    
                         valid = true;
                         break;

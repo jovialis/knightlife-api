@@ -5,8 +5,8 @@ module.exports.register = (app) => {
         try {
             const code = req.body.code;
 
-            const account = await require(`${ global.__interface }/auth/validate-google-login`).validate(code); 
-            const token = require(`${ global.__interface }/auth/generate-token`).generate(account);
+            const account = await require(`${ global.__interface }/portal/auth/auth-handle-login`).handleGoogle(code); 
+            const token = require(`${ global.__interface }/portal/auth/auth-token`).generate(account);
 
             res.json({
                 index: {

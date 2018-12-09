@@ -1,7 +1,7 @@
 const deleteKey = require('key-del');
 
 module.exports.register = (app) => {
-    app.get('/api/data/digest/:year/:month/:day', async (req, res) => {
+    app.get('/api/data/day/:year/:month/:day', async (req, res) => {
         const year = req.param('year');
         const month = req.param('month') - 1;
         const day = req.param('day');
