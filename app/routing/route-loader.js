@@ -34,15 +34,16 @@ function register(app) {
     // Auth
     require('./routes/portal/auth/post-submit-login').register(app);
     require('./routes/portal/auth/post-retrieve-session-validation').register(app);
-    
+
     require('./routes/portal/auth/google/post-retrieve-google-redirect').register(app);
     require('./routes/portal/auth/google/post-submit-google-login').register(app);
-    
+
     // Dashboard
     require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
     require('./routes/portal/dashboard/lunch/post-retrieve-page-lunch').register(app);
     require('./routes/portal/dashboard/lunch/post-retrieve-food-suggestions').register(app);
-    
+    require('./routes/portal/dashboard/lunch/post-submit-data-lunch').register(app);
+
     // App
     require('./routes/application/day/post-retrieve-day').register(app);
 }
