@@ -35,6 +35,8 @@ module.exports.register = function(app) {
                     }
                 });
             } catch (err) {
+                console.log(err);
+                
                 res.status(500);
                 
                 res.json({
