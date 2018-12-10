@@ -87,10 +87,8 @@ module.exports.retrieveComplication = (date, desiredComplication, populate) => {
 
 module.exports.updateComplication = (date, desiredComplication, props) => {
     return new Promise(async (resolve, reject) => {
-        try {       
-            const complication = getComplication(desiredComplication);
-            const complicationObject = await populateComplication(date, complication);
-
+        try {
+            const complicationObject = await module.exports.retrieveComplication(date, desiredComplication, true);
             resolve(await complication.doUpdate(complicationObject, props));
         } catch (err) {
             reject(err);
