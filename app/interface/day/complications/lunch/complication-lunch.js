@@ -59,9 +59,13 @@ module.exports.suggestFood = async (name) => {
 }
 
 module.exports.doUpdate = (lunch, props) => {
+    console.log('props: ' + props);
+    
     const title = props.title || null;
     const items = props.items || [];
 
+    console.log('items:' + items);
+    
     return new Promise(async (resolve, reject) => {
         try {
             let idList = []
@@ -95,6 +99,8 @@ module.exports.doUpdate = (lunch, props) => {
 
             lunch.title = title;
             lunch.items = idList;
+            
+                console.log('ids:' + idList);
             
             resolve(await lunch.save());
         } catch (err) {
