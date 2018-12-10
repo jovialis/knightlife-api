@@ -42,43 +42,69 @@ module.exports.retrieve = (date) => {
     });
 }
 
-module.exports.retrieveComplication = (date, desiredComplication) => {
+module.exports.retrieveComplication = (date, desiredComplication, populate) => {
     return new Promise(async (resolve, reject) => {
-        for (const complication of complications) {
-            if (complication.path === desiredComplication) {
-                const Day = mongoose.model('Day');
+        const complication = getComplication(desiredComplication);
+        if (!complication) {
+            reject('Invalid complication name.');
+            return;
+        }
 
-                Day.findOne({
-                    date: date
-                }, async (err, day) => {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
+        const Day = mongoose.model('Day');
 
-                    try {
-                        if (!day) {
-                            day = await Day.create({
-                                date: date
-                            });
-                        }
-
-                        let changed = await ensureDefault(day, complication);
-
-                        if (changed) {
-                            await day.save();
-                        }
-
-                        resolve(await populateComplication(day, complication));
-                    } catch (err) {
-                        reject(err);
-                    }
-                });
+        Day.findOne({
+            date: date
+        }, async (err, day) => {
+            if (err) {
+                reject(err);
                 return;
             }
-        }
-        reject('Invalid complication name.');
+
+            try {
+                if (!day) {
+                    day = await Day.create({
+                        date: date
+                    });
+                }
+
+                let changed = await ensureDefault(day, complication);
+
+                if (changed) {
+                    await day.save();
+                }
+
+                if (populate) {
+                    resolve(await populateComplication(day, complication));
+                } else {
+                    resolve(day.complications[desiredComplication]);   
+                }
+            } catch (err) {
+                reject(err);
+            }
+        });
     });
+}
+
+module.exports.updateComplication = (date, desiredComplication, props) => {
+    return new Promise(async (resolve, reject) => {
+        try {       
+            const complication = getComplication(desiredComplication);
+            const complicationObject = await populateComplication(date, complication);
+
+            resolve(await complication.doUpdate(complicationObject, props));
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+function getComplication(desired) {
+    for (const complication of complications) {
+        if (complication.path === desired) {
+            return complication
+        }
+    }
+    return null;
 }
 
 async function ensureDefaults(day) {

@@ -12,7 +12,10 @@ const Food = new mongoose.Schema({
         type: String,
         required: true
     },
-    allergy: String
+    allergy: {
+        type: String,
+        default: null
+    }
 }, {
     collection: 'foods'
 });
@@ -27,7 +30,10 @@ const Lunch = new mongoose.Schema({
         type: String,
         default: uuid
     },
-    title: String,
+    title: {
+        type: String,
+        default: null
+    },
     items: {
         type: [ mongoose.Schema.Types.ObjectId ],
         ref: 'Food',

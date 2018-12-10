@@ -38,7 +38,7 @@ module.exports.populate = async (basepath, doc) => {
 module.exports.suggestFood = async (name) => {
     return new Promise(async (resolve, reject) => {
         const Food = mongoose.model('Food');
-        
+
         try {
             Food.find({
                 nameLower: {
@@ -49,9 +49,54 @@ module.exports.suggestFood = async (name) => {
                     reject(err);
                     return;
                 }
-                
+
                 resolve(items);
             });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+module.exports.doUpdate = (lunch, props) => {
+    const title = props.title || null;
+    const items = props.items || [];
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let idList = []
+
+            for (const item of items) {
+                const Food = mongoose.model('Food');
+
+                // Exists
+                if (item.badge !== undefined) {
+                    const badge = item.badge;
+
+                    const food = await Food.find({
+                        badge: badge
+                    });
+                    
+                    idList.append(food._id);
+                }
+                // Needs to be created
+                else {
+                    const name = item.name;
+                    const allergy = item.allergy;
+
+                    const newFood = await Food.create({
+                        name: name,
+                        allergy: allergy
+                    });
+
+                    idList.append(newFood._id);
+                }
+            }
+
+            lunch.title = title;
+            lunch.items = idList;
+            
+            resolve(await lunch.save());
         } catch (err) {
             reject(err);
         }

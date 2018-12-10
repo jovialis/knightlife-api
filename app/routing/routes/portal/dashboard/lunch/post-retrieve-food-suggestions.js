@@ -1,24 +1,28 @@
+const deleteKey = require('key-del');
+
 module.exports.register = (app) => {
     app.get('/dashboard/page/lunch/food/suggest', async (req, res) => {
-//        const token = req.body._a;
-//        const text = req.body.text;
+        //        const token = req.body._a;
+        //        const text = req.body.text;
         const text = req.param('text')
 
         try {
-//            const account = await require(`${ global.__interface }/portal/auth/auth-token`).validate(token); 
-//
-//            const hasPermission = await require(`${ global.__interface }/portal/account/account-modules`).hasModule(account, 'lunch');
-//
-//            if (!hasPermission) {
-//                res.json({
-//                    error: 'You do not have permission.',
-//                    redirect: true
-//                });
-//                return;
-//            }
+            //            const account = await require(`${ global.__interface }/portal/auth/auth-token`).validate(token); 
+            //
+            //            const hasPermission = await require(`${ global.__interface }/portal/account/account-modules`).hasModule(account, 'lunch');
+            //
+            //            if (!hasPermission) {
+            //                res.json({
+            //                    error: 'You do not have permission.',
+            //                    redirect: true
+            //                });
+            //                return;
+            //            }
 
             const items = await require(`${ global.__interface }/day/complications/lunch/complication-lunch`).suggestFood(text);
-            
+
+            deleteKey(items, '_id', { copy: false });
+
             res.json({
                 index: {
                     items: items
