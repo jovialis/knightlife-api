@@ -34,3 +34,26 @@ module.exports.populate = async (basepath, doc) => {
         }
     });
 }
+
+module.exports.suggestFood = async (name) => {
+    return new Promise(async (resolve, reject) => {
+        const Food = mongoose.model('Food');
+        
+        try {
+            Food.find({
+                nameLower: {
+                    '$regex': name.toLowerCase()
+                }
+            }, (err, items) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                
+                resolve(items);
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}

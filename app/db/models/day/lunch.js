@@ -17,6 +17,11 @@ const Food = new mongoose.Schema({
     collection: 'foods'
 });
 
+Food.pre('save', (next) => {
+    this.nameLower = this.name.toLowerCase();
+    next();
+});
+
 const Lunch = new mongoose.Schema({
     badge: {
         type: String,

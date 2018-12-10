@@ -41,6 +41,7 @@ function register(app) {
     // Dashboard
     require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
     require('./routes/portal/dashboard/lunch/post-retrieve-page-lunch').register(app);
+    require('./routes/portal/dashboard/lunch/post-retrieve-food-suggestions').register(app);
     
     // App
     require('./routes/application/day/post-retrieve-day').register(app);
