@@ -20,8 +20,8 @@ module.exports.register = function(app) {
 //                return;
 //            }
 
-            const title = req.body.submit.title;
-            const items = req.body.submit.items;
+            const title = req.body.title;
+            const items = req.body.items;
 
             try {
                 const complication = await require(`${ global.__interface }/day/retrieve-day`).updateComplication(date, 'lunch', {
