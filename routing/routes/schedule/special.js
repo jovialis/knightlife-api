@@ -20,7 +20,7 @@ module.exports = async function (req, res) {
             let adjustedDate = new Date(req.param("date"));
             adjustedDate.setDate(adjustedDate.getDate() + i);
 
-            const dateString = dateFormatter(date);
+            const dateString = dateFormatter(adjustedDate);
 
             // Check for vacations first
             const vacation = await mongoose.model('Vacation').findOne({
@@ -30,11 +30,25 @@ module.exports = async function (req, res) {
                 end: {
                     $gte: adjustedDate
                 }
-            }).lean().select({ _id: 0 }).exec();
+            });
 
             if (vacation) {
-                vacation.date = dateString;
-                resultList.push(vacation);
+                const vacationName = vacation.name;
+
+                const vacationObject = {
+                    changed: true,
+                    blocks: [],
+                    notices: [
+                        {
+                            message: vacationName,
+                            priority: 1
+                        }
+                    ],
+                    vacation: true,
+                    date: dateString
+                };
+                
+                resultList.push(vacationObject);
 
                 continue;
             }
