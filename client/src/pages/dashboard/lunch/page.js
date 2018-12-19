@@ -36,14 +36,12 @@ export default class PageLunch extends Component {
             <div>
                 <input type='text' value={ this.state.search } onChange={ this.updateSearchField } placeholder='Food Name' required></input>
                 {
-                    this.state.items.map(item => {
-                        return (
-                            <div>
-                                <h3>{ item.name }</h3>
-                                <h5>{ item.allergy }</h5>
-                            </div>
-                        );
-                    });
+                    this.state.items.map(item => (
+                        <div>
+                            <h3>{ item.name }</h3>
+                            <h5>{ item.allergy }</h5>
+                        </div>
+                    ))
                 }
             </div>
         );
