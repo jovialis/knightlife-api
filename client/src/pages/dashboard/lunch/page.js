@@ -83,8 +83,6 @@ export default class PageLunch extends Component {
                     return;
                 }
             }
-
-            reject('An error occurred.');
         });
     }
     
