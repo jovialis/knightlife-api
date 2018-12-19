@@ -35,14 +35,16 @@ export default class PageLunch extends Component {
         return (
             <div>
                 <input type='text' value={ this.state.search } onChange={ this.updateSearchField } placeholder='Food Name' required></input>
-                {
-                    this.state.suggested.map(item => (
-                        <div>
-                            <h3>{ item.name }</h3>
-                            <h5>{ item.allergy }</h5>
-                        </div>
-                    ))
-                }
+                <div>
+                    {
+                        this.state.suggested.map(item => (
+                            <div style={{ 'background-color': 'yellow', 'border': '1px solid gray' }}>
+                                <h4>{ item.name }</h3>
+                                <h5>{ item.allergy }</h5>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         );
     }
@@ -58,6 +60,9 @@ export default class PageLunch extends Component {
     fetchSearchResults = () => {
         const searchTerm = this.state.search.trim();
         if (searchTerm.length === 0) {
+            this.setState({
+                suggested: []
+            });
             return;
         }
         
