@@ -39,7 +39,7 @@ export default class PageLunch extends Component {
                     {
                         this.state.suggested.map(item => (
                             <div style={{ 'background-color': 'yellow', 'border': '1px solid gray' }}>
-                                <h4>{ item.name }</h3>
+                                <h4>{ item.name }</h4>
                                 <h5>{ item.allergy }</h5>
                             </div>
                         ))
