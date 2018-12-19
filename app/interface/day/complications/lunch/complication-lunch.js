@@ -76,7 +76,7 @@ module.exports.doUpdate = (lunch, props) => {
                     const food = await Food.find({
                         badge: badge
                     });
-
+                    
                     idList.append(food._id);
                 }
                 // Needs to be created

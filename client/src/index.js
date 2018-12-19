@@ -11,6 +11,8 @@ import PageGoogleRedirect from './pages/login/google/redirect/page';
 
 import PageDashboard from './pages/dashboard/page';
 
+import PageDashboardLunch from './pages/dashboard/lunch/page';
+
 ReactDOM.render(
     <Router>
         <Switch>
@@ -18,6 +20,7 @@ ReactDOM.render(
             <Route path="/login/google/redirect" component={ PageGoogleRedirect } />
 
             <Route exact path='/dashboard' component={ PageDashboard } />
+            <Route exact path='/dashboard/lunch' component={ PageDashboardLunch } />
         </Switch>
     </Router>,
     document.getElementById('container')

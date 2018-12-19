@@ -1,10 +1,9 @@
 const deleteKey = require('key-del');
 
 module.exports.register = (app) => {
-    app.get('/dashboard/page/lunch/food/suggest', async (req, res) => {
-        //        const token = req.body._a;
-        //        const text = req.body.text;
-        const text = req.param('text')
+    app.post('/dashboard/page/lunch/food/suggest', async (req, res) => {
+        const token = req.body._a;
+        const text = req.body.text;
 
         try {
             //            const account = await require(`${ global.__interface }/portal/auth/auth-token`).validate(token); 
