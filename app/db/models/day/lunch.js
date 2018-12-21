@@ -15,12 +15,15 @@ const Food = new mongoose.Schema({
     allergy: {
         type: String,
         default: null
-    }
+    },
+    nameLower: String
 }, {
     collection: 'foods'
 });
 
 Food.pre('save', (next) => {
+    console.log('Pre Save: ' + JSON.stringify(this));
+    
     this.nameLower = this.name.toLowerCase();
     next();
 });
