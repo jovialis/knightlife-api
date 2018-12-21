@@ -62,8 +62,6 @@ module.exports.doUpdate = (lunch, props) => {
     const title = props.title;
     const items = props.items;
 
-    console.log('In complication-lunch. Preparing to update lunch menu with props: ' + JSON.stringify(props));
-
     return new Promise(async (resolve, reject) => {
         try {
             let idList = []
@@ -71,41 +69,33 @@ module.exports.doUpdate = (lunch, props) => {
             const Food = mongoose.model('Food');
 
             for (const item of items) {
-                console.log('Handling provided food: ' + JSON.stringify(item));
-
-                // Exists
-                if (item.badge) {
-                    console.log('Item does exist')
-                    
-                    const badge = item.badge;
-
-                    const food = await Food.find({
-                        badge: badge
-                    });
-
-                    idList.append(food._id);
-
-                    console.log('Fetched food with badge: ' + badge);
+                // Require item name for processing
+                if (!item.name) {
+                    continue;
                 }
-                // Needs to be created
-                else {
-                    console.log('Item does not exist.')
-                    
-                    const name = item.name;
-                    const allergy = item.allergy;
-                    
-                    console.log('Name: ' + name);
-                    console.log('Allergy: ' + allergy)
 
-                    const newFood = await Food.create({
-                        name: name,
-                        allergy: allergy
-                    });
+                const indexingName = item.name.trim().toLowerCase();
+                const indexingAllergy = item.allergy ? (item.allergy.trim().toLowerCase()) : null;
 
-                    idList.push(newFood._id);
+                const alreadyExisting = await Food.findOne({
+                    nameLower: indexingName,
+                    allergyLower: indexingAllergy
+                });
 
-                    console.log('Generated food with id: ' + JSON.stringify(newFood._id));
+                if (alreadyExisting) {
+                    idList.push(alreadyExisting._id);
+                    continue;
                 }
+
+                const name = item.name.trim();
+                const allergy = item.allergy ? (item.allergy.trim()) : null;
+
+                const newFood = await Food.create({
+                    name: name,
+                    allergy: allergy
+                });
+
+                idList.push(newFood._id);
             }
 
             lunch.title = title;

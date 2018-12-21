@@ -9,7 +9,8 @@
         "react-router-dom": "latest",
         "axios": "latest",
         "feather-icons": "latest",
-        "query-string": "latest"
+        "query-string": "latest",
+        "react-day-picker": "latest"
     },
     "scripts": {
         "start": "react-scripts start",

@@ -20,7 +20,7 @@ module.exports.register = (app) => {
 
             const items = await require(`${ global.__interface }/day/complications/lunch/complication-lunch`).suggestFood(text);
 
-            deleteKey(items, '_id', { copy: false });
+            deleteKey(items, ['_id', 'nameLower', 'allergyLower'], { copy: false });
 
             res.json({
                 index: {
