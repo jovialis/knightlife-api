@@ -74,7 +74,9 @@ module.exports.doUpdate = (lunch, props) => {
                 console.log('Handling provided food: ' + JSON.stringify(item));
 
                 // Exists
-                if (item.badge !== undefined) {
+                if (item.badge) {
+                    console.log('Item does exist')
+                    
                     const badge = item.badge;
 
                     const food = await Food.find({
@@ -87,8 +89,13 @@ module.exports.doUpdate = (lunch, props) => {
                 }
                 // Needs to be created
                 else {
+                    console.log('Item does not exist.')
+                    
                     const name = item.name;
                     const allergy = item.allergy;
+                    
+                    console.log('Name: ' + name);
+                    console.log('Allergy: ' + allergy)
 
                     const newFood = await Food.create({
                         name: name,
