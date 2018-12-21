@@ -21,9 +21,7 @@ const Food = new mongoose.Schema({
     collection: 'foods'
 });
 
-Food.pre('save', (next) => {
-    console.log('Pre Save: ' + JSON.stringify(this));
-    
+Food.pre('save', function (next) {    
     this.nameLower = this.name.toLowerCase();
     next();
 });
