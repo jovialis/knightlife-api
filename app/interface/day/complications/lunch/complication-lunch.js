@@ -94,7 +94,7 @@ module.exports.doUpdate = (lunch, props) => {
                 }
                 
                 // Blank string allergies get turned to null
-                if (item.allergy.trim().length === 0) {
+                if (item.allergy && item.allergy.trim().length === 0) {
                     item.allergy = null;
                 }
 
