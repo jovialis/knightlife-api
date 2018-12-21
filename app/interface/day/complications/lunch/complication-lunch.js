@@ -102,7 +102,7 @@ module.exports.doUpdate = (lunch, props) => {
                         allergy: allergy
                     });
 
-                    idList.append(newFood._id);
+                    idList.push(newFood._id);
 
                     console.log('Generated food with id: ' + JSON.stringify(newFood._id));
                 }
