@@ -62,12 +62,16 @@ module.exports.doUpdate = (lunch, props) => {
     const title = props.title;
     const items = props.items;
 
+    console.log('In complication-lunch. Preparing to update lunch menu with props: ' + JSON.stringify(props));
+
     return new Promise(async (resolve, reject) => {
         try {
             let idList = []
 
+            const Food = mongoose.model('Food');
+
             for (const item of items) {
-                const Food = mongoose.model('Food');
+                console.log('Handling provided food: ' + JSON.stringify(item));
 
                 // Exists
                 if (item.badge !== undefined) {
@@ -76,8 +80,10 @@ module.exports.doUpdate = (lunch, props) => {
                     const food = await Food.find({
                         badge: badge
                     });
-                    
+
                     idList.append(food._id);
+
+                    console.log('Fetched food with badge: ' + badge);
                 }
                 // Needs to be created
                 else {
@@ -90,6 +96,8 @@ module.exports.doUpdate = (lunch, props) => {
                     });
 
                     idList.append(newFood._id);
+
+                    console.log('Generated food with id: ' + JSON.stringify(newFood._id));
                 }
             }
 
