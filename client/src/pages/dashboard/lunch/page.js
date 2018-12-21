@@ -93,7 +93,7 @@ export default class PageLunch extends Component {
                     <button onClick={ this.addFoodField }>Add</button>
                     <br></br>
                     <div>
-                        <h4>Suggested:</h4>
+                        <h4></h4>
                         <div>
                             {
                                 this.state.suggested.map((item) => {
@@ -207,6 +207,9 @@ export default class PageLunch extends Component {
     
     addItemToCurrent = (item) => {
         this.setState({
+            addName: '',
+            addAllergy: '',
+            suggested: [],
             current: [
                 ...this.state.current,
                 item
@@ -270,7 +273,13 @@ export default class PageLunch extends Component {
             title: title,
             items: items
         }).then(res => {
-            window.location.reload();
+            this.fetchDateResults();
+            
+            this.setState({
+                addName: '',
+                addAllergy: '',
+                suggested: [],
+            });
         });
     }
     

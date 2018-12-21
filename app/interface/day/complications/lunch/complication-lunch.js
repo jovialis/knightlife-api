@@ -62,14 +62,14 @@ module.exports.suggestFood = async (name) => {
 module.exports.hideSuggestion = async (badge) => {
     return new Promise(async (resolve, reject) => {
         const Food = mongoose.model('Food');
-        
+
         try {
             await Food.findOneAndUpdate({
                 badge: badge
             }, {
                 suggest: false
             });
-            
+
             resolve(true);
         } catch (err) {
             reject(err);
@@ -92,6 +92,11 @@ module.exports.doUpdate = (lunch, props) => {
                 if (!item.name) {
                     continue;
                 }
+                
+                // Blank string allergies get turned to null
+                if (item.allergy.trim().length === 0) {
+                    item.allergy = null;
+                }
 
                 const indexingName = item.name.trim().toLowerCase();
                 const indexingAllergy = item.allergy ? (item.allergy.trim().toLowerCase()) : null;
@@ -102,6 +107,12 @@ module.exports.doUpdate = (lunch, props) => {
                 });
 
                 if (alreadyExisting) {
+                    // If we're adding it as a menu option, we're going to reset the suggest flag.
+                    if (!alreadyExisting.suggest) {
+                        alreadyExisting.suggest = true;
+                        await alreadyExisting.save();
+                    }
+
                     idList.push(alreadyExisting._id);
                     continue;
                 }
