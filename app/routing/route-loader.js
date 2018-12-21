@@ -40,9 +40,12 @@ function register(app) {
 
     // Dashboard
     require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
+    
+    // Lunch
     require('./routes/portal/dashboard/lunch/post-retrieve-page-lunch').register(app);
     require('./routes/portal/dashboard/lunch/post-retrieve-food-suggestions').register(app);
     require('./routes/portal/dashboard/lunch/post-submit-data-lunch').register(app);
+    require('./routes/portal/dashboard/lunch/post-submit-hide-suggestion').register(app);
 
     // App
     require('./routes/application/day/post-retrieve-day').register(app);

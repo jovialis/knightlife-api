@@ -41,6 +41,7 @@ module.exports.suggestFood = async (name) => {
 
         try {
             Food.find({
+                suggest: true,
                 nameLower: {
                     '$regex': name.toLowerCase()
                 }
@@ -52,6 +53,24 @@ module.exports.suggestFood = async (name) => {
 
                 resolve(items);
             });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+module.exports.hideSuggestion = async (badge) => {
+    return new Promise(async (resolve, reject) => {
+        const Food = mongoose.model('Food');
+        
+        try {
+            await Food.findOneAndUpdate({
+                badge: badge
+            }, {
+                suggest: false
+            });
+            
+            resolve(true);
         } catch (err) {
             reject(err);
         }

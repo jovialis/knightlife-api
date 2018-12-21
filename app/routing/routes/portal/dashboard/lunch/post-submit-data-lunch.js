@@ -24,8 +24,6 @@ module.exports.register = function(app) {
             const title = req.body.title;
             const items = req.body.items;
             
-            console.log('Recieved request to update lunch menu with items: ' + JSON.stringify(items));
-
             try {
                 const complication = await require(`${ global.__interface }/day/retrieve-day`).updateComplication(date, 'lunch', {
                     title: title,

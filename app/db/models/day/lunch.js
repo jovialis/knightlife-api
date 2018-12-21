@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
 
 const Food = new mongoose.Schema({
+    badge: {
+        type: String,
+        default: uuid
+    },
     name: {
         type: String,
         required: true
@@ -11,6 +15,10 @@ const Food = new mongoose.Schema({
     allergy: {
         type: String,
         default: null
+    },
+    suggest: {
+        type: Boolean,
+        default: true
     },
     nameLower: String,
     allergyLower: {

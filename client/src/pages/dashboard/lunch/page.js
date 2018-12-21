@@ -24,7 +24,9 @@ export default class PageLunch extends Component {
         current: [],
         __v: -1,
         
-        search: '',
+        addName: '',
+        addAllergy: '',
+        
         suggested: [],
     }
 
@@ -75,26 +77,32 @@ export default class PageLunch extends Component {
                     <input type='text' value={ this.state.title } onChange={ this.updateTitleField } placeholder='Menu Name'></input>
                     <ul>
                         {
-                            this.state.current.map(item => (
-                                <li>
-                                    <h6>Name: { item.name }</h6>
-                                    <h6>Allergy: { item.allergy }</h6>
-                                </li>
-                            ))
+                            this.state.current.map((item) => {
+                                return (
+                                    <AddedFood item={ item } onRemove={ this.removeFood } />
+                                );
+                            })
                         }
                     </ul>
                 </div>
                 <label>
                     <h4>Add Food</h4>
-                    <input type='text' value={ this.state.search } onChange={ this.updateSearchField } placeholder='Food Name' required></input>
+                    <input type='text' value={ this.state.addName } onChange={ this.updateNameField } placeholder='Food Name' required></input>
+                    <br></br>
+                    <input type='text' value={ this.state.addAllergy } onChange={ this.updateAllergyField } placeholder='Food Allergy' required></input>
+                    <button onClick={ this.addFoodField }>Add</button>
+                    <br></br>
                     <div>
-                        {
-                            this.state.suggested.map((item) => {
-                                return (
-                                    <SuggestedFood item={ item } onSelect={ this.addItemToCurrent }  />
-                                );
-                            })
-                        }
+                        <h4>Suggested:</h4>
+                        <div>
+                            {
+                                this.state.suggested.map((item) => {
+                                    return (
+                                        <SuggestedFood item={ item } onSelect={ this.addItemToCurrent } delete={ this.removeItemFromSuggestions } />
+                                    );
+                                })
+                            }
+                        </div>
                     </div>
                 </label>
             </div>
@@ -115,16 +123,56 @@ export default class PageLunch extends Component {
         });
     }
     
-    updateSearchField = (event) => {
+    updateNameField = (event) => {
         this.setState({
-            search: event.target.value
+            addName: event.target.value
         }, () => {
             this.fetchSearchResults();
         });
     }
     
+    updateAllergyField = (event) => {
+        this.setState({
+            addAllergy: event.target.value
+        });
+    }
+
+    addFoodField = () => {
+        const name = this.state.addName;
+        const allergy = this.state.addAllergy;
+        
+        this.setState({
+            addName: '',
+            addAllergy: '',
+            
+            current: [
+                ...this.state.current,
+                {
+                    name: name,
+                    allergy: allergy
+                }
+            ]
+        });
+    }
+    
+    removeFood = (item) => {
+        let items = this.state.current;
+        
+        const index = items.indexOf(item);
+        
+        if (index === -1) {
+            return;
+        }
+        
+        items.splice(index, 1);
+        
+        this.setState({
+            current: items
+        });
+    }
+    
     fetchSearchResults = () => {
-        const searchTerm = this.state.search.trim();
+        const searchTerm = this.state.addName.trim();
         if (searchTerm.length === 0) {
             this.setState({
                 suggested: []
@@ -137,7 +185,7 @@ export default class PageLunch extends Component {
             text: searchTerm
         }).then(res => {
             // If we've changed the search terms.
-            if (this.state.search.trim() !== searchTerm) {
+            if (this.state.addName.trim() !== searchTerm) {
                 return;
             }
             
@@ -166,6 +214,16 @@ export default class PageLunch extends Component {
         });
     }
     
+    removeItemFromSuggestions = (item) => {
+        const badge = item.badge;
+        
+        axios.post('/dashboard/page/lunch/food/suggest/do/hide', {
+            badge: badge
+        }).then(res => {
+            this.fetchSearchResults(); 
+        });
+    }
+    
     fetchDateResults = () => {
         const date = this.state.selectedDate;
 
@@ -185,7 +243,7 @@ export default class PageLunch extends Component {
                 if (index) {
                     const lunch = index.lunch;
                     
-                    const title = lunch.title;
+                    const title = lunch.title ? lunch.title : '';
                     const items = lunch.items;
                     
                     const __v = lunch.__v;
@@ -226,6 +284,25 @@ export default class PageLunch extends Component {
 
 }
 
+class AddedFood extends Component {
+    
+    render() {
+        return (
+            <li style={{ 'backgroundColor': 'pink' }}>
+                <h6>Name: { this.props.item.name }</h6>
+                <h6>Allergy: { this.props.item.allergy }</h6>
+                <br></br>
+                <button onClick={ this.remove }>Remove from Menu</button>
+            </li>
+        );
+    }
+    
+    remove = () => {
+        this.props.onRemove(this.props.item);
+    }
+    
+}
+
 class SuggestedFood extends Component {
     
     constructor(props) {
@@ -237,10 +314,12 @@ class SuggestedFood extends Component {
     render() {
         return (
             <div>
-                <button onClick={ this.selected }>Add</button>
                 <div style={{ 'backgroundColor': 'yellow', 'border': '1px solid gray' }}>
+                    <b style={{ 'color': 'brown' }}>Suggested Food</b>
                     <h4>{ this.props.item.name }</h4>
                     <h5>{ this.props.item.allergy }</h5>
+                    <button onClick={ this.selected }>Add to Menu</button>
+                    <button onClick={ this.doDelete }>Stop suggesting this food</button>
                 </div>
             </div>
         );
@@ -248,6 +327,10 @@ class SuggestedFood extends Component {
     
     selected = () => {
         this.props.onSelect(this.props.item);
+    }
+    
+    doDelete = () => {
+        this.props.delete(this.props.item);
     }
     
 }
