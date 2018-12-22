@@ -131,4 +131,5 @@
 
 .page-login .content-section-manual form input[type=submit]:hover {
     background-color: #3667bc;
+    cursor: pointer;
 }

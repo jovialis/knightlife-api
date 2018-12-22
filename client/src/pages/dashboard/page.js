@@ -3,9 +3,8 @@ import { Link, Redirect } from 'react-router-dom';
 
 import axios from 'axios';
 
-import feather from 'feather-icons';
-
 import Navigation from '../../components/navigation/component';
+import Module from './components/module/component';
 
 // Styles
 import './styles.css';
@@ -77,9 +76,8 @@ export default class PageDashboard extends Component {
 
     render() {
         return (
-            <div className='page-dashboard'>
+            <div id='page-dashboard'>
                 <Navigation />
-                <h1>Dashboard</h1>
                 { this.renderPage() }
             </div>
         );
@@ -105,24 +103,42 @@ export default class PageDashboard extends Component {
 
     renderMain = () => {
         return (
-            <div className='page-content'>
-                <section id='section-overview'>
-                    <h2>{ this.state.overview.name }</h2>
-                    <h5>{ this.state.overview.username }</h5>
-                    <img src={ this.state.overview.picture } style={{ width: '200px', height: 'auto' }}></img>
-                    <button onClick={ this.doLogout } style={{ color: 'red' }}>Logout</button>
-                </section>
-                <section id='section-modules'>
-                    { this.state.modules.map(module => (
-                        <div id={ `modules-item-${ module.id }` } className='modules-item' style={{ border: '1px solid gray' }}>
-                            <Link to={ `/dashboard/${ module.id }` }>
-                                <div className='modules-item-icon-wrapper' dangerouslySetInnerHTML={{ __html: feather.icons[module.icon].toSvg() }}></div>
-                                <div className='modules-item-body'>
-                                    <b>{ module.name }</b>
+            <div id='page-body'>
+                <section id='page-header'>
+                    <div className='tray'>
+                        <div className='tray-bumper page-dimensions'>
+                            <div className='tray-content'>
+                                <img className='profile-image' src={ this.state.overview.picture }></img>
+                                <div className='profile-info offset-left'>
+                                    <div className='profile-info-name'>
+                                        <span>{ this.state.overview.name }</span>
+                                    </div>
+                                    <div className='profile-info-username'>
+                                        <span>{ this.state.overview.username }</span>
+                                    </div>
                                 </div>
-                            </Link>
+                                <div className='profile-actions offset-left'>
+                                    <div className='profile-actions-logout'>
+                                        <button onClick={ this.doLogout }>Logout</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    )) }
+                    </div>
+                </section>
+                <section id='page-content' className='page-dimensions'>
+                    <section id='content-modules'>
+                        <span className='modules-header'>Modules</span>
+                        <div className='modules-body'>
+                            { 
+                                this.state.modules.map((module) => {
+                                    return (
+                                        <Module module={ module }></Module>
+                                    );
+                                }) 
+                            }
+                        </div>
+                    </section>
                 </section>
             </div>
         );
