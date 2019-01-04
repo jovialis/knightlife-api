@@ -14,11 +14,12 @@
 		"bcrypt": "latest",
 		"uuid": "latest",
 		"googleapis": "latest",
-        "key-del": "latest",
-        "ical-toolkit": "latest",
-        "download": "latest",
-        "redis": "latest",
-        "moment": "latest"
+		"key-del": "latest",
+		"ical-toolkit": "latest",
+		"download": "latest",
+		"redis": "latest",
+		"moment": "latest",
+		"dotenv": "latest"
 	},
 	"scripts": {
 		"start": "node index.js"
