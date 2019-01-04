@@ -17,7 +17,8 @@
         "key-del": "latest",
         "ical-toolkit": "latest",
         "download": "latest",
-        "redis": "latest"
+        "redis": "latest",
+        "moment": "latest"
 	},
 	"scripts": {
 		"start": "node index.js",

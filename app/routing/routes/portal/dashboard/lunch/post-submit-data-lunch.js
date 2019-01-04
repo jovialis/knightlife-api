@@ -25,7 +25,7 @@ module.exports.register = function(app) {
             const items = req.body.items;
             
             try {
-                const complication = await require(`${ global.__interface }/day/retrieve-day`).updateComplication(date, 'lunch', {
+                const complication = await require(`${ global.__interface }/day/day`).updateComplication(date, 'lunch', {
                     title: title,
                     items: items,
                     version: version

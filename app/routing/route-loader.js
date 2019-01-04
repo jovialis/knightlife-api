@@ -16,12 +16,12 @@ module.exports.init = () => {
     app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
     register(app);
-
-    app.use(express.static(path.join(__basedir, 'client/build')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__basedir, 'client/build/index.html'));
-    });
+//
+//    app.use(express.static(path.join(__basedir, 'client/build')));
+//
+//    app.get('*', (req, res) => {
+//        res.sendFile(path.join(__basedir, 'client/build/index.html'));
+//    });
 
     var port = process.env.PORT || 5000;
 

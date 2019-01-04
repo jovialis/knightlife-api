@@ -6,25 +6,36 @@ const Event = new mongoose.Schema({
         type: String,
         default: uuid
     },
-    link: String,
+    date: {
+        type: Date,
+        required: true
+    },
     schedule: {
-        date: {
-            type: Date,
-            required: true
-        },
         blocks: { // These are the badges of all blocks during which this event occurrs on that day.
             type: [ String ],
-            default: []
+            default: null
         },
-        start: Date,
-        end: Date
+        start: {
+            type: Date,
+            default: null
+        },
+        end: {
+            type: Date,
+            default: null
+        }
     },
     title: {
         type: String,
         required: true
     },
-    description: String,
-    location: String,
+    description: {
+        type: String,
+        default: null
+    },
+    location: {
+        type: String,
+        default: null
+    },
     categories: {
         type: [ String ],
         default: []
@@ -35,3 +46,5 @@ const Event = new mongoose.Schema({
 });
 
 mongoose.model('Event', Event);
+
+require('./sportingevent');

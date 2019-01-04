@@ -21,7 +21,7 @@ module.exports.register = (app) => {
 //                return;
 //            }
 
-            let complication = await require(`${ global.__interface }/day/retrieve-day`).retrieveComplication(date, 'lunch', true);
+            let complication = await require(`${ global.__interface }/day/day`).retrieveComplication(date, 'lunch', true);
 
             deleteKey(complication, [ '_id' ], { copy: false });
 

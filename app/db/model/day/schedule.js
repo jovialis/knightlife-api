@@ -57,14 +57,21 @@ const Block = new mongoose.Schema({
 });
 
 const BlockList = new mongoose.Schema({
+    badge: {
+        type: String,
+        default: uuid
+    },
     blocks: {
         type: [ Block ]
     },
-    target: { // 0 = all school, 1 = freshman, etc. 5 = other.
+    target: { // 0 = freshman, etc. 4 = other.
         type: Number,
-        default: 0
+        default: null
     },
-    title: String // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
+    title: { 
+        type: String,
+        default: null
+    } // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
 }, {
     _id: false
 });
