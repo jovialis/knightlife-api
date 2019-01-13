@@ -1,103 +1,163 @@
 const mongoose = require('mongoose');
-const redis = require('redis').createClient();
+const redis = require(`${ __redis }`);
 
 const ical = require('ical-toolkit');
 const download = require('download');
 const moment = require('moment');
 
-const globalUrl = 'https://www.bbns.org/cf_calendar/feed.cfm?type=ical&feedID=4C21C6845B904089A90AF02BBD2B6290';
+// Implement promises for redis
+const redisGet = require('util').promisify(redis.get).bind(redis);
 
 module.exports.name = 'sports';
 
-module.exports.fetchByDate = (date, props) => {
-    const team = props.team;
+module.exports.remote = true;
 
-    // If team IDS were provided and we haven't checked each team in a while, we fetch from url
-    // If team wasn't provided and we haven't checked global in a while, we fetch from url
-    
-    // If we were supplied team ids, then we go thr    
-    return new Promise(async (resolve, reject) => {
-        const SportsEvent = mongoose.model('SportsEvent');
+module.exports.fetchUpdates = async () => {
+    const Team = mongoose.model('SportsTeam');
+
+    const teams = await Team.find({});
+
+    for (const team of teams) {
+        try {
+            const id = team.calendarId;
+
+            if (await redisGet(`events-sports-refresh-${ id }`)) {
+                console.log(`Sports team ${ id } has been refreshed recently.`);
+                return;
+            }
+
+            // 4 hours
+            redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 14400);
+
+            const url = teamUrl(id);
+
+            const raw = await download(url);
+            const ics = await ical.parseToJSON(raw);
+
+            try {
+                await handleICS(team, ics);
+            } catch (err) {
+                console.log(err);
+            }
             
-        
-    });
-}
-
-async function fetchGlobalSportingEvents() {
-    const raw = await download(globalUrl);
+//            wait(250);
+        } catch (err) {
+            console.log(err);
+        }
+    }
     
-    const ics = await ical.parseToJSON(raw);
-    
-    const parsedOutput = cleanICS(ics);
-}
-
-async function fetchTeamSportingEvents(teamId) {
-    const raw = await download(teamUrl(teamId));
-    
-    const ics = await ical.parseToJSON(raw);
-    
-    const parsedOutput = cleanICS(ics);
+    console.log('Finished updating sporting events.');
 }
 
 function teamUrl(teamId) {
     return `https://www.bbns.org/calendar/team_${ teamId }.ics`;
 }
 
-async function parseRawICal(raw) {
-    const ics = await ical.parseToJSON(raw);
-    const parsedOutput = cleanICS(ics);
-    
-    return parsedOutput;
-}
+async function handleICS(team, ics) {
+    const Event = mongoose.model('Event');
 
-function cleanICS(ics) {
-    let output = {};
+    if (ics['VCALENDAR'] === undefined || ics['VCALENDAR'][0]['VEVENT'] === undefined) {
+        console.log(`Found no events for team ${ team.calendarId }`);
+        return;
+    }
 
-    const root = ics['VCALENDAR'][0];
+    ics['VCALENDAR'][0]['VEVENT'].forEach(async event => {
+        const raw = JSON.stringify(event);
+        const badge = event['UID'];
 
-    output.title = root['X-WR-CALNAME'];
+        const eventDocument = await Event.findOne({ 
+            badge: badge
+        });
 
-    output.events = root['VEVENT'].map(event => {
-        return interpretEvent(event);
+        try {
+            // Event already in system
+            if (eventDocument) {
+                // Raw data is the same, continue
+                if (eventDocument.calendarRaw === raw) {
+                    return;
+                    // Need to update event
+                } else {
+                    const digested = digestEvent(team, event);
+                    const model = digested.model;
+
+                    digested.model = undefined;
+
+                    try {
+                        for (const key in digested) {
+                            eventDocument[key] = digested[key];
+                        }
+
+                        await eventDocument.save();
+
+                        console.log(`Updated event ${ badge }`);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }
+            } else {
+                const digested = digestEvent(team, event);
+
+                if (digested === undefined) {
+                    //                    console.log('Recieved an unparsable event.');
+                    return;
+                }
+
+                const model = digested.model;
+
+                digested.model = undefined;
+
+                try {
+                    await mongoose.model(model).create(digested);
+
+                    console.log(`Created event ${ badge }`);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
     });
-
-    return output;
 }
 
-function interpretEvent(event) {
-    let output = {};
+function digestEvent(team, event) {
+    let output = {
+        schedule: {},
+        flags: {}
+    };
 
-    output.uid = event['UID'];
+    output.badge = event['UID'];
 
     const dateFormat = 'YYYYMMDD HHmmss';
 
-    output.time = {};
-    output.time.start = moment.utc(event['DTSTART'], dateFormat).toDate();
-    output.time.end = event['DTEND'] ? (moment.utc(event['DTEND'], dateFormat).toDate()) : null;
+    // Invalid event if it doesn't have a date.
+    if (event['DTSTART'] === undefined) {
+        console.log(`Recieved an invalid event.`);
+        return;
+    }
 
-    output.raw = event['SUMMARY'];
+    output.schedule.start = moment.utc(event['DTSTART'], dateFormat).toDate();
+    output.schedule.end = event['DTEND'] ? (moment.utc(event['DTEND'], dateFormat).toDate()) : null;
 
-    output.details = {};
-    output.details.location = event['LOCATION'];
+    const start = output.schedule.start;
+    output.date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
 
-    let summary = event['SUMMARY'];
+    output.calendarRaw = JSON.stringify(event);
 
-    output.details.notifications = {}
-    output.details.notifications.changed = summary.includes('CHANGED:');
-    output.details.notifications.cancelled = summary.includes('CANCELLED');
+    output.title = event['SUMMARY'];
+    output.location = event['LOCATION'];
 
-    output.team = {};
-    output.team.sport = summary.split('-')[0].trim().toLowerCase();
+    let summary = event['SUMMARY'].replace(team.name, '').trim();
 
-    // Remove sport. We can extract the section later.
-    summary = summary.substring(summary.indexOf('-') + 1, summary.length);
+    output.flags.changed = summary.includes('CHANGED:');
+    output.flags.cancelled = summary.includes('CANCELLED');
 
     // Remove artifacts
-    if (output.details.notifications.changed) {
+    if (output.flags.changed) {
         summary = summary.split('CHANGED:')[0];
     }
 
-    if (output.details.notifications.cancelled) {
+    if (output.flags.cancelled) {
         summary = summary.replace('CANCELLED', '');
     }
 
@@ -107,48 +167,51 @@ function interpretEvent(event) {
 
     // Contains vs. === game
     if (summary.includes('vs.')) {
-        output.type = 'game';
+        output.model = 'SportsGameEvent';
 
-        const home = output.raw.includes('(Home)') || output.details.location === 'BB&N';
-        output.details.home = home;
+        output.team = team._id;
+        output.teamId = team.calendarId;
+
+        const home = output.calendarRaw.includes('(Home)') || output.location === 'BB&N';
+        output.home = home;
 
         const splitAroundVs = summary.split('vs.');
-
-        const sections = splitAroundVs[0];
-        output.team.sections = sections.split('&').map(section => {
-            return section.trim().toLowerCase();
-        });
 
         let opponents = splitAroundVs[1].split(',');
         opponents = opponents.map(opponent => {
             return opponent.replace(/\\/g, '').replace('  ', ' ').trim();
         });
 
-        output.details.opponents = opponents;
+        output.opponents = opponents;
 
         // Multiple hyphens === tournament
     } else if (summary.includes('-')) {
-        output.type = 'tournament';
+        output.model = 'SportsTournamentEvent';
 
-        const home = output.raw.includes('(Home)') || output.details.location === 'BB&N';
-        output.details.home = home;
+        output.team = team._id;
+        output.teamId = team.calendarId;
 
-        const sections = summary.substring(0, summary.lastIndexOf('-'));
-        output.team.sections = sections.split('&').map(section => {
-            return section.trim().toLowerCase();
-        });
+        const home = output.calendarRaw.includes('(Home)') || output.location === 'BB&N';
+        output.home = home;
 
         let tournamentName = summary.substring(summary.lastIndexOf('-') + 1, summary.length);
-        output.details.tournament = tournamentName.replace(/\\/g, '').replace('  ', ' ').trim();
+        output.tournament = tournamentName.replace(/\\/g, '').replace('  ', ' ').trim();
 
         // No game means practice
     } else {
-        output.type = 'practice';
+        output.model = 'SportsPracticeEvent';
 
-        output.team.sections = summary.split('&').map(section => {
-            return section.trim().toLowerCase();
-        });
+        output.team = team._id;
+        output.teamId = team.calendarId;
     }
 
     return output;
+}
+
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
+    }
 }

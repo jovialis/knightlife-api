@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
 
-const Event = new mongoose.Schema({
+const categories = [
+    require('./sports/sportsevent')
+];
+
+const EventSchema = new mongoose.Schema({
     badge: {
         type: String,
         default: uuid
+    },
+    calendarRaw: {
+        type: String,
+        default: null
     },
     date: {
         type: Date,
@@ -36,15 +44,30 @@ const Event = new mongoose.Schema({
         type: String,
         default: null
     },
+    flags: {
+        changed: {
+            type: Boolean,
+            default: false
+        },
+        cancelled: {
+            type: Boolean,
+            default: false
+        }
+    },
     categories: {
         type: [ String ],
         default: []
     }
 }, {
-    collection: 'events',
-    versionKey: false
+    collection: 'events'
 });
 
-mongoose.model('Event', Event);
+for (const category of categories) {
+    category.registerMiddleware(EventSchema);
+}
 
-require('./sportingevent');
+const Event = mongoose.model('Event', EventSchema);
+
+for (const category of categories) {
+    category.register(Event);
+}
