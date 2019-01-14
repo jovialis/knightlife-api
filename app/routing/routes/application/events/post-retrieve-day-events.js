@@ -2,7 +2,7 @@ const deleteKey = require('key-del');
 
 module.exports.register = (app) => {
     app.get('/data/events/:year/:month/:day', async (req, res) => {
-        let categories = req.query('categories');
+        let categories = req.query.categories;
         if (categories !== undefined) {
             categories = categories.split(',');
         } else {
@@ -23,16 +23,15 @@ module.exports.register = (app) => {
             return;
         }
 
-        let rawFilters = req.query('filters');
+        let rawFilters = req.query.filters;
         let filters = {};
-
-        if (filters !== undefined) {
+        
+        if (rawFilters !== undefined) {
             try {
                 rawFilters = rawFilters.split(',');
                 rawFilters.forEach(filter => {
                     const split = filter.split(':');
                     
-                    // Convert query to integer if it's equivalent
                     if (!isNaN(split[1])) {
                         split[1] = parseInt(split[1]);
                     }

@@ -28,6 +28,7 @@ module.exports.fetchUpdates = async () => {
 
             // 4 hours
             redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 14400);
+//            redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 10);
 
             const url = teamUrl(id);
 

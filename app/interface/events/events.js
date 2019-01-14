@@ -20,7 +20,7 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
             },
             ...filters
         };
-
+        
         if (categories.length > 0) {
             query.categories = {
                 $in: categories
@@ -81,12 +81,14 @@ async function attemptFetchEventUpdates() {
             if (!category.remote) {
                 continue;
             }
-
+            
             // Check if category has been cached or recently checked
             const redisCheck = await redisGet(`events-${ category.name }-refresh-global`);
-
+//            const redisCheck = null;
+            
             if (redisCheck === null) {
                 // 16 hours
+//                redis.set(`events-${ category.name }-refresh-global`, 'ye boi', 'EX', 10);
                 redis.set(`events-${ category.name }-refresh-global`, 'ye boi', 'EX', 57600);
 
                 console.log(`Fetching up-to-date events for category ${ category.name }.`);

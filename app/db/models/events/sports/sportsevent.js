@@ -107,6 +107,10 @@ module.exports.register = (model) => {
         teamId: {
             type: Number
         },
+        tournament: {
+            type: String,
+            default: null
+        },
         home: {
             type: Boolean,
             required: true

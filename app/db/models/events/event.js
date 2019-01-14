@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
 
 const categories = [
+    
     require('./sports/sportsevent')
+    
 ];
 
 const EventSchema = new mongoose.Schema({
