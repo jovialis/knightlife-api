@@ -50,9 +50,9 @@ module.exports.register = (app) => {
         } else {
             rawFilters = [];
         }
-
+        
         try {
-            let events = await require(`${ global.__interface }/events/events`).retrieveEvents(date, categories);
+            let events = await require(`${ global.__interface }/events/events`).retrieveEvents(date, categories, filters);
             events = events.map(event => event.toObject());
 
             deleteKey(events, ['__v', '_id', 'calendarRaw', '__t', 'teamId'], { copy: false });

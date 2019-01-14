@@ -26,7 +26,7 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
                 $in: categories
             };
         }
-
+        
         try {
             const events = await Event.find(query);
             resolve(events);
