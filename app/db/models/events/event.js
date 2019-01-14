@@ -3,7 +3,8 @@ const uuid = require('uuid/v4');
 
 const categories = [
     
-    require('./sports/sportsevent')
+    require('./sports/sportsevent'),
+    require('./sports/schoolevent')
     
 ];
 

@@ -28,7 +28,7 @@ module.exports.fetchUpdates = async () => {
 
             // 4 hours
             redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 14400);
-//            redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 10);
+            //            redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 10);
 
             const url = teamUrl(id);
 
@@ -40,13 +40,13 @@ module.exports.fetchUpdates = async () => {
             } catch (err) {
                 console.log(err);
             }
-            
-//            wait(250);
+
+            //            wait(250);
         } catch (err) {
             console.log(err);
         }
     }
-    
+
     console.log('Finished updating sporting events.');
 }
 
@@ -132,16 +132,21 @@ function digestEvent(team, event) {
     const dateFormat = 'YYYYMMDD HHmmss';
 
     // Invalid event if it doesn't have a date.
-    if (event['DTSTART'] === undefined) {
+    if (event['DTSTART'] === undefined && event[''] === undefined) {
         console.log(`Recieved an invalid event.`);
         return;
     }
 
-    output.schedule.start = moment.utc(event['DTSTART'], dateFormat).toDate();
+    output.schedule.start = event['DTSTART'] ? (moment.utc(event['DTSTART'], dateFormat).toDate()) : null;
     output.schedule.end = event['DTEND'] ? (moment.utc(event['DTEND'], dateFormat).toDate()) : null;
 
     const start = output.schedule.start;
-    output.date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+
+    if (start === null) {
+        output.date = moment.utc(event['DTSTART;VALUE=DATE'], 'YYYYMMDD').toDate();
+    } else {
+        output.date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    }
 
     output.calendarRaw = JSON.stringify(event);
 

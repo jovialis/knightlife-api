@@ -4,7 +4,8 @@ const redis = require(`${ __redis }`);
 const redisGet = require('util').promisify(redis.get).bind(redis);
 
 const dynamicEventCategories = [
-    require('./categories/sports')
+    require('./categories/sports'),
+    require('./categories/school')
 ];
 
 // Filter by date, category, filters
