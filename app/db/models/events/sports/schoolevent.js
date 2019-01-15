@@ -7,14 +7,25 @@ module.exports.registerMiddleware = (schema) => {
 
 module.exports.register = (model) => {
 
-    const SchoolEventSchema = new mongoose.Schema({
+    const AllSchoolEventSchema = new mongoose.Schema({
         categories: {
             type: [ String ],
-            default: [ 'school' ]
+            default: [ 'school', 'school-all' ]
         }
     });
 
-    const SchoolEvent = model.discriminator('SchoolEvent', SchoolEventSchema);
+    const AllSchoolEvent = model.discriminator('AllSchoolEvent', AllSchoolEventSchema);
+    
+    const UpperSchoolEventSchema = new mongoose.Schema({
+        categories: {
+            type: [ String ],
+            default: [ 'school', 'school-upper' ]
+        }
+    });
+
+    const UpperSchoolEvent = model.discriminator('UpperSchoolEvent', UpperSchoolEventSchema);
+    
+    
 
 }
 

@@ -4,7 +4,8 @@ const uuid = require('uuid/v4');
 const categories = [
     
     require('./sports/sportsevent'),
-    require('./sports/schoolevent')
+    require('./sports/schoolevent'),
+    require('./sports/artevent')
     
 ];
 
@@ -13,9 +14,13 @@ const EventSchema = new mongoose.Schema({
         type: String,
         default: uuid
     },
-    calendarRaw: {
+    calendarRaw: { // The raw data from remote event. Is null if not a remote event, otherwise is set to the raw input to allow for versioning.
         type: String,
         default: null
+    },
+    hidden: { // Whether or not to show this event should be hidden. This should only be true if we're removing a remote event and want to prevent it from being readded.
+        type: Boolean,
+        default: false
     },
     date: {
         type: Date,

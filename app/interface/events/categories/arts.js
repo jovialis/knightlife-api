@@ -8,14 +8,15 @@ const moment = require('moment');
 // Implement promises for redis
 const redisGet = require('util').promisify(redis.get).bind(redis);
 
-module.exports.name = 'school';
+// 16 hrs
+module.exports.refreshDelay = 57600;
+
+module.exports.name = 'arts';
 
 module.exports.remote = true;
 
 module.exports.fetchUpdates = async () => {
-    const SchoolEvent = mongoose.model('SchoolEvent');
-
-    const url = 'https://www.bbns.org/calendar/calendar_350.ics';
+    const url = 'https://www.bbns.org/calendar/calendar_354.ics';
 
     const raw = await download(url);
     const ics = await ical.parseToJSON(raw);
@@ -26,7 +27,7 @@ module.exports.fetchUpdates = async () => {
         console.log(err);
     }
 
-    console.log('Finished updating school events.');
+    console.log('Finished updating art events.');
 }
 
 async function handleICS(ics) {
@@ -37,8 +38,10 @@ async function handleICS(ics) {
         return;
     }
 
-    ics['VCALENDAR'][0]['VEVENT'].forEach(async event => {
+    for (const event of ics['VCALENDAR'][0]['VEVENT']) {
+        event['DTSTAMP'] = undefined;
         const raw = JSON.stringify(event);
+        
         const badge = event['UID'];
 
         const eventDocument = await Event.findOne({ 
@@ -49,10 +52,14 @@ async function handleICS(ics) {
             // Event already in system
             if (eventDocument) {
                 // Raw data is the same, continue
-                if (eventDocument.calendarRaw === raw) {
-                    return;
+                if (eventDocument.calendarRaw == raw) {
+                    continue;
                     // Need to update event
                 } else {
+//                    console.log(eventDocument.calendarRaw);
+//                    console.log(raw);
+//                    console.log('--')
+                    
                     const digested = digestEvent(event);
 
                     try {
@@ -60,9 +67,11 @@ async function handleICS(ics) {
                             eventDocument[key] = digested[key];
                         }
 
+                        eventDocument.calendarRaw = raw;
+
                         await eventDocument.save();
 
-                        console.log(`Updated event ${ badge }`);
+                        console.log(`Updated arts event ${ badge }`);
                     } catch (err) {
                         console.log(err);
                     }
@@ -72,13 +81,13 @@ async function handleICS(ics) {
 
                 if (digested === undefined) {
                     //                    console.log('Recieved an unparsable event.');
-                    return;
+                    continue;
                 }
 
                 try {
-                    await mongoose.model('SchoolEvent').create(digested);
+                    await mongoose.model('ArtEvent').create(digested);
 
-                    console.log(`Created event ${ badge }`);
+                    console.log(`Created arts event ${ badge }`);
                 } catch (err) {
                     console.log(err);
                 }
@@ -86,7 +95,7 @@ async function handleICS(ics) {
         } catch (err) {
             console.log(err);
         }
-    });
+    };
 }
 
 function digestEvent(event) {
@@ -99,7 +108,7 @@ function digestEvent(event) {
     const dateFormat = 'YYYYMMDD HHmmss';
 
     // Invalid event if it doesn't have a date.
-    if (event['DTSTART'] === undefined && event[''] === undefined) {
+    if (event['DTSTART'] === undefined && event['DTSTART;VALUE=DATE'] === undefined) {
         console.log(`Recieved an invalid event.`);
         return;
     }

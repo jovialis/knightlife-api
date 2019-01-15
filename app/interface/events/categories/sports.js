@@ -8,6 +8,9 @@ const moment = require('moment');
 // Implement promises for redis
 const redisGet = require('util').promisify(redis.get).bind(redis);
 
+// 23 hrs
+module.exports.refreshDelay = 82800;
+
 module.exports.name = 'sports';
 
 module.exports.remote = true;
@@ -21,10 +24,10 @@ module.exports.fetchUpdates = async () => {
         try {
             const id = team.calendarId;
 
-            if (await redisGet(`events-sports-refresh-${ id }`)) {
-                console.log(`Sports team ${ id } has been refreshed recently.`);
-                return;
-            }
+            //            if (await redisGet(`events-sports-refresh-${ id }`)) {
+            //                console.log(`Sports team ${ id } has been refreshed recently.`);
+            //                return;
+            //            }
 
             // 4 hours
             redis.set(`events-sports-refresh-${ id }`, 'ye', 'EX', 14400);
@@ -62,8 +65,10 @@ async function handleICS(team, ics) {
         return;
     }
 
-    ics['VCALENDAR'][0]['VEVENT'].forEach(async event => {
+    for (const event of ics['VCALENDAR'][0]['VEVENT']) {
+        event['DTSTAMP'] = undefined;
         const raw = JSON.stringify(event);
+
         const badge = event['UID'];
 
         const eventDocument = await Event.findOne({ 
@@ -75,7 +80,7 @@ async function handleICS(team, ics) {
             if (eventDocument) {
                 // Raw data is the same, continue
                 if (eventDocument.calendarRaw === raw) {
-                    return;
+                    continue;
                     // Need to update event
                 } else {
                     const digested = digestEvent(team, event);
@@ -88,9 +93,11 @@ async function handleICS(team, ics) {
                             eventDocument[key] = digested[key];
                         }
 
+                        eventDocument.calendarRaw = raw;
+
                         await eventDocument.save();
 
-                        console.log(`Updated event ${ badge }`);
+                        console.log(`Updated sports event (${ model }) ${ badge }`);
                     } catch (err) {
                         console.log(err);
                     }
@@ -100,7 +107,7 @@ async function handleICS(team, ics) {
 
                 if (digested === undefined) {
                     //                    console.log('Recieved an unparsable event.');
-                    return;
+                    continue;
                 }
 
                 const model = digested.model;
@@ -110,7 +117,7 @@ async function handleICS(team, ics) {
                 try {
                     await mongoose.model(model).create(digested);
 
-                    console.log(`Created event ${ badge }`);
+                    console.log(`Created sports event (${ model }) ${ badge }`);
                 } catch (err) {
                     console.log(err);
                 }
@@ -118,7 +125,7 @@ async function handleICS(team, ics) {
         } catch (err) {
             console.log(err);
         }
-    });
+    }
 }
 
 function digestEvent(team, event) {
@@ -132,7 +139,7 @@ function digestEvent(team, event) {
     const dateFormat = 'YYYYMMDD HHmmss';
 
     // Invalid event if it doesn't have a date.
-    if (event['DTSTART'] === undefined && event[''] === undefined) {
+    if (event['DTSTART'] === undefined && event['DTSTART;VALUE=DATE'] === undefined) {
         console.log(`Recieved an invalid event.`);
         return;
     }

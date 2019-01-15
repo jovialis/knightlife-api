@@ -44,7 +44,7 @@ module.exports.register = (app) => {
             let events = await require(`${ global.__interface }/events/events`).retrieveUpcomingEvents(date, categories, filters);
             events = events.map(event => event.toObject());
 
-            deleteKey(events, ['__v', '_id', 'calendarRaw', '__t', 'teamId'], { copy: false });
+            deleteKey(events, ['__v', '_id', 'calendarRaw', '__t', 'teamId', 'hidden'], { copy: false });
 
             res.json({
                 index: events
