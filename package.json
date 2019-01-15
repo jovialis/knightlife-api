@@ -25,6 +25,6 @@
 		"start": "node index.js"
 	},
 	"engines": {
-		"node": "latest"
+		"node": "10.11.0"
 	}
 }
