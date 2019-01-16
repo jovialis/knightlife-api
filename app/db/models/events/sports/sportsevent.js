@@ -88,19 +88,13 @@ module.exports.register = (model) => {
             required: true
         },
         score: {
-            type: GameScore
+            type: GameScore,
+            default: () => ({})
         },
         categories: {
             type: [ String ],
             default: [ 'sports', 'sports-game' ]
         }
-    });
-
-    SportsGameSchema.pre('save', function(next) {
-        if (this.isNew) {
-            this.score = new GameScore();
-        }
-        next();
     });
 
     const SportsGame = model.discriminator('SportsGameEvent', SportsGameSchema);
