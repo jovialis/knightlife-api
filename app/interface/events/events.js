@@ -25,7 +25,6 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
             ...filters
         };
 
-
         if (categories.length > 0) {
             query.categories = {
                 $in: categories
@@ -62,13 +61,8 @@ module.exports.retrieveEvents = async (date, categories, filters) => {
             };
         }
 
-        console.log('With filters:');
-        console.log(query);
-
         try {
             const events = await Event.find(query);
-            console.log(events);
-
             resolve(events);
 
             attemptFetchEventUpdates();
