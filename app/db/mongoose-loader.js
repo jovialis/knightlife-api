@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 module.exports.init = () => {
     mongoose.connect(process.env.MONGODB_URI);
 
+    mongoose.set('debug', true);
+    
     load();
 }
 
