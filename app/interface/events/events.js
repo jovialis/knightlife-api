@@ -32,7 +32,7 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
         }
 
         try {
-            const events = await Event.find(query).sort({ 'schedule.start': -1, 'date': -1 }).exec();
+            const events = await Event.find(query).sort({ 'schedule.start': 1, 'date': 1 }).exec();
             resolve(events);
 
             // Fetch event updates.
@@ -62,7 +62,7 @@ module.exports.retrieveEvents = async (date, categories, filters) => {
         }
 
         try {
-            const events = await Event.find(query).sort({ 'schedule.start': -1, 'date': -1 }).exec();
+            const events = await Event.find(query).sort({ 'schedule.start': 1, 'date': 1 }).exec();
             resolve(events);
 
             attemptFetchEventUpdates();
