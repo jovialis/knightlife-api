@@ -88,8 +88,12 @@ async function attemptFetchEventUpdates() {
             }
 
             // Check if category has been cached or recently checked
-            //            const redisCheck = await redisGet(`events-${ category.name }-refresh-global`);
-            const redisCheck = null;
+            let redisCheck = await redisGet(`events-${ category.name }-refresh-global`);
+
+            // For debugging
+            if (process.env.OVERRIDE_EVENT_COOLDOWNS) {
+                redisCheck = null;
+            }
 
             if (redisCheck === null) {
                 // 16 hours
