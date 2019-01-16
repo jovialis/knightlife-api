@@ -68,6 +68,8 @@ module.exports.register = (model) => {
             type: Number,
             default: -1
         }
+    }, {
+        _id: false
     });
 
     const SportsGameSchema = new mongoose.Schema({

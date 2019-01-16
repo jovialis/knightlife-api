@@ -5,7 +5,8 @@ const categories = [
     
     require('./sports/sportsevent'),
     require('./sports/schoolevent'),
-    require('./sports/artevent')
+    require('./sports/artevent'),
+    require('./sports/colorwarsevent')
     
 ];
 
