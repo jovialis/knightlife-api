@@ -96,6 +96,13 @@ module.exports.register = (model) => {
         }
     });
 
+    SportsGameSchema.pre('save', function(next) {
+        if (this.isNew) {
+            this.score = new GameScore();
+        }
+        next();
+    });
+
     const SportsGame = model.discriminator('SportsGameEvent', SportsGameSchema);
 
     const SportsTournamentSchema = new mongoose.Schema({
