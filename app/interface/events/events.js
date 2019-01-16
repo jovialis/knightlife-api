@@ -14,8 +14,6 @@ const dynamicEventCategories = [
 
 // All upcoming events
 module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
-    console.log('Retrieve upcoming events')
-
     return new Promise(async (resolve, reject) => {
         const Event = mongoose.model('Event');
 
@@ -27,7 +25,6 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
             ...filters
         };
 
-        console.log('With filters:');
 
         if (categories.length > 0) {
             query.categories = {
@@ -35,13 +32,8 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
             };
         }
 
-        console.log(query);
-
         try {
             const events = await Event.find(query);
-            
-            console.log(events);
-            
             resolve(events);
 
             // Fetch event updates.
@@ -70,8 +62,13 @@ module.exports.retrieveEvents = async (date, categories, filters) => {
             };
         }
 
+        console.log('With filters:');
+        console.log(query);
+
         try {
             const events = await Event.find(query);
+            console.log(events);
+
             resolve(events);
 
             attemptFetchEventUpdates();
