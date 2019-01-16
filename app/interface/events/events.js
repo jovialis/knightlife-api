@@ -14,6 +14,8 @@ const dynamicEventCategories = [
 
 // All upcoming events
 module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
+    console.log('Retrieve upcoming events')
+
     return new Promise(async (resolve, reject) => {
         const Event = mongoose.model('Event');
 
@@ -24,15 +26,22 @@ module.exports.retrieveUpcomingEvents = async (date, categories, filters) => {
             hidden: false,
             ...filters
         };
-        
+
+        console.log('With filters:');
+
         if (categories.length > 0) {
             query.categories = {
                 $in: categories
             };
         }
-        
+
+        console.log(query);
+
         try {
             const events = await Event.find(query);
+            
+            console.log(events);
+            
             resolve(events);
 
             // Fetch event updates.
@@ -76,7 +85,7 @@ module.exports.retrieveEvents = async (date, categories, filters) => {
 async function attemptFetchEventUpdates() {
     const start = new Date();
 
-//    console.log('Fetching remote events.');
+    //    console.log('Fetching remote events.');
 
     try {
         const categoryStart = new Date();
@@ -86,11 +95,11 @@ async function attemptFetchEventUpdates() {
             if (!category.remote) {
                 continue;
             }
-            
+
             // Check if category has been cached or recently checked
             const redisCheck = await redisGet(`events-${ category.name }-refresh-global`);
-//            const redisCheck = null;
-            
+            //            const redisCheck = null;
+
             if (redisCheck === null) {
                 // 16 hours
                 redis.set(`events-${ category.name }-refresh-global`, 'ye boi', 'EX', category.refreshDelay);
@@ -102,12 +111,12 @@ async function attemptFetchEventUpdates() {
 
                 console.log(`Updated category ${ category.name } in ${ new Date() - categoryStart }ms`);
             } else {
-//                console.log(`Event category ${ category.name } has been updated recently. Ignoring.`);
+                //                console.log(`Event category ${ category.name } has been updated recently. Ignoring.`);
             }
         }        
     } catch (err) {
         console.log(err);
     }
 
-//    console.log(`Fetched all remote events in ${ new Date() - start }ms`)
+    //    console.log(`Fetched all remote events in ${ new Date() - start }ms`)
 }
