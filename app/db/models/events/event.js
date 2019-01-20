@@ -72,7 +72,8 @@ const EventSchema = new mongoose.Schema({
         default: []
     }
 }, {
-    collection: 'events'
+    collection: 'events',
+    discriminatorKey: 'kind'
 });
 
 for (const category of categories) {
