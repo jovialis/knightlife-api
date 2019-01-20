@@ -61,6 +61,10 @@ const EventSchema = new mongoose.Schema({
         cancelled: {
             type: Boolean,
             default: false
+        },
+        postponed: {
+            type: Boolean,
+            default: false
         }
     },
     categories: {

@@ -12,6 +12,8 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'school', 'school-all' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
     const AllSchoolEvent = model.discriminator('AllSchoolEvent', AllSchoolEventSchema);
@@ -21,6 +23,8 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'school', 'school-upper' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
     const UpperSchoolEvent = model.discriminator('UpperSchoolEvent', UpperSchoolEventSchema);

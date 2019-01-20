@@ -12,9 +12,11 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'art' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
-    const ArtEvent = model.discriminator('ArtEvent', ArtEventSchema);
+    const ArtEvent = model.discriminator('ArtsEvent', ArtEventSchema);
 
 }
 

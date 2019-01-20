@@ -55,6 +55,8 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'sports', 'sports-practice' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
     const SportsPractice = model.discriminator('SportsPracticeEvent', SportsPracticeSchema);
@@ -97,6 +99,8 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'sports', 'sports-game' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
     const SportsGame = model.discriminator('SportsGameEvent', SportsGameSchema);
@@ -122,6 +126,8 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'sports', 'sports-tournament' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
     const SportsTournament = model.discriminator('SportsTournamentEvent', SportsTournamentSchema);

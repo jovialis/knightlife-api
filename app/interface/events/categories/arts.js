@@ -85,7 +85,7 @@ async function handleICS(ics) {
                 }
 
                 try {
-                    await mongoose.model('ArtEvent').create(digested);
+                    await mongoose.model('ArtsEvent').create(digested);
 
                     console.log(`Created arts event ${ badge }`);
                 } catch (err) {

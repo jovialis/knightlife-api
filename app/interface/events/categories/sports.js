@@ -162,6 +162,7 @@ function digestEvent(team, event) {
 
     let summary = event['SUMMARY'].replace(team.name, '').trim();
 
+    output.flags.postponed = summary.includes('POSTPONED');
     output.flags.changed = summary.includes('CHANGED:');
     output.flags.cancelled = summary.includes('CANCELLED');
 

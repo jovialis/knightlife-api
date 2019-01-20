@@ -29,9 +29,11 @@ module.exports.register = (model) => {
             type: [ String ],
             default: [ 'colorwars' ]
         }
+    }, {
+        discriminatorKey: 'kind'
     });
 
-    const SportsGame = model.discriminator('ColorWarEvent', ColorWarSchema);
+    const SportsGame = model.discriminator('ColorWarsEvent', ColorWarSchema);
 
 }
 
