@@ -52,8 +52,8 @@ function register(app) {
     APP
     **********************************************/
 
-    require('./routes/application/day/post-retrieve-day').register(app);
+    require('./routes/mobile/day/post-retrieve-day').register(app);
 
-    require('./routes/application/events/post-retrieve-events').register(app);
-    require('./routes/application/events/post-retrieve-day-events').register(app);
+    require('./routes/mobile/events/post-retrieve-events').register(app);
+    require('./routes/mobile/events/post-retrieve-day-events').register(app);
 }

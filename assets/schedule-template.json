@@ -1,0 +1,474 @@
+{
+	"blockIds": [
+		"a",
+		"b",
+		"c",
+		"d",
+		"e",
+		"f",
+		"g",
+		"x",
+		"lunch",
+		"activities",
+		"lab",
+		"class_meeting",
+		"assembly",
+		"advisory",
+		"custom"
+	],
+	"days": {
+		"mo": {
+			"blocks": [
+				{
+					"id": "assembly",
+					"time": {
+						"start": "08-00",
+						"end": "08-15"
+					}
+				},
+				{
+					"id": "d",
+					"time": {
+						"start": "08-20",
+						"end": "09-05"
+					}
+				},
+				{
+					"id": "b",
+					"time": {
+						"start": "09-10",
+						"end": "10-00"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "10-00",
+						"end": "10-20"
+					}
+				},
+				{
+					"id": "f",
+					"time": {
+						"start": "10-25",
+						"end": "11-10"
+					}
+				},
+				{
+					"id": "a",
+					"variation": 0,
+					"time": {
+						"start": "11-15",
+						"end": "12-05"
+					}
+				},
+				{
+					"id": "lunch",
+					"variation": 0,
+					"time": {
+						"start": "12-10",
+						"end": "12-35"
+					}
+				},
+				{
+					"id": "lunch",
+					"variation": 1,
+					"time": {
+						"start": "11-15",
+						"end": "11-40"
+					}
+				},
+				{
+					"id": "a",
+					"variation": 1,
+					"time": {
+						"start": "11-45",
+						"end": "12-35"
+					}
+				},
+				{
+					"id": "x",
+					"time": {
+						"start": "12-40",
+						"end": "13-25"
+					}
+				},
+				{
+					"id": "c",
+					"time": {
+						"start": "13-30",
+						"end": "14-20"
+					}
+				},
+				{
+					"id": "g",
+					"time": {
+						"start": "14-25",
+						"end": "15-10"
+					}
+				}
+			]
+		},
+		"tu": {
+			"blocks": [
+				{
+					"id": "advisory",
+					"time": {
+						"start": "08-00",
+						"end": "08-15"
+					}
+				},
+				{
+					"id": "e",
+					"time": {
+						"start": "08-20",
+						"end": "09-05"
+					}
+				},
+				{
+					"id": "c",
+					"time": {
+						"start": "09-10",
+						"end": "10-00"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "10-00",
+						"end": "10-20"
+					}
+				},
+				{
+					"id": "d",
+					"time": {
+						"start": "10-25",
+						"end": "11-10"
+					}
+				},
+				{
+					"id": "b",
+					"time": {
+						"start": "11-15",
+						"end": "12-05"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "12-10",
+						"end": "12-35"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "11-15",
+						"end": "11-40"
+					},
+					"variation": 1
+				},
+				{
+					"id": "b",
+					"time": {
+						"start": "11-45",
+						"end": "12-35"
+					},
+					"variation": 1
+				},
+				{
+					"id": "x",
+					"time": {
+						"start": "12-40",
+						"end": "13-20"
+					}
+				},
+				{
+					"id": "f",
+					"time": {
+						"start": "13-25",
+						"end": "14-15"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "14-15",
+						"end": "14-35"
+					}
+				},
+				{
+					"id": "a",
+					"time": {
+						"start": "14-40",
+						"end": "15-25"
+					}
+				}
+			]
+		},
+		"we": {
+			"blocks": [
+				{
+					"id": "class_meeting",
+					"time": {
+						"start": "08-00",
+						"end": "08-15"
+					}
+				},
+				{
+					"id": "g",
+					"time": {
+						"start": "08-20",
+						"end": "09-05"
+					}
+				},
+				{
+					"id": "e",
+					"time": {
+						"start": "09-10",
+						"end": "10-00"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "10-00",
+						"end": "10-20"
+					}
+				},
+				{
+					"id": "c",
+					"time": {
+						"start": "10-25",
+						"end": "11-10"
+					}
+				},
+				{
+					"id": "f",
+					"time": {
+						"start": "11-15",
+						"end": "12-05"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "12-10",
+						"end": "12-35"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "11-15",
+						"end": "11-40"
+					},
+					"variation": 1
+				},
+				{
+					"id": "f",
+					"time": {
+						"start": "11-45",
+						"end": "12-35"
+					},
+					"variation": 1
+				},
+				{
+					"id": "activities",
+					"time": {
+						"start": "12-40",
+						"end": "13-25"
+					}
+				}
+			]
+		},
+		"th": {
+			"blocks": [
+				{
+					"id": "f",
+					"time": {
+						"start": "08-20",
+						"end": "09-05"
+					}
+				},
+				{
+					"id": "a",
+					"time": {
+						"start": "09-10",
+						"end": "10-00"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "10-00",
+						"end": "10-20"
+					}
+				},
+				{
+					"id": "x",
+					"time": {
+						"start": "10-25",
+						"end": "11-05"
+					}
+				},
+				{
+					"id": "g",
+					"time": {
+						"start": "11-10",
+						"end": "12-00"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "12-05",
+						"end": "12-30"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "11-10",
+						"end": "11-35"
+					},
+					"variation": 1
+				},
+				{
+					"id": "g",
+					"time": {
+						"start": "11-40",
+						"end": "12-30"
+					},
+					"variation": 1
+				},
+				{
+					"id": "e",
+					"time": {
+						"start": "12-35",
+						"end": "13-20"
+					}
+				},
+				{
+					"id": "d",
+					"time": {
+						"start": "13-25",
+						"end": "14-15"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "14-15",
+						"end": "14-35"
+					}
+				},
+				{
+					"id": "b",
+					"time": {
+						"start": "14-40",
+						"end": "15-25"
+					}
+				}
+			]
+		},
+		"fr": {
+			"blocks": [
+				{
+					"id": "advisory",
+					"time": {
+						"start": "08-00",
+						"end": "08-15"
+					}
+				},
+				{
+					"id": "c",
+					"time": {
+						"start": "08-20",
+						"end": "09-05"
+					}
+				},
+				{
+					"id": "g",
+					"time": {
+						"start": "09-10",
+						"end": "10-00"
+					}
+				},
+				{
+					"id": "lab",
+					"time": {
+						"start": "10-00",
+						"end": "10-20"
+					}
+				},
+				{
+					"id": "b",
+					"time": {
+						"start": "10-25",
+						"end": "11-10"
+					}
+				},
+				{
+					"id": "d",
+					"time": {
+						"start": "11-15",
+						"end": "12-05"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "12-10",
+						"end": "12-35"
+					},
+					"variation": 0
+				},
+				{
+					"id": "lunch",
+					"time": {
+						"start": "11-15",
+						"end": "11-40"
+					},
+					"variation": 1
+				},
+				{
+					"id": "d",
+					"time": {
+						"start": "11-45",
+						"end": "12-35"
+					},
+					"variation": 1
+				},
+				{
+					"id": "a",
+					"time": {
+						"start": "12-40",
+						"end": "13-25"
+					}
+				},
+				{
+					"id": "e",
+					"time": {
+						"start": "13-30",
+						"end": "14-20"
+					}
+				},
+				{
+					"id": "x",
+					"time": {
+						"start": "14-25",
+						"end": "15-10"
+					}
+				}
+			]
+		}
+	}
+}

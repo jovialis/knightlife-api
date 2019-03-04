@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 module.exports.register = (app) => {
-    app.post('/dashboard/do/auth/session/validate', async (req, res) => {
+    app.post('/p/do/auth/session/validate', async (req, res) => {
         const token = req.body._a;
 
         try {

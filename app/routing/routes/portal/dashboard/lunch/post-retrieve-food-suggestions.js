@@ -1,7 +1,7 @@
 const deleteKey = require('key-del');
 
 module.exports.register = (app) => {
-    app.post('/dashboard/page/lunch/food/suggest', async (req, res) => {
+    app.post('/p/page/lunch/food/suggest', async (req, res) => {
         const token = req.body._a;
         const text = req.body.text;
 

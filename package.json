@@ -1,5 +1,5 @@
 {
-	"name": "server",
+	"name": "api",
 	"version": "1.0.0",
 	"private": true,
 	"main": "index.js",
@@ -11,15 +11,12 @@
 		"express-sslify": "latest",
 		"cors": "latest",
 		"jsonwebtoken": "latest",
-		"bcrypt": "latest",
 		"uuid": "latest",
 		"googleapis": "latest",
 		"key-del": "latest",
 		"ical-toolkit": "latest",
 		"download": "latest",
-		"redis": "latest",
-		"moment": "latest",
-		"dotenv": "latest"
+		"moment": "latest"
 	},
 	"scripts": {
 		"start": "node index.js"

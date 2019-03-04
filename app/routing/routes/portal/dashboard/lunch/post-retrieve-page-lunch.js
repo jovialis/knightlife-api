@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const deleteKey = require('key-del');
 
 module.exports.register = (app) => {
-    app.post('/dashboard/page/lunch/:year/:month/:day', async (req, res) => {
+    app.post('/p/page/lunch/:year/:month/:day', async (req, res) => {
         const token = req.body._a;
 
         try {

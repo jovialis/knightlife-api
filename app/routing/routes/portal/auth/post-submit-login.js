@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 module.exports.register = (app) => {
-    app.post('/dashboard/do/auth/login', async (req, res) => {
+    app.post('/p/do/auth/login', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
