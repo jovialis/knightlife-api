@@ -5,5 +5,6 @@ module.exports.registerRoutes = (router) => {
 
 	// Mobile
 	router.get('/m/bundle/:year/:month/:day', [ parseDate ], controller.routeGetBundleForDate);
+	router.get('/m/bundle/startup', controller.routeGetEssentialBundle);
 
 };
