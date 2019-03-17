@@ -61,6 +61,36 @@ function retrieveLunchObjectForDate(date, sanitize) {
 	});
 }
 
+module.exports.routeGetLunchByBadge = (req, res) => {
+	const badge = req.param('badge');
+
+	getLunchByBadge(badge).then(doc => {
+		if (doc) {
+			let menuObject = doc.toObject();
+			removeKey(menuObject, ['_id', '__t', '__v'], {copy: false});
+
+			res.json({
+				index: menuObject
+			});
+			return;
+		}
+
+		// Invalid badge
+		res.status(400).send('Invalid Badge Provided');
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send('An Internal Error Occurred');
+	});
+};
+
+function getLunchByBadge(badge) {
+	return new Promise((resolve, reject) => {
+		Lunch.findOne({
+			badge: badge
+		}).then(resolve).catch(reject);
+	});
+}
+
 module.exports.hideSuggestion = hideSuggestion;
 function hideSuggestion(badge) {
 	return new Promise(async (resolve, reject) => {

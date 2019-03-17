@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 
 module.exports.init = () => {
 	// Start DB connection
-	mongoose.connect(process.env.MONGODB_URI);
+	mongoose.connect(process.env.MONGODB_URI, {
+		useNewUrlParser: true
+	});
 
 	registerModels();
 };

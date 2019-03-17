@@ -112,3 +112,33 @@ function fetchEventsObject(query, sanitize) {
 		}).catch(reject)
 	});
 }
+
+module.exports.routeGetEventByBadge = (req, res) => {
+	const badge = req.param('badge');
+
+	getEventByBadge(badge).then(doc => {
+		if (doc) {
+			let eventsObject = doc.toObject();
+			removeKey(eventsObject, ['__v', '_id', 'calendarRaw', '__t', 'teamId', 'hidden'], { copy: false });
+
+			res.json({
+				index: eventsObject
+			});
+			return;
+		}
+
+		// Invalid badge
+		res.status(400).send('Invalid Badge Provided');
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send('An Internal Error Occurred');
+	});
+};
+
+function getEventByBadge(badge) {
+	return new Promise((resolve, reject) => {
+		Event.findOne({
+			badge: badge
+		}).then(resolve).catch(reject);
+	});
+}

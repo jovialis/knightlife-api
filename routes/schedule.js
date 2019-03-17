@@ -5,7 +5,8 @@ const auth = require('../middlewares/auth');
 module.exports.registerRoutes = (router) => {
 
 	// Mobile
-	router.get('/m/lunch/:year/:month/:day', [ parseDate ], controller.routeGetScheduleForDate);
+	router.get('/m/schedule/:year/:month/:day', [ parseDate ], controller.routeGetScheduleForDate);
+	router.get('/m/schedule/:badge', controller.routeGetScheduleByBadge);
 
 	// Dashboard
 	// router.get('/d/pages/dashboard/lunch/:year/:month/:day', [ auth.requirePermission('lunch'), parseDate ], controller.routeGetData);

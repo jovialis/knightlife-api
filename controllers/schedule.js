@@ -86,5 +86,50 @@ function createScheduleForDate(date) {
 	});
 }
 
+module.exports.routeGetScheduleByBadge = (req, res) => {
+	const badge = req.param('badge');
+
+	getScheduleByBadge(badge).then(doc => {
+		if (doc) {
+			let scheduleObject = doc.toObject();
+			removeKey(scheduleObject, ['_id', '__t', '__v'], {copy: false});
+
+			res.json({
+				index: scheduleObject
+			});
+			return;
+		}
+
+		// Invalid badge
+		res.status(400).send('Invalid Badge Provided');
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send('An Internal Error Occurred');
+	});
+};
+
+function getScheduleByBadge(badge) {
+	return new Promise((resolve, reject) => {
+		const Schedule = mongoose.model('Schedule');
+
+		Schedule.findOne({
+			badge: badge
+		}).then(resolve).catch(reject);
+	});
+}
+
+module.exports.routeGetNextSchoolday = (req, res) => {
+
+};
+
+function getNextSchoolday() {
+	return new Promise((resolve, reject) => {
+		let date = new Date();
+		date.setUTCHours(0,0,0,0);
+
+		
+	});
+}
+
 const template = require('../assets/schedule-template');
 module.exports.template = template;

@@ -1,7 +1,7 @@
 module.exports.parseDate = (req, res, next) => {
-	const year = req.param('year');
-	const month = req.param('month') - 1;
-	const day = req.param('day');
+	const year = req.params.year;
+	const month = req.params.month - 1;
+	const day = req.params.day;
 
 	const date = new Date(year, month, day);
 	date.setUTCHours(0,0,0,0);

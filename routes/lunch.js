@@ -6,6 +6,7 @@ module.exports.registerRoutes = (router) => {
 
 	// Mobile
 	router.get('/m/lunch/:year/:month/:day', [ parseDate ], controller.routeGetLunchForDate);
+	router.get('/m/lunch/:badge', controller.routeGetLunchByBadge);
 
 	// Dashboard
 	// router.get('/d/pages/dashboard/lunch/:year/:month/:day', [ auth.requirePermission('lunch'), parseDate ], controller.routeGetData);
