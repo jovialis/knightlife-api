@@ -8,9 +8,7 @@ module.exports.routeGetLunchForDate = (req, res) => {
 	const date = req.date;
 
 	retrieveLunchObjectForDate(date, true).then(menu => {
-		res.json({
-			index: menu
-		});
+		res.json(menu);
 	}).catch(error => {
 		res.status(500).send("An Internal Error Occurred");
 		console.log(error);
@@ -69,9 +67,7 @@ module.exports.routeGetLunchByBadge = (req, res) => {
 			let menuObject = doc.toObject();
 			removeKey(menuObject, ['_id', '__t', '__v'], {copy: false});
 
-			res.json({
-				index: menuObject
-			});
+			res.json(menuObject);
 			return;
 		}
 

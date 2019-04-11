@@ -64,7 +64,7 @@ const Timetable = new mongoose.Schema({
 	blocks: {
 		type: [Block]
 	},
-	grades: { // 0 = freshman, etc. 4 = other.
+	grades: { // 0 = freshman, etc.
 		type: [ Number ],
 		default: [  ]
 	},
