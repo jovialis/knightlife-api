@@ -5,7 +5,7 @@ module.exports.routeRegisterDeviceId = (req, res) => {
 
 	registerDeviceId(token).then(doc => {
 		res.json({
-			success: true
+			success: doc !== null
 		});
 	}).catch(error => {
 		console.log(error);
