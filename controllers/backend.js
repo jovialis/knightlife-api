@@ -3,9 +3,18 @@ const mongoose = require('mongoose');
 module.exports.routeRegisterDeviceId = (req, res) => {
 	const token = req.get('Device');
 
+	if (!token) {
+		res.status(401);
+		res.json({
+			success: false,
+			error: "No token provided"
+		});
+		return;
+	}
+
 	registerDeviceId(token).then(doc => {
 		res.json({
-			success: doc !== null
+			success: true
 		});
 	}).catch(error => {
 		console.log(error);
@@ -17,7 +26,7 @@ function registerDeviceId(token) {
 	return new Promise((resolve, reject) => {
 		const Device = mongoose.model('Device');
 
-		Device.find({
+		Device.findOne({
 			token: token
 		}).then(doc => {
 			if (doc) {
