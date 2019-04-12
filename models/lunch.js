@@ -15,11 +15,11 @@ const Lunch = new mongoose.Schema({
 		type: String,
 		default: null
 	},
-	items: {
-		type: [ mongoose.Schema.Types.ObjectId ],
+	items: [{
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Food',
 		default: []
-	}
+	}]
 }, {
 	collection: 'lunches'
 });

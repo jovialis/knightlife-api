@@ -8,6 +8,8 @@ module.exports.routeGetLunchForDate = (req, res) => {
 	const date = req.date;
 
 	retrieveLunchObjectForDate(date, true).then(menu => {
+		removeKey(menu.items, [ 'badge', 'suggest', 'nameLower', 'allergyLower' ], { copy: false });
+
 		res.json(menu);
 	}).catch(error => {
 		res.status(500).send("An Internal Error Occurred");
