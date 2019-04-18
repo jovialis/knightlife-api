@@ -74,7 +74,6 @@ Params:
 Returns a list of schedules (and dates) across the next 28 days that have irregular block schedules or notices available for the user. This route is commonly accessed to display upcoming irregular schedule items.
 ```
 ## Lunch Routes
----
 ### _Retrieve Date Lunch Menu_
 Path: __[/lunch](https://bbnknightlife.com/api/lunch)__
 <br>
@@ -93,7 +92,6 @@ Params:
 Returns a list of Foods, denoted by a name and nullable allergy, and a nullable menu title. This list of foods will be empty if there has been no menu inputted.
 ```
 ## Event Routes
----
 ### _Retrieve Date Events_
 Path: __[/events](https://bbnknightlife.com/api/events)__
 <br>
@@ -112,7 +110,6 @@ Params:
 Returns a list of Events occurring on the given `date`.
 ```
 ## Misc. Routes
----
 ### _Upcoming Items_
 Path: __[/upcoming](https://bbnknightlife.com/api/upcoming)__
 <br>
