@@ -56,7 +56,7 @@
 				},
 				{
 					"id": "a",
-					"variation": 0,
+					"firstLunch": false,
 					"time": {
 						"start": "11-15",
 						"end": "12-05"
@@ -64,7 +64,7 @@
 				},
 				{
 					"id": "lunch",
-					"variation": 0,
+					"firstLunch": false,
 					"time": {
 						"start": "12-10",
 						"end": "12-35"
@@ -72,7 +72,7 @@
 				},
 				{
 					"id": "lunch",
-					"variation": 1,
+					"firstLunch": true,
 					"time": {
 						"start": "11-15",
 						"end": "11-40"
@@ -80,7 +80,7 @@
 				},
 				{
 					"id": "a",
-					"variation": 1,
+					"firstLunch": true,
 					"time": {
 						"start": "11-45",
 						"end": "12-35"
@@ -152,7 +152,7 @@
 						"start": "11-15",
 						"end": "12-05"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -160,7 +160,7 @@
 						"start": "12-10",
 						"end": "12-35"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -168,7 +168,7 @@
 						"start": "11-15",
 						"end": "11-40"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "b",
@@ -176,7 +176,7 @@
 						"start": "11-45",
 						"end": "12-35"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "x",
@@ -251,7 +251,7 @@
 						"start": "11-15",
 						"end": "12-05"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -259,7 +259,7 @@
 						"start": "12-10",
 						"end": "12-35"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -267,7 +267,7 @@
 						"start": "11-15",
 						"end": "11-40"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "f",
@@ -275,7 +275,7 @@
 						"start": "11-45",
 						"end": "12-35"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "activities",
@@ -322,7 +322,7 @@
 						"start": "11-10",
 						"end": "12-00"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -330,7 +330,7 @@
 						"start": "12-05",
 						"end": "12-30"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -338,7 +338,7 @@
 						"start": "11-10",
 						"end": "11-35"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "g",
@@ -346,7 +346,7 @@
 						"start": "11-40",
 						"end": "12-30"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "e",
@@ -421,7 +421,7 @@
 						"start": "11-15",
 						"end": "12-05"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -429,7 +429,7 @@
 						"start": "12-10",
 						"end": "12-35"
 					},
-					"variation": 0
+					"firstLunch": false
 				},
 				{
 					"id": "lunch",
@@ -437,7 +437,7 @@
 						"start": "11-15",
 						"end": "11-40"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "d",
@@ -445,7 +445,7 @@
 						"start": "11-45",
 						"end": "12-35"
 					},
-					"variation": 1
+					"firstLunch": true
 				},
 				{
 					"id": "a",

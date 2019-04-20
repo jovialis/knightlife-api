@@ -34,8 +34,8 @@ const Block = new mongoose.Schema({
 		required: true,
 		enum: require('../controllers/schedule').template.blockIds
 	},
-	variation: {
-		type: Number,
+	firstLunch: {
+		type: Boolean,
 		required: false
 	},
 	time: {

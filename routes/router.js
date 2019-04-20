@@ -40,7 +40,10 @@ function registerRoutes(router) {
 	require('./backend').registerRoutes(router);
 	require('./bundle').registerRoutes(router);
 	require('./events').registerRoutes(router);
+
 	require('./lunch').registerRoutes(router);
+	require('./lunchDashboard').registerRoutes(router);
+
 	// require('./push').registerRoutes(router);
 	require('./schedule').registerRoutes(router);
 	require('./user').registerRoutes(router);
