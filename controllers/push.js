@@ -113,3 +113,27 @@ function getDeviceTokens() {
 	});
 }
 
+module.exports.sendTargetedRefresh = sendTargetedRefresh;
+function sendTargetedRefresh(date, target) {
+	return new Promise(async (resolve, reject) => {
+		let notification = new apn.Notification();
+		notification.topic = 'MAD.BBN.KnightLife';
+		notification.badge = 0;
+		notification.contentAvailable = true;
+
+		notification.payload = {
+			"type": "refresh",
+			"data": {
+				"date": `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+				"target": target
+			}
+		};
+
+		try {
+			let tokens = await getDeviceTokens();
+			provider.send(notification, tokens).then(resolve).catch(reject);
+		} catch (error) {
+			reject(error);
+		}
+	});
+}

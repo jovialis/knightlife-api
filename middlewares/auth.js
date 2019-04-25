@@ -2,6 +2,14 @@ const controller = require('../controllers/user');
 
 module.exports.fetchUser = (req, res, next) => {
 	const token = req.get('User');
+	if (!token) {
+		res.writeHead(401, {
+			'WWW-Authentication': 'Basic'
+		});
+		res.end("Unauthorized access");
+		return;
+	}
+
 	controller.getUserFromToken(token).then(user => {
 		// Set user variable
 		req.user = user;
@@ -13,12 +21,21 @@ module.exports.fetchUser = (req, res, next) => {
 
 module.exports.requireUser = (req, res, next) => {
 	const token = req.get('User');
+	if (!token) {
+		res.writeHead(401, {
+			'WWW-Authentication': 'Basic'
+		});
+		res.end("Unauthorized access");
+		return;
+	}
+
 	controller.getUserFromToken(token).then(user => {
 		if (!user) {
 			// No user = unauthorized
 			res.writeHead(401, {
 				'WWW-Authentication': 'Basic'
 			});
+			res.end("Unauthorized access");
 			return;
 		}
 
@@ -35,12 +52,21 @@ module.exports.requirePermission = (permission) => {
 		// TODO: Transfer variables from request to permission
 
 		const token = req.get('User');
+		if (!token) {
+			res.writeHead(401, {
+				'WWW-Authentication': 'Basic'
+			});
+			res.end("Unauthorized access");
+			return;
+		}
+
 		controller.userHasPermissionFromToken(token, permission).then((user, valid) => {
 			if (!valid) {
 				// Unauthorized
 				res.writeHead(401, {
 					'WWW-Authentication': 'Basic'
 				});
+				res.end("Unauthorized access");
 				return;
 			}
 

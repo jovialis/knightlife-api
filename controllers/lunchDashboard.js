@@ -6,8 +6,9 @@ const removeKey = require('key-del');
 module.exports.routeGetMenu = (req, res) => {
 	const date = req.date;
 
-	lunchController.getLunchObjectForDate(date, true).then(menu => {
-		removeKey(menu, ['badge'], {copy: false});
+	lunchController.getLunchObjectForDate(date, false).then(menu => {
+		removeKey(menu, ['_id', '__t', 'suggest', 'allergyLower', 'nameLower'], {copy: false});
+		removeKey(menu.items, ['__v'], {copy: false});
 
 		res.json({
 			menu: menu
@@ -87,8 +88,8 @@ module.exports.routePutMenu = (req, res) => {
 		document.title = title;
 		document.items = foodIdList;
 
-		document.save().then(() => {
-			// TODO: Push lunch update to client
+		document.save().then(async () => {
+			require('./push').sendTargetedRefresh(document.date, "lunch");
 
 			res.json({
 				success: true
@@ -104,7 +105,7 @@ module.exports.routePutMenu = (req, res) => {
 };
 
 module.exports.routeGetSuggestion = (req, res) => {
-	const name = req.body.name;
+	const name = req.query.term;
 
 	Food.find({
 		suggest: true,

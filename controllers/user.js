@@ -112,7 +112,7 @@ module.exports.userHasPermissionFromToken = userHasPermissionFromToken;
 function userHasPermissionFromToken(token, permissions) {
 	return new Promise((resolve, reject) => {
 		getUserFromToken(token).then(account => {
-			userHasPermissionFromToken(account, permissions).then(has => {
+			userHasPermission(account, permissions).then(has => {
 				resolve(has);
 			}).catch(reject);
 		}).catch(reject);
