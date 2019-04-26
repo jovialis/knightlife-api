@@ -85,7 +85,10 @@ module.exports.routePutMenu = (req, res) => {
 			return;
 		}
 
-		document.title = title;
+		let newTitle = title.trim();
+		newTitle = newTitle.length === 0 ? null : newTitle;
+
+		document.title = newTitle;
 		document.items = foodIdList;
 
 		document.save().then(async () => {
