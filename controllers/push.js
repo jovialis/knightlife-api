@@ -35,7 +35,7 @@ module.exports.routeGlobalMessage = (req, res) => {
 	});
 };
 
-module.exports.globalMessage = message;
+module.exports.globalMessage = globalMessage;
 function globalMessage(user, anonymous, title, message, badge, sound, payload) {
 	return new Promise((resolve, reject) => {
 		let notification = new apn.Notification();

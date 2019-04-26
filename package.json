@@ -4,19 +4,19 @@
 	"private": true,
 	"main": "index.js",
 	"dependencies": {
-		"express": "latest",
-		"body-parser": "latest",
-		"apn": "latest",
-		"mongoose": "latest",
-		"express-sslify": "latest",
-		"cors": "latest",
-		"jsonwebtoken": "latest",
-		"uuid": "latest",
-		"googleapis": "latest",
-		"key-del": "latest",
-		"ical-toolkit": "latest",
-		"download": "latest",
-		"moment": "latest"
+		"express": "^4.16.4",
+		"body-parser": "^1.19.0",
+		"apn": "^2.2.0",
+		"mongoose": "^5.5.4",
+		"express-sslify": "^1.2.0",
+		"cors": "^2.8.5",
+		"jsonwebtoken": "^8.5.1",
+		"uuid": "^3.3.2",
+		"googleapis": "^39.2.0",
+		"key-del": "^1.3.0",
+		"ical-toolkit": "^1.0.9",
+		"download": "^7.1.0",
+		"moment": "^2.24.0"
 	},
 	"scripts": {
 		"start": "node index.js"
