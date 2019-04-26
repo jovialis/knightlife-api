@@ -8,5 +8,5 @@ module.exports = new apn.Provider({
         teamId: process.env.APN_TEAMID, // The Team ID of your Apple Developer Account (available at
         // https://developer.apple.com/account/#/membership/)
     },
-    production: false // Set to true if sending a notification to a production iOS app
+    production: process.env.APN_ENV === 'production' // Set to true if sending a notification to a production iOS app
 });
