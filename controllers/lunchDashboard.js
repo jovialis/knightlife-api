@@ -93,6 +93,8 @@ module.exports.routePutMenu = (req, res) => {
 				const result = await require('./push').sendTargetedRefresh(document.date, "lunch");
 				console.log("Successfully updated lunch menu, pushed refresh to " + result.sent.length + " devices and failed to send to " + result.failed.length + " devices.");
 
+				console.log(result.failed);
+
 				res.json({
 					success: true
 				});
