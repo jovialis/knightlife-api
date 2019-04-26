@@ -89,7 +89,8 @@ module.exports.routePutMenu = (req, res) => {
 		document.items = foodIdList;
 
 		document.save().then(async () => {
-			require('./push').sendTargetedRefresh(document.date, "lunch");
+			const result = await require('./push').sendTargetedRefresh(document.date, "lunch");
+			console.log("Successfully updated lunch menu, pushed refresh to " + result.sent.length + " devices.");
 
 			res.json({
 				success: true
