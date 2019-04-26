@@ -89,12 +89,19 @@ module.exports.routePutMenu = (req, res) => {
 		document.items = foodIdList;
 
 		document.save().then(async () => {
-			const result = await require('./push').sendTargetedRefresh(document.date, "lunch");
-			console.log("Successfully updated lunch menu, pushed refresh to " + result.sent.length + " devices.");
+			try {
+				const result = await require('./push').sendTargetedRefresh(document.date, "lunch");
+				console.log("Successfully updated lunch menu, pushed refresh to " + result.sent.length + " devices and failed to send to " + result.failed.length + " devices.");
 
-			res.json({
-				success: true
-			});
+				res.json({
+					success: true
+				});
+			} catch (error) {
+				console.log(error);
+				res.json({
+					success: false
+				});
+			}
 		}).catch(error => {
 			console.log(error);
 			res.status(500).send("An Internal Error Occurred");
