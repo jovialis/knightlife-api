@@ -2,17 +2,18 @@ const mongoose = require('mongoose');
 
 module.exports.routeRegisterDeviceId = (req, res) => {
 	const token = req.get('Device');
+	const version = req.get('Version');
 
-	if (!token) {
+	if (!token || !version) {
 		res.status(401);
 		res.json({
 			success: false,
-			error: "No token provided"
+			error: "Incomplete information provided"
 		});
 		return;
 	}
 
-	registerDeviceId(token).then(doc => {
+	registerDeviceId(token, version).then(doc => {
 		res.json({
 			success: true
 		});
@@ -22,7 +23,7 @@ module.exports.routeRegisterDeviceId = (req, res) => {
 	});
 };
 
-function registerDeviceId(token) {
+function registerDeviceId(token, version) {
 	return new Promise((resolve, reject) => {
 		const Device = mongoose.model('Device');
 
@@ -30,13 +31,18 @@ function registerDeviceId(token) {
 			token: token
 		}).then(doc => {
 			if (doc) {
-				resolve(doc);
+				doc.version = version;
+
+				doc.save().then(doc => {
+					resolve(doc);
+				}).catch(reject);
 				return;
 			}
 
 			// Needs to be created
 			Device.create({
-				token: token
+				token: token,
+				version: version
 			}).then(doc => {
 				resolve(doc);
 			}).catch(reject);

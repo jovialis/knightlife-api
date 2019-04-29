@@ -16,7 +16,8 @@
 		"key-del": "^1.3.0",
 		"ical-toolkit": "^1.0.9",
 		"download": "^7.1.0",
-		"moment": "^2.24.0"
+		"moment": "^2.24.0",
+		"semver": "^6.0.0"
 	},
 	"scripts": {
 		"start": "node index.js"

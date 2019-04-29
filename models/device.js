@@ -4,6 +4,10 @@ const Device = new mongoose.Schema({
     token: {
         type: String,
         required: true
+    },
+    version: {
+        type: String,
+        required: true
     }
 }, {
     collection: 'devices'
