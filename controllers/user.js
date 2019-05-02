@@ -7,7 +7,7 @@ const googleUtil = require('../util/google');
 
 module.exports.getUserFromToken = getUserFromToken;
 
-async function getUserFromToken(token) {
+function getUserFromToken(token) {
 	return new Promise((resolve, reject) => {
 		const User = mongoose.model('User');
 		User.findOne({
@@ -32,7 +32,7 @@ module.exports.routeValidateToken = (req, res) => {
 		}
 
 		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '_t'], {copy: false});
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t'], {copy: false});
 
 		res.json({
 			valid: true,
@@ -55,7 +55,7 @@ module.exports.routeValidateTokenPermission = (req, res) => {
 		}
 
 		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '_t'], {copy: false});
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t'], {copy: false});
 
 		userHasPermission(user, permission).then(has => {
 			if (has) {
