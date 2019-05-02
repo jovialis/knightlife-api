@@ -50,7 +50,7 @@ module.exports.routeUserLoginGoogle = async (req, res) => {
 			const token = uuid();
 
 			// Add token
-			doc.tokens.append(token);
+			doc.tokens.push(token);
 
 			// Account settings
 			doc.username = account.username;
