@@ -22,6 +22,10 @@ async function getUserFromToken(token) {
 	});
 }
 
+module.exports.routeUserOpenGoogleLogin = (req, res) => {
+	res.redirect(googleUtil.urlGoogle());
+};
+
 module.exports.routeUserLoginGoogle = async (req, res) => {
 	const code = req.query.code;
 	if (!code) {
