@@ -117,7 +117,7 @@ module.exports.sendTargetedRefresh = sendTargetedRefresh;
 function sendTargetedRefresh(date, target) {
 	return new Promise(async (resolve, reject) => {
 		let notification = new apn.Notification();
-		notification.topic = 'MAD.BBN.KnightLife';
+		notification.topic = process.env.APN_BUNDLE;
 		notification.badge = 0;
 		notification.contentAvailable = true;
 

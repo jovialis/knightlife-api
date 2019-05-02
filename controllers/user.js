@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
 
+const Cookies = require('cookies');
+
 const googleUtil = require('../util/google');
 
 module.exports.getUserFromToken = getUserFromToken;
@@ -21,7 +23,12 @@ async function getUserFromToken(token) {
 }
 
 module.exports.routeUserLoginGoogle = async (req, res) => {
-	const code = req.body.code;
+	const code = req.query.code;
+	if (!code) {
+		res.redirect(`${process.env.LOGIN_SUCCESS_REDIRECT}?error=${req.query.error}`);
+		return;
+	}
+
 	googleUtil.getGoogleAccountFromCode(code).then(account => {
 		const GoogleUser = mongoose.model('GoogleUser');
 
@@ -39,9 +46,16 @@ module.exports.routeUserLoginGoogle = async (req, res) => {
 			doc.image = account.image;
 
 			doc.save().then(() => {
-				res.json({
-					token: token
+				//COOKIE
+
+				res.cookies.set('Session', token, {
+					domain: 'bbnknightlife.com',
+					secure: true,
+					signed: true,
+					overwrite: true
 				});
+
+				res.redirect(process.env.LOGIN_SUCCESS_REDIRECT);
 			}).catch(error => {
 				console.log(error);
 				res.status(500).send("An Internal Error Occurred");

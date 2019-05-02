@@ -4,7 +4,7 @@ const { google } = require('googleapis');
 const googleConfig = {
 	clientId: process.env.GOOGLE_CLIENT_ID,
 	clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-	redirect: process.env.GOOGLE_REDIRECT
+	redirect: 'https://api.bbnknightlife.com/auth/google/redirect'
 };
 
 /**

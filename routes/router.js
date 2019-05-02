@@ -3,6 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const expressSsl = require('express-sslify');
 
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
+const Cookies = require('cookies');
+
 const bodyParser = require('body-parser');
 
 // Instantiation
@@ -10,7 +15,7 @@ module.exports.init = () => {
 	const router = express();
 
 	// POST middleware
-	router.use(bodyParser.urlencoded({ extended: true }));
+	router.use(bodyParser.urlencoded({extended: true}));
 	router.use(bodyParser.json());
 
 	// CORS support
@@ -18,15 +23,36 @@ module.exports.init = () => {
 
 	// Redirect to HTTPS when allowed
 	if (process.env.ENFORCE_HTTPS) {
-		router.use(expressSsl.HTTPS({ trustProtoHeader: true }));
+		router.use(expressSsl.HTTPS({trustProtoHeader: true}));
 	}
+
+	// Session storage
+	let sessionOptions = {
+		secret: process.env.SESSION_SECRET,
+		store: new MongoStore({mongooseConnection: mongoose.connection}),
+		resave: false,
+		saveUninitialized: true
+	};
+
+	router.use(session(sessionOptions));
+
+	// Instantiate cookies object in request
+	router.use(Cookies.express([ process.env.COOKIE_SECRET ]));
 
 	registerRoutes(router);
 
-	router.get('*', (req, res) => { res.status(404).send("Not Found") });
-	router.post('*', (req, res) => { res.status(404).send("Not Found") });
-	router.put('*', (req, res) => { res.status(404).send("Not Found") });
-	router.delete('*', (req, res) => { res.status(404).send("Not Found") });
+	router.get('*', (req, res) => {
+		res.status(404).send("Not Found")
+	});
+	router.post('*', (req, res) => {
+		res.status(404).send("Not Found")
+	});
+	router.put('*', (req, res) => {
+		res.status(404).send("Not Found")
+	});
+	router.delete('*', (req, res) => {
+		res.status(404).send("Not Found")
+	});
 
 	// Grab port and start listening
 	const port = process.env.PORT || 5000;

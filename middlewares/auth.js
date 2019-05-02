@@ -1,7 +1,8 @@
 const controller = require('../controllers/user');
 
 module.exports.fetchUser = (req, res, next) => {
-	const token = req.get('User');
+	const token = req.cookies.get('Session', { signed: true });
+
 	if (!token) {
 		res.writeHead(401, {
 			'WWW-Authentication': 'Basic'
@@ -20,7 +21,8 @@ module.exports.fetchUser = (req, res, next) => {
 };
 
 module.exports.requireUser = (req, res, next) => {
-	const token = req.get('User');
+	const token = req.cookies.get('Session', { signed: true });
+
 	if (!token) {
 		res.writeHead(401, {
 			'WWW-Authentication': 'Basic'
@@ -51,7 +53,8 @@ module.exports.requirePermission = (permission) => {
 	return (req, res, next) => {
 		// TODO: Transfer variables from request to permission
 
-		const token = req.get('User');
+		const token = req.cookies.get('Session', { signed: true });
+
 		if (!token) {
 			res.writeHead(401, {
 				'WWW-Authentication': 'Basic'
