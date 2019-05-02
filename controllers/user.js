@@ -12,7 +12,7 @@ function getUserFromToken(token) {
 		const User = mongoose.model('User');
 		User.findOne({
 			tokens: {
-				$in: token
+				$in: [token]
 			}
 		}).then(doc => {
 			resolve(doc);
