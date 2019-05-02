@@ -12,15 +12,15 @@ const userSchema = new mongoose.Schema({
 	},
 	name: String,
 	image: String,
-	tokens: {
-		type: [String],
+	tokens: [{
+		type: String,
 		default: []
-	},
-	devices: {
-		type: [ mongoose.Schema.Types.ObjectId ],
+	}],
+	devices: [{
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Device',
 		default: []
-	}
+	}]
 }, {
 	collection: "accounts"
 });
