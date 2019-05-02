@@ -7,4 +7,8 @@ module.exports.registerRoutes = (router) => {
 	router.get('/auth/google', controller.routeUserOpenGoogleLogin);
 	router.get('/auth/google/redirect', controller.routeUserLoginGoogle);
 
+	// Website validation
+	router.post('/auth/validate', controller.routeValidateToken);
+	router.post('/auth/validate/permission', controller.routeValidateTokenPermission);
+
 };

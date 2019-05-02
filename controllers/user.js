@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
 
-const Cookies = require('cookies');
+const removeKey = require('key-del');
 
 const googleUtil = require('../util/google');
 
@@ -21,6 +21,60 @@ async function getUserFromToken(token) {
 		});
 	});
 }
+
+module.exports.routeValidateToken = (req, res) => {
+	const token = req.body.token;
+
+	getUserFromToken(token).then(user => {
+		if (!user) {
+			res.json({ valid: false });
+			return;
+		}
+
+		const userObject = user.toObject();
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '_t'], {copy: false});
+
+		res.json({
+			valid: true,
+			user: userObject
+		});
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send("An Internal Error Occurred");
+	});
+};
+
+module.exports.routeValidateTokenPermission = (req, res) => {
+	const token = req.body.token;
+	const permission = req.body.permission;
+
+	getUserFromToken(token).then(user => {
+		if (!user) {
+			res.json({ valid: false });
+			return;
+		}
+
+		const userObject = user.toObject();
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '_t'], {copy: false});
+
+		userHasPermission(user, permission).then(has => {
+			if (has) {
+				res.json({
+					valid: true,
+					user: userObject
+				})
+			} else {
+				res.json({ valid: false });
+			}
+		}).catch(error => {
+			console.log(error);
+			res.status(500).send("An Internal Error Occurred");
+		});
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send("An Internal Error Occurred");
+	});
+};
 
 module.exports.routeUserOpenGoogleLogin = (req, res) => {
 	res.redirect(googleUtil.urlGoogle());
