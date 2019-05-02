@@ -40,6 +40,10 @@ module.exports.init = () => {
 	// Instantiate cookies object in request
 	router.use(Cookies.express([ process.env.COOKIE_SECRET ]));
 
+	if (process.env.NODE_ENV === 'production') {
+		router.enable('trust proxy');
+	}
+
 	registerRoutes(router);
 
 	router.get('*', (req, res) => {
