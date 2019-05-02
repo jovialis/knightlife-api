@@ -4,6 +4,7 @@ const cors = require('cors');
 const expressSsl = require('express-sslify');
 
 const session = require('express-session');
+const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
 const Cookies = require('cookies');
