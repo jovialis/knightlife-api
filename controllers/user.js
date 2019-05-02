@@ -25,7 +25,11 @@ function getUserFromToken(token) {
 module.exports.routeValidateToken = (req, res) => {
 	const token = req.body.token;
 
+	console.log(token);
+
 	getUserFromToken(token).then(user => {
+		console.log(user);
+
 		if (!user) {
 			res.json({ valid: false });
 			return;
