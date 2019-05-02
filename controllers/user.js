@@ -38,7 +38,15 @@ module.exports.routeUserLoginGoogle = async (req, res) => {
 
 		GoogleUser.findOne({
 			badge: account.badge
-		}).then(doc => {
+		}).then(async doc => {
+			if (!doc) {
+				doc = await GoogleUser.create({
+					badge: account.badge,
+					username: account.username
+				});
+			}
+
+			// Username, Badge
 			const token = uuid();
 
 			// Add token
