@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Permissions
 const Permission = new mongoose.Schema({
-	account: {
+	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true

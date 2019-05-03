@@ -36,7 +36,7 @@ module.exports.routeValidateToken = (req, res) => {
 		}
 
 		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t'], {copy: false});
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
 
 		res.json({
 			valid: true,
@@ -59,7 +59,7 @@ module.exports.routeValidateTokenPermission = (req, res) => {
 		}
 
 		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t'], {copy: false});
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
 
 		userHasPermission(user, permission).then(has => {
 			if (has) {
@@ -115,6 +115,9 @@ module.exports.routeUserLoginGoogle = async (req, res) => {
 			doc.name = account.name;
 			doc.image = account.image;
 
+			// Change image url size to 250px from 50px
+			doc.image = doc.image.replace('/s50/', '/s250/');
+
 			doc.save().then(() => {
 				//COOKIE
 
@@ -147,7 +150,7 @@ function userHasPermission(account, required) {
 		const Permission = mongoose.model('Permission');
 
 		Permission.find({
-			account: account._id
+			user: account._id
 		}, (err, permissions) => {
 			if (err) {
 				reject(err);
