@@ -44,6 +44,19 @@ module.exports.routeValidateToken = (req, res) => {
 	});
 };
 
+module.exports.routeLogoutUser = (req, res) => {
+	// Unset cookies
+	res.cookies.set('Session', '', {
+		domain: 'bbnknightlife.com',
+		secure: true,
+		signed: true,
+		overwrite: true,
+		maxAge: 0
+	});
+
+	res.redirect(process.env.LOGIN_FAILURE_REDIRECT);
+};
+
 module.exports.routeUserAbout = (req, res) => {
 	const token = req.query.token;
 
@@ -107,7 +120,7 @@ module.exports.routeUserOpenGoogleLogin = (req, res) => {
 module.exports.routeUserLoginGoogle = async (req, res) => {
 	const code = req.query.code;
 	if (!code) {
-		res.redirect(`${process.env.LOGIN_SUCCESS_REDIRECT}?error=${req.query.error}`);
+		res.redirect(`${process.env.LOGIN_FAILURE_REDIRECT}?error=${req.query.error}`);
 		return;
 	}
 

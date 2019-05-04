@@ -11,6 +11,8 @@ module.exports.registerRoutes = (router) => {
 	router.post('/auth/validate', controller.routeValidateToken);
 	router.post('/auth/validate/permission', controller.routeValidateTokenPermission);
 
+	router.post('/auth/logout', controller.routeLogoutUser);
+
 	// Token must be passed as a query key
 	router.get('/user/about', controller.routeUserAbout);
 };
