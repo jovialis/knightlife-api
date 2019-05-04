@@ -11,4 +11,6 @@ module.exports.registerRoutes = (router) => {
 	router.post('/auth/validate', controller.routeValidateToken);
 	router.post('/auth/validate/permission', controller.routeValidateTokenPermission);
 
+	// Info
+	router.get('/user/about', [auth.requireUser], controller.routeUserAbout);
 };

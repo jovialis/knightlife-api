@@ -25,11 +25,7 @@ function getUserFromToken(token) {
 module.exports.routeValidateToken = (req, res) => {
 	const token = req.body.token;
 
-	console.log(token);
-
 	getUserFromToken(token).then(user => {
-		console.log(user);
-
 		if (!user) {
 			res.json({ valid: false });
 			return;
@@ -45,6 +41,17 @@ module.exports.routeValidateToken = (req, res) => {
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
+	});
+};
+
+module.exports.routeUserAbout = (req, res) => {
+	const user = req.user;
+	const userObject = user.toObject();
+
+	removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
+
+	res.json({
+		user: userObject
 	});
 };
 
