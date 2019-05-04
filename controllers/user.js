@@ -45,13 +45,26 @@ module.exports.routeValidateToken = (req, res) => {
 };
 
 module.exports.routeUserAbout = (req, res) => {
-	const user = req.user;
-	const userObject = user.toObject();
+	const token = req.query.token;
 
-	removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
+	getUserFromToken(token).then(user => {
+		if (!user) {
+			res.writeHead(401, {
+				'WWW-Authentication': 'Basic'
+			});
+			res.end("Unauthorized access");
+			return;
+		}
 
-	res.json({
-		user: userObject
+		const userObject = user.toObject();
+		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
+
+		res.json({
+			user: userObject
+		});
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send("An Internal Error Occurred");
 	});
 };
 
