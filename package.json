@@ -15,8 +15,7 @@
 		"axios": "^0.18.0"
 	},
 	"scripts": {
-		"start": "node index.js",
-		"heroku-postbuild": "cd client && npm install && npm run build"
+		"start": "node index.js"
 	},
 	"engines": {
 		"node": "latest"
