@@ -16,8 +16,11 @@ module.exports = function (req, res) {
 			Device: token,
 			Version: version
 		}
+	}).then(d => {
+		res.json(true);
+	}).catch(err => {
+		console.log(err);
 	});
 
-	res.json(true);
 
 }
