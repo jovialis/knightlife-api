@@ -23,22 +23,7 @@ function getUserFromToken(token) {
 }
 
 module.exports.routeValidateUserSession = async (req, res) => {
-	let user;
-
-	if (req.query.token) {
-		// Otherwise, we assume that an authentication token has been attached
-		try {
-			const token = req.query.token;
-			user = await getUserFromToken(token);
-		} catch (error) {
-			console.log(error);
-			res.status(500).send("An Internal Error Occurred");
-
-			return;
-		}
-	} else {
-		user = req.user;
-	}
+	const user = req.user;
 
 	if (!user) {
 		res.json({valid: false});
@@ -55,22 +40,7 @@ module.exports.routeValidateUserSession = async (req, res) => {
 };
 
 module.exports.routeValidateUserSessionPermission = async (req, res) => {
-	let user;
-
-	if (req.query.token) {
-		// Otherwise, we assume that an authentication token has been attached
-		try {
-			const token = req.query.token;
-			user = await getUserFromToken(token);
-		} catch (error) {
-			console.log(error);
-			res.status(500).send("An Internal Error Occurred");
-
-			return;
-		}
-	} else {
-		user = req.user;
-	}
+	const user = req.user;
 
 	if (!user) {
 		res.json({valid: false});

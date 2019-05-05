@@ -1,7 +1,30 @@
 const controller = require('../controllers/user');
+const Keygrip = require('keygrip');
+
+function retrieveTokenFromRequest(req) {
+	let userToken;
+
+	// If there are authentication headers provided
+	if (req.get('Session') && req.get('Session.sig')) {
+		const token = req.get('Session');
+		const tokenSig = req.get('Session.sig');
+
+		const grip = Keygrip([ process.env.COOKIE_SECRET ]);
+		if (grip.verify(token, tokenSig)) {
+			userToken = token;
+		}
+	}
+
+	// If no userToken has been set yet, we attempt to load a Session by cookies
+	if (!userToken) {
+		userToken = req.cookies.get('Session', { signed: true });
+	}
+
+	return userToken;
+}
 
 module.exports.fetchUser = (req, res, next) => {
-	const token = req.cookies.get('Session', { signed: true });
+	const token = retrieveTokenFromRequest(req);
 
 	if (!token) {
 		next();
@@ -18,7 +41,7 @@ module.exports.fetchUser = (req, res, next) => {
 };
 
 module.exports.requireUser = (req, res, next) => {
-	const token = req.cookies.get('Session', { signed: true });
+	const token = retrieveTokenFromRequest(req);
 
 	if (!token) {
 		res.writeHead(401, {
@@ -50,7 +73,7 @@ module.exports.requirePermission = (permission) => {
 	return (req, res, next) => {
 		// TODO: Transfer variables from request to permission
 
-		const token = req.cookies.get('Session', { signed: true });
+		const token = retrieveTokenFromRequest(req);
 
 		if (!token) {
 			res.writeHead(401, {
