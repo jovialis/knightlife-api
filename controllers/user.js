@@ -25,9 +25,7 @@ function getUserFromToken(token) {
 module.exports.routeValidateUserSession = async (req, res) => {
 	let user;
 
-	if (req.user) {
-		user = req.user;
-	} else {
+	if (req.query.token) {
 		// Otherwise, we assume that an authentication token has been attached
 		try {
 			const token = req.query.token;
@@ -38,6 +36,8 @@ module.exports.routeValidateUserSession = async (req, res) => {
 
 			return;
 		}
+	} else {
+		user = req.user;
 	}
 
 	if (!user) {
@@ -57,9 +57,7 @@ module.exports.routeValidateUserSession = async (req, res) => {
 module.exports.routeValidateUserSessionPermission = async (req, res) => {
 	let user;
 
-	if (req.user) {
-		user = req.user;
-	} else {
+	if (req.query.token) {
 		// Otherwise, we assume that an authentication token has been attached
 		try {
 			const token = req.query.token;
@@ -70,6 +68,8 @@ module.exports.routeValidateUserSessionPermission = async (req, res) => {
 
 			return;
 		}
+	} else {
+		user = req.user;
 	}
 
 	if (!user) {
