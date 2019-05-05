@@ -20,7 +20,7 @@ module.exports.init = () => {
 	router.use(bodyParser.json());
 
 	// CORS support
-	router.use(cors());
+	// router.use(cors());
 
 	// Redirect to HTTPS when allowed
 	if (process.env.ENFORCE_HTTPS) {
