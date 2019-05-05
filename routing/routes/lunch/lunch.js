@@ -13,9 +13,9 @@ module.exports = function (req, res) {
 
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
-	axios.get(`https://api.bbnknightlife.com/m/lunch/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(res => {
-		if (res.data) {
-			res.json(formatter.success(res.data, "lunch", dateString));
+	axios.get(`https://api.bbnknightlife.com/m/lunch/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(lunchRes => {
+		if (lunchRes.data) {
+			res.json(formatter.success(lunchRes.data, "lunch", dateString));
 		}
 	}).catch(error => {
 		console.log(error);
