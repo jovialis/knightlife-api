@@ -30,7 +30,7 @@ module.exports = function (app) {
     
 //    app.post('/api/submit/lunch', passport.authenticate('google'), require('./routes/submit/lunch'));
     
-    app.post('/api/device/register', require('./routes/device/registration'));
+    app.get('/api/device/register', require('./routes/device/registration'));
     
     // Setup Google Auth via passport
     app.use(passport.initialize());
