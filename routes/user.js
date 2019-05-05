@@ -8,11 +8,11 @@ module.exports.registerRoutes = (router) => {
 	router.get('/auth/google/redirect', controller.routeUserLoginGoogle);
 
 	// Website validation
-	router.post('/auth/validate', controller.routeValidateToken);
-	router.post('/auth/validate/permission', controller.routeValidateTokenPermission);
+	router.get('/auth/validate', auth.fetchUser, controller.routeValidateUserSession);
+	router.get('/auth/validate/permission', auth.fetchUser, controller.routeValidateTokenPermission);
 
 	router.get('/auth/logout', controller.routeLogoutUser);
 
 	// Token must be passed as a query key
-	router.get('/user/about', controller.routeUserAbout);
+	router.get('/user/about', auth.fetchUser, controller.routeUserAbout);
 };

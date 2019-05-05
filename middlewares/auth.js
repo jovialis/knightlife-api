@@ -4,10 +4,7 @@ module.exports.fetchUser = (req, res, next) => {
 	const token = req.cookies.get('Session', { signed: true });
 
 	if (!token) {
-		res.writeHead(401, {
-			'WWW-Authentication': 'Basic'
-		});
-		res.end("Unauthorized access");
+		next();
 		return;
 	}
 

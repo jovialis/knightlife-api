@@ -22,25 +22,35 @@ function getUserFromToken(token) {
 	});
 }
 
-module.exports.routeValidateToken = (req, res) => {
-	const token = req.body.token;
+module.exports.routeValidateUserSession = async (req, res) => {
+	let user;
 
-	getUserFromToken(token).then(user => {
-		if (!user) {
-			res.json({ valid: false });
+	if (req.user) {
+		user = req.user;
+	} else {
+		// Otherwise, we assume that an authentication token has been attached
+		try {
+			const token = req.query.token;
+			user = await getUserFromToken(token);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send("An Internal Error Occurred");
+
 			return;
 		}
+	}
 
-		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
+	if (!user) {
+		res.json({valid: false});
+		return;
+	}
 
-		res.json({
-			valid: true,
-			user: userObject
-		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
+	const userObject = user.toObject();
+	removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
+
+	res.json({
+		valid: true,
+		user: userObject
 	});
 };
 
@@ -57,27 +67,38 @@ module.exports.routeLogoutUser = (req, res) => {
 	res.redirect(process.env.LOGIN_FAILURE_REDIRECT);
 };
 
-module.exports.routeUserAbout = (req, res) => {
-	const token = req.query.token;
+module.exports.routeUserAbout = async (req, res) => {
+	let user;
 
-	getUserFromToken(token).then(user => {
-		if (!user) {
-			res.writeHead(401, {
-				'WWW-Authentication': 'Basic'
-			});
-			res.end("Unauthorized access");
+	// If user has been attached
+	if (req.user) {
+		user = req.user;
+	} else {
+		// Otherwise, we assume that an authentication token has been attached
+		try {
+			const token = req.query.token;
+			user = await getUserFromToken(token);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send("An Internal Error Occurred");
+
 			return;
 		}
+	}
 
-		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
-
-		res.json({
-			user: userObject
+	if (!user) {
+		res.writeHead(401, {
+			'WWW-Authentication': 'Basic'
 		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
+		res.end("Unauthorized access");
+		return;
+	}
+
+	const userObject = user.toObject();
+	removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
+
+	res.json({
+		user: userObject
 	});
 };
 
@@ -87,7 +108,7 @@ module.exports.routeValidateTokenPermission = (req, res) => {
 
 	getUserFromToken(token).then(user => {
 		if (!user) {
-			res.json({ valid: false });
+			res.json({valid: false});
 			return;
 		}
 
@@ -101,7 +122,7 @@ module.exports.routeValidateTokenPermission = (req, res) => {
 					user: userObject
 				})
 			} else {
-				res.json({ valid: false });
+				res.json({valid: false});
 			}
 		}).catch(error => {
 			console.log(error);
