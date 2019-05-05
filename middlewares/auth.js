@@ -10,7 +10,7 @@ function retrieveTokenFromRequest(req) {
 		const tokenSig = req.get('Session.sig');
 
 		const grip = Keygrip([ process.env.COOKIE_SECRET ]);
-		if (grip.verify(token, tokenSig)) {
+		if (grip.verify(`Session=${token}`, tokenSig)) {
 			userToken = token;
 		}
 	}
