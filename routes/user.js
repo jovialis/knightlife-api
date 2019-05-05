@@ -9,10 +9,8 @@ module.exports.registerRoutes = (router) => {
 
 	// Website validation
 	router.get('/auth/validate', auth.fetchUser, controller.routeValidateUserSession);
-	router.get('/auth/validate/permission', auth.fetchUser, controller.routeValidateTokenPermission);
+	router.get('/auth/validate/permission', auth.fetchUser, controller.routeValidateUserSessionPermission);
 
 	router.get('/auth/logout', controller.routeLogoutUser);
 
-	// Token must be passed as a query key
-	router.get('/user/about', auth.fetchUser, controller.routeUserAbout);
 };

@@ -54,23 +54,9 @@ module.exports.routeValidateUserSession = async (req, res) => {
 	});
 };
 
-module.exports.routeLogoutUser = (req, res) => {
-	// Unset cookies
-	res.cookies.set('Session', '', {
-		domain: 'bbnknightlife.com',
-		secure: true,
-		signed: true,
-		overwrite: true,
-		maxAge: 0
-	});
-
-	res.redirect(process.env.LOGIN_FAILURE_REDIRECT);
-};
-
-module.exports.routeUserAbout = async (req, res) => {
+module.exports.routeValidateUserSessionPermission = async (req, res) => {
 	let user;
 
-	// If user has been attached
 	if (req.user) {
 		user = req.user;
 	} else {
@@ -87,51 +73,41 @@ module.exports.routeUserAbout = async (req, res) => {
 	}
 
 	if (!user) {
-		res.writeHead(401, {
-			'WWW-Authentication': 'Basic'
-		});
-		res.end("Unauthorized access");
+		res.json({valid: false});
 		return;
 	}
 
 	const userObject = user.toObject();
 	removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
 
-	res.json({
-		user: userObject
-	});
-};
+	const permission = req.query.permission;
 
-module.exports.routeValidateTokenPermission = (req, res) => {
-	const token = req.body.token;
-	const permission = req.body.permission;
-
-	getUserFromToken(token).then(user => {
-		if (!user) {
+	userHasPermission(user, permission).then(has => {
+		if (has) {
+			res.json({
+				valid: true,
+				user: userObject
+			});
+		} else {
 			res.json({valid: false});
-			return;
 		}
-
-		const userObject = user.toObject();
-		removeKey(userObject, ['tokens', 'devices', '_id', '__v', '__t', 'badge'], {copy: false});
-
-		userHasPermission(user, permission).then(has => {
-			if (has) {
-				res.json({
-					valid: true,
-					user: userObject
-				})
-			} else {
-				res.json({valid: false});
-			}
-		}).catch(error => {
-			console.log(error);
-			res.status(500).send("An Internal Error Occurred");
-		});
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
 	});
+};
+
+module.exports.routeLogoutUser = (req, res) => {
+	// Unset cookies
+	res.cookies.set('Session', '', {
+		domain: 'bbnknightlife.com',
+		secure: true,
+		signed: true,
+		overwrite: true,
+		maxAge: 0
+	});
+
+	res.redirect(process.env.LOGIN_FAILURE_REDIRECT);
 };
 
 module.exports.routeUserOpenGoogleLogin = (req, res) => {
