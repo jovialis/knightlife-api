@@ -79,22 +79,32 @@ module.exports.requirePermission = (permission) => {
 			res.writeHead(401, {
 				'WWW-Authentication': 'Basic'
 			});
-			res.end("Unauthorized access");
+			res.end("No User Supplied");
 			return;
 		}
 
-		controller.userHasPermissionFromToken(token, permission).then((user, valid) => {
-			if (!valid) {
-				// Unauthorized
+		controller.getUserFromToken(token).then(user => {
+			if (!user) {
 				res.writeHead(401, {
 					'WWW-Authentication': 'Basic'
 				});
-				res.end("Unauthorized access");
+				res.end("No User Supplied");
 				return;
 			}
 
-			req.user = user;
-			next();
+			controller.userHasPermission(user, permission).then(valid => {
+				if (!valid) {
+					// Unauthorized
+					res.writeHead(401, {
+						'WWW-Authentication': 'Basic'
+					});
+					res.end("Invalid permissions");
+					return;
+				}
+
+				req.user = user;
+				next();
+			}).catch(next);
 		}).catch(error => {
 			next(error);
 		});
