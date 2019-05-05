@@ -7,7 +7,7 @@ const Device = new mongoose.Schema({
     },
     version: {
         type: String,
-        required: true
+        default: '3.0.2'
     }
 }, {
     collection: 'devices'
