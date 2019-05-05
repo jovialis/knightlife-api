@@ -4,14 +4,15 @@
 	"main": "index.js",
 	"dependencies": {
 		"express": "latest",
-        "body-parser": "latest",
+		"body-parser": "latest",
 		"apn": "latest",
 		"mongoose": "latest",
-        "passport": "latest",
-        "express-validator": "latest",
-        "passport-google-oauth20": "latest",
-        "express-sslify": "latest",
-        "cors": "latest"
+		"passport": "latest",
+		"express-validator": "latest",
+		"passport-google-oauth20": "latest",
+		"express-sslify": "latest",
+		"cors": "latest",
+		"axios": "^0.18.0"
 	},
 	"scripts": {
 		"start": "node index.js",

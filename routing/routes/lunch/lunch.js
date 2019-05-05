@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
@@ -10,17 +12,14 @@ module.exports = function (req, res) {
 	}
 
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
-	require(`${__basedir}/database/models/lunch`).findOne({
-		date: date
-	}, { _id: 0, date: 0 }, function (error, object) {
-		if (error) {
-			console.log(error);
 
-			res.json(formatter.error(error));
-			return;
+	axios.get(`https://api.bbnknightlife.com/m/lunch/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(res => {
+		if (res.data) {
+			res.json(formatter.success(res.data, "lunch", dateString));
 		}
+	}).catch(error => {
+		console.log(error);
 
-		const result = object ? object : {'items': []};
-		res.json(formatter.success(result, "lunch", dateString));
+		res.json(formatter.error(error));
 	});
 };

@@ -1,30 +1,23 @@
+const axios = require('axios');
+
 module.exports = function (req, res) {
-	const token = req.param("device")
+	const token = req.param("device");
+
 	if (!token) {
 		console.log("Recieved a device registration request with no token!");
 		res.json(false)
 		return;
 	}
 
-	const Device = require(`${__basedir}/database/models/device`);
-    Device.findOne({
-        token: token
-    }, function(err, obj) {
-        if (obj) {
-            res.json(true);
-            return;
-        }
-        
-        const newDevice = new Device({
-            token: token
-        });
-        
-        newDevice.save(function(err, obj) {
-            if (obj) {
-                res.json(true);
-            } else {
-                res.json(false);
-            }
-        });
-    });
+	const version = '3.0.2';
+
+	axios.post('https://api.bbnknightlife.com/m/device/register', {}, {
+		headers: {
+			Device: token,
+			Version: version
+		}
+	});
+
+	res.json(true);
+
 }
