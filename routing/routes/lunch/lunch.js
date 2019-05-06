@@ -15,6 +15,9 @@ module.exports = function (req, res) {
 
 	axios.get(`https://api.bbnknightlife.com/m/lunch/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(lunchRes => {
 		if (lunchRes.data) {
+			// Transfer Title
+			lunchRes.data.description = lunchRes.data.title;
+
 			res.json(formatter.success(lunchRes.data, "lunch", dateString));
 		}
 	}).catch(error => {
