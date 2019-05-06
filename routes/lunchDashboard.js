@@ -1,18 +1,22 @@
 const controller = require('../controllers/lunchDashboard');
-const cors = require('../util/corsOrigins');
+const cors = require('cors');
 const parseDate = require('../middlewares/date').parseDate;
 const auth = require('../middlewares/auth');
 
 module.exports.registerRoutes = (router) => {
 
-	router.get('/d/lunch/menu/:year/:month/:day', [ cors.wwwKL, /*auth.requirePermission('lunch'),*/ parseDate ],
+	const corsOptions = {
+		origin: true
+	};
+
+	router.get('/d/lunch/menu/:year/:month/:day', [ cors(corsOptions), /*auth.requirePermission('lunch'),*/ parseDate ],
 	 controller.routeGetMenu);
 
-	router.post('/d/lunch/menu/:year/:month/:day/submit', [ cors.wwwKL, auth.requirePermission('lunch'), parseDate ],
+	router.post('/d/lunch/menu/:year/:month/:day/submit', [ cors(corsOptions), auth.requirePermission('lunch'), parseDate ],
 	 controller.routePutMenu);
-	router.options('/d/lunch/menu/:year/:month/:day/submit', cors.wwwKL);
+	router.options('/d/lunch/menu/:year/:month/:day/submit', cors(corsOptions));
 
-	router.get('/d/lunch/suggest', [cors.wwwKL, auth.requirePermission('lunch')], controller.routeGetSuggestion);
-	router.post('/d/lunch/suggest/hide/:badge', [cors.wwwKL, auth.requirePermission('lunch')], controller.routeHideSuggestion);
+	router.get('/d/lunch/suggest', [cors(corsOptions), auth.requirePermission('lunch')], controller.routeGetSuggestion);
+	router.post('/d/lunch/suggest/hide/:badge', [cors(corsOptions), auth.requirePermission('lunch')], controller.routeHideSuggestion);
 
 };
