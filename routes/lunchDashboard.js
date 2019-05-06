@@ -6,7 +6,9 @@ const auth = require('../middlewares/auth');
 module.exports.registerRoutes = (router) => {
 
 	const corsOptions = {
-		origin: true
+		origin: true,
+		credentials: true,
+		optionsSuccessStatus: 200
 	};
 
 	router.get('/d/lunch/menu/:year/:month/:day', [ cors(corsOptions), /*auth.requirePermission('lunch'),*/ parseDate ],
