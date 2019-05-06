@@ -11,11 +11,9 @@ module.exports.registerRoutes = (router) => {
 		optionsSuccessStatus: 200
 	};
 
-	router.get('/d/lunch/menu/:year/:month/:day', [ cors(corsOptions), /*auth.requirePermission('lunch'),*/ parseDate ],
-	 controller.routeGetMenu);
+	router.get('/d/lunch/menu/:year/:month/:day', [ cors(corsOptions), /*auth.requirePermission('lunch'),*/ parseDate ], controller.routeGetMenu);
 
-	router.post('/d/lunch/menu/:year/:month/:day/submit', [ cors(corsOptions), auth.requirePermission('lunch'), parseDate ],
-	 controller.routePutMenu);
+	router.post('/d/lunch/menu/:year/:month/:day/submit', [ cors(corsOptions), auth.requirePermission('lunch'), parseDate ], controller.routePutMenu);
 	router.options('/d/lunch/menu/:year/:month/:day/submit', cors(corsOptions));
 
 	router.get('/d/lunch/suggest', [cors(corsOptions), auth.requirePermission('lunch')], controller.routeGetSuggestion);

@@ -16,12 +16,12 @@ const modules = [
     new Module('messages', 'Push Messages', [ 'messaging' ], 'message-square'),
     new Module('lunch', 'Lunch Menus', [ 'lunch' ], 'coffee'),
     new Module('events', 'Events', [ 'event' ], 'calendar'),
-    new Module('news', 'News', [ 'news' ], 'globe'),
-    new Module('accounts', 'Accounts', [ 'accounts' ], 'users'),
+    // new Module('news', 'News', [ 'news' ], 'globe'),
+    new Module('users', 'Users', [ 'users' ], 'users'),
 
     // Secondary modules
-    new Module('colorwars', 'Color Wars', [ 'event.category.colorwars' ], 'zap'),
-    new Module('snowdays', 'Snow Days', [ 'news.add', 'schedule' ], 'cloud-snow')
+    // new Module('colorwars', 'Color Wars', [ 'event.category.colorwars' ], 'zap'),
+    // new Module('snowdays', 'Snow Days', [ 'news.add', 'schedule' ], 'cloud-snow')
 ];
 
 module.exports.retrieveUserModules = (account) => {
