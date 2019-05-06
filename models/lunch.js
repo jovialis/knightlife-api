@@ -24,10 +24,10 @@ const Lunch = new mongoose.Schema({
 	collection: 'lunches'
 });
 
-Lunch.pre('save', function (next) {
-	// Increment version ID
-	this.increment();
-	next();
-});
+// Lunch.pre('save', function (next) {
+// 	// Increment version ID
+// 	this.increment();
+// 	next();
+// });
 
 mongoose.model('Lunch', Lunch);

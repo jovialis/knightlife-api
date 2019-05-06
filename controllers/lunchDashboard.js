@@ -7,8 +7,8 @@ module.exports.routeGetMenu = (req, res) => {
 	const date = req.date;
 
 	lunchController.getLunchObjectForDate(date, false).then(menu => {
-		removeKey(menu, ['_id', '__t', 'suggest', 'allergyLower', 'nameLower'], {copy: false});
-		removeKey(menu.items, ['__v'], {copy: false});
+		removeKey(menu, ['_id', '__t', 'suggest', 'allergyLower', 'nameLower', '__v'], {copy: false});
+		// removeKey(menu.items, ['__v'], {copy: false});
 
 		res.json({
 			menu: menu
@@ -22,18 +22,18 @@ module.exports.routeGetMenu = (req, res) => {
 module.exports.routePutMenu = (req, res) => {
 	const date = req.date;
 
-	const version = req.body.__v;
+	// const version = req.body.__v;
 	const title = req.body.title;
 	const foodItems = req.body.items;
 
 	lunchController.getLunchForDate(date).then(async document => {
-		if (document.__v !== version) {
-			res.json({
-				success: false,
-				error: "Inconsistent version"
-			});
-			return;
-		}
+		// if (document.__v !== version) {
+		// 	res.json({
+		// 		success: false,
+		// 		error: "Inconsistent version"
+		// 	});
+		// 	return;
+		// }
 
 		let foodIdList = [];
 
