@@ -20,10 +20,13 @@ module.exports.init = () => {
 	router.use(bodyParser.json());
 
 	// CORS support
-	router.use(cors({
+	const corsOptions = {
 		exposedHeaders: ['Session', 'Session.sig'],
 		credentials: true
-	}));
+	};
+
+	router.use(cors(corsOptions));
+	router.options('*', cors(corsOptions));
 
 	// Redirect to HTTPS when allowed
 	if (process.env.ENFORCE_HTTPS) {
