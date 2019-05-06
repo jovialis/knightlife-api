@@ -28,15 +28,6 @@ module.exports.init = () => {
 	// router.use(cors(corsOptions));
 	// router.options('*', cors(corsOptions));
 
-	// ENABLE OPTION REQUESTS FOR CORS
-	// http://johnzhang.io/options-request-in-express
-	router.options("/*", function(req, res, next){
-		res.header('Access-Control-Allow-Origin', '*');
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-		res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-		res.send(200);
-	});
-
 	// Redirect to HTTPS when allowed
 	if (process.env.ENFORCE_HTTPS) {
 		router.use(expressSsl.HTTPS({trustProtoHeader: true}));
