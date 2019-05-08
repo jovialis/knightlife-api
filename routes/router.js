@@ -1,15 +1,7 @@
 const express = require('express');
-
-const cors = require('cors');
-const expressSsl = require('express-sslify');
-
-const session = require('express-session');
-const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo')(session);
-
-const Cookies = require('cookies');
-
 const bodyParser = require('body-parser');
+const expressSsl = require('express-sslify');
+const Cookies = require('cookies');
 
 // Instantiation
 module.exports.init = () => {
@@ -19,49 +11,20 @@ module.exports.init = () => {
 	router.use(bodyParser.urlencoded({extended: true}));
 	router.use(bodyParser.json());
 
-	// CORS support
-	// const corsOptions = {
-	// 	exposedHeaders: ['Session', 'Session.sig'],
-	// 	credentials: true
-	// };
-	//
-	// router.use(cors(corsOptions));
-	// router.options('*', cors(corsOptions));
-
-	// Redirect to HTTPS when allowed
-	if (process.env.ENFORCE_HTTPS) {
-		router.use(expressSsl.HTTPS({trustProtoHeader: true}));
-	}
-
-	// Session storage
-	let sessionOptions = {
-		secret: process.env.SESSION_SECRET,
-		store: new MongoStore({mongooseConnection: mongoose.connection}),
-		resave: false,
-		saveUninitialized: true
-	};
-
-	router.use(session(sessionOptions));
-
 	// Instantiate cookies object in request
 	router.use(Cookies.express([ process.env.COOKIE_SECRET ]));
 
 	if (process.env.NODE_ENV === 'production') {
+		// Redirect to HTTPS in production
+		router.use(expressSsl.HTTPS({trustProtoHeader: true}));
+
+		// Trust Proxy in production
 		router.enable('trust proxy');
 	}
 
 	registerRoutes(router);
 
-	router.get('*', (req, res) => {
-		res.status(404).send("Not Found")
-	});
-	router.post('*', (req, res) => {
-		res.status(404).send("Not Found")
-	});
-	router.put('*', (req, res) => {
-		res.status(404).send("Not Found")
-	});
-	router.delete('*', (req, res) => {
+	router.all('*', (req, res) => {
 		res.status(404).send("Not Found")
 	});
 
@@ -88,36 +51,3 @@ function registerRoutes(router) {
 	require('./userDashboard').registerRoutes(router);
 
 }
-
-// function register(app) {
-//
-// 	/*********************************************
-// 	 PORTAL
-// 	 **********************************************/
-//
-// 	// Auth
-// 	require('./routes/portal/auth/post-submit-login').register(app);
-// 	require('./routes/portal/auth/post-retrieve-session-validation').register(app);
-//
-// 	require('./routes/portal/auth/google/post-retrieve-google-redirect').register(app);
-// 	require('./routes/portal/auth/google/post-submit-google-login').register(app);
-//
-// 	// Dashboard
-// 	require('./routes/portal/dashboard/post-retrieve-page-home').register(app);
-//
-// 	// Lunch
-// 	require('./routes/portal/dashboard/lunch/post-retrieve-page-lunch').register(app);
-// 	require('./routes/portal/dashboard/lunch/post-retrieve-food-suggestions').register(app);
-// 	require('./routes/portal/dashboard/lunch/post-submit-data-lunch').register(app);
-// 	require('./routes/portal/dashboard/lunch/post-submit-hide-suggestion').register(app);
-//
-//
-// 	/*********************************************
-// 	 APP
-// 	 **********************************************/
-//
-// 	require('./routes/mobile/day/post-retrieve-day').register(app);
-//
-// 	require('./routes/mobile/events/post-retrieve-events').register(app);
-// 	require('./routes/mobile/events/post-retrieve-day-events').register(app);
-// }

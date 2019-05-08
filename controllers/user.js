@@ -160,7 +160,7 @@ function userHasPermission(account, required) {
 			let permissionsToCheck = required;
 
 			// If user didn't provide a list of permissions we put that into a list.
-			if (typeof required[Symbol.iterator] !== 'function') {
+			if (typeof required === 'string') {
 				permissionsToCheck = [required];
 			}
 
