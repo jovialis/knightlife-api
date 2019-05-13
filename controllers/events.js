@@ -28,9 +28,7 @@ module.exports.routeGetEvents = (req, res) => {
 	}
 
 	fetchEventsObject(query, true).then(events => {
-		res.json({
-			index: events
-		});
+		res.json(events);
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
@@ -55,9 +53,7 @@ module.exports.routeGetEventsForDate = (req, res) => {
 	}
 
 	fetchEventsObjectForDay(date, query, true).then(events => {
-		res.json({
-			index: events
-		});
+		res.json(events);
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
@@ -121,9 +117,7 @@ module.exports.routeGetEventByBadge = (req, res) => {
 			let eventsObject = doc.toObject();
 			removeKey(eventsObject, ['__v', '_id', 'calendarRaw', '__t', 'teamId', 'hidden'], { copy: false });
 
-			res.json({
-				index: eventsObject
-			});
+			res.json(eventsObject);
 			return;
 		}
 
