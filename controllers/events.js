@@ -53,7 +53,10 @@ module.exports.routeGetEventsForDate = (req, res) => {
 	}
 
 	fetchEventsObjectForDay(date, query, true).then(events => {
-		res.json(events);
+		res.json({
+			date: date.toISOString(),
+			events: events
+		});
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
