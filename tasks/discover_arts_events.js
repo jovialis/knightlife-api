@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const ical = require('ical-toolkit');
 const download = require('download');
-const moment = require('moment');
+const dates = require('../util/date');
 
 require('../models/modeller').init();
 
@@ -96,13 +96,13 @@ function digestEvent(event) {
 		return;
 	}
 
-	output.schedule.start = event['DTSTART'] ? (moment.utc(event['DTSTART'], dateFormat).toDate()) : null;
-	output.schedule.end = event['DTEND'] ? (moment.utc(event['DTEND'], dateFormat).toDate()) : null;
+	output.schedule.start = event['DTSTART'] ? (dates.parseInEST(event['DTSTART'], dateFormat)) : null;
+	output.schedule.end = event['DTEND'] ? (dates.parseInEST(event['DTEND'], dateFormat)) : null;
 
 	const start = output.schedule.start;
 
 	if (start === null) {
-		output.date = moment.utc(event['DTSTART;VALUE=DATE'], 'YYYYMMDD').toDate();
+		output.date = dates.parseInEST(event['DTSTART;VALUE=DATE'], 'YYYYMMDD');
 	} else {
 		output.date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
 		output.date.setUTCHours(0,0,0,0);

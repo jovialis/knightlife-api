@@ -17,6 +17,7 @@
 		"ical-toolkit": "^1.0.9",
 		"download": "^7.1.0",
 		"moment": "^2.24.0",
+		"moment-timezone": "^0.5.25",
 		"semver": "^6.0.0",
 		"express-session": "^1.16.1",
 		"connect-mongo": "^2.0.3",
