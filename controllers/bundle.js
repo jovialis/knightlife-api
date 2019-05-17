@@ -4,23 +4,19 @@ const eventController = require('./events');
 
 module.exports.routeGetBundleForDate = (req, res) => {
 	getBundleForDate(req.date).then(bundle => {
-		res.json({
-			index: bundle
-		});
+		res.json(bundle);
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
 	});
 };
 
-module.exports.routeGetEssentialBundle = (req, res) => {
+module.exports.routeGetWeekBundles = (req, res) => {
 	const date = new Date();
 	date.setUTCHours(0,0,0,0);
 
 	getWeekBundle(date, 7).then(bundle => {
-		res.json({
-			index: bundle
-		});
+		res.json(bundle);
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
@@ -36,6 +32,7 @@ function getBundleForDate(date) {
 			const events = await eventController.fetchEventsObjectForDay(date, {}, true);
 
 			resolve({
+				date: date,
 				schedule: schedule,
 				lunch: lunch,
 				events: events
