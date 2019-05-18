@@ -69,7 +69,7 @@ function createScheduleForDate(date) {
 
 		const daysOfWeek = [ 'mo', 'tu', 'we', 'th', 'fr', 'sa', 'su' ];
 
-		const dayOfWeek = daysOfWeek[date.getDay()];
+		const dayOfWeek = daysOfWeek[(date.getDay() - 1) % 7];
 
 		const dayPreset = template.days[dayOfWeek];
 
