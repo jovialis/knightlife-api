@@ -14,7 +14,7 @@ module.exports.routeGetBundleForDate = (req, res) => {
 
 module.exports.routeGetWeekBundles = (req, res) => {
 	const date = new Date();
-	date.setUTCHours(0,0,0,0);
+	date.setHours(0,0,0,0);
 
 	getWeekBundle(date, 7).then(bundle => {
 		res.json(bundle);
@@ -50,7 +50,7 @@ function getWeekBundle(date, days) {
 
 		for (let i = 0; i < days; i++) {
 			const newDate = new Date(+date);
-			newDate.setUTCDate(newDate.getUTCDate() + i);
+			newDate.setDate(newDate.getDate() + i);
 
 			try {
 				packaged[newDate.toISOString()] = await getBundleForDate(newDate);
