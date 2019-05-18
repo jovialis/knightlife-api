@@ -25,7 +25,7 @@
 		"keygrip": "^1.0.3"
 	},
 	"scripts": {
-		"start": "node index.js"
+		"start": "TZ=America/New_York node index.js "
 	},
 	"engines": {
 		"node": "10.11.0"

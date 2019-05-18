@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
+const moment = require('moment');
 
 const Annotation = new mongoose.Schema({
 	badge: {
@@ -55,6 +56,31 @@ const Block = new mongoose.Schema({
 }, {
 	_id: false
 });
+
+Block.methods.populateDates = function(date) {
+	const splitStart = this.time.start.split('-');
+	const splitEnd = this.time.end.split('-');
+
+	try {
+		let start = new Date(date.getTime());
+		let end = new Date(date.getTime());
+
+		start = moment(start).set({
+			hour: parseInt(splitStart[0]),
+			minute: parseInt(splitStart[1])
+		}).toDate();
+
+		end = moment(end).set({
+			hour: parseInt(splitEnd[0]),
+			minute: parseInt(splitEnd[1])
+		}).toDate();
+
+		this.time.start = start.toISOString();
+		this.time.end = end.toISOString();
+	} catch(error) {
+		console.log(error);
+	}
+};
 
 const Timetable = new mongoose.Schema({
 	badge: {

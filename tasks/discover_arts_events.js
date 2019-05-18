@@ -105,7 +105,6 @@ function digestEvent(event) {
 		output.date = dates.parseInEST(event['DTSTART;VALUE=DATE'], 'YYYYMMDD');
 	} else {
 		output.date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-		output.date.setUTCHours(0,0,0,0);
 	}
 
 	output.calendarRaw = JSON.stringify(event);

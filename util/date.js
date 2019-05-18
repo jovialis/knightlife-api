@@ -2,11 +2,13 @@ const moment = require('moment-timezone');
 
 const dateZone = 'US/Eastern';
 
+// Set up prototype
+Date.prototype.toISOString = function() {
+	const date = moment(this);
+	return date.format();
+};
+
 module.exports.parseInEST = (string, format) => {
-	const date = moment.tz(string, format, dateZone).toDate();
-
-	// console.log(date.toUTCString());
-
-	return date;
+	return moment.tz(string, format, dateZone).toDate();
 };
 

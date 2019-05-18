@@ -1,6 +1,7 @@
 const scheduleController = require('./schedule');
 const lunchController = require('./lunch');
 const eventController = require('./events');
+const removeKey = require('key-del');
 
 module.exports.routeGetBundleForDate = (req, res) => {
 	getBundleForDate(req.date).then(bundle => {

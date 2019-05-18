@@ -7,9 +7,7 @@ module.exports.routeGetScheduleForDate = (req, res) => {
 	const date = req.date;
 
 	retrieveScheduleObjectForDate(date, true).then(schedule => {
-		res.json({
-			index: schedule
-		});
+		res.json(schedule);
 	}).catch(error => {
 		res.status(500).send("An Internal Error Occurred");
 		console.log(error);
@@ -47,6 +45,11 @@ module.exports.getScheduleObjectForDate = retrieveScheduleObjectForDate;
 function retrieveScheduleObjectForDate(date, sanitize) {
 	return new Promise((resolve, reject) => {
 		retrieveScheduleForDate(date).then(object => {
+			// Populate block dates instead of having simple times
+			object.timetables.forEach(t => {
+				t.blocks.forEach(b => b.populateDates(object.date));
+			});
+
 			let scheduleObject = object.toObject();
 
 			if (sanitize) {
@@ -91,6 +94,11 @@ module.exports.routeGetScheduleByBadge = (req, res) => {
 
 	getScheduleByBadge(badge).then(doc => {
 		if (doc) {
+			// Populate block dates instead of having simple times
+			doc.timetables.forEach(t => {
+				t.blocks.forEach(b => b.populateDates(doc.date));
+			});
+
 			let scheduleObject = doc.toObject();
 			removeKey(scheduleObject, ['_id', '__t', '__v'], {copy: false});
 

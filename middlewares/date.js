@@ -4,7 +4,6 @@ module.exports.parseDate = (req, res, next) => {
 	const day = req.params.day;
 
 	const date = new Date(year, month, day);
-	date.setUTCHours(0,0,0,0);
 
 	// Invalid date
 	if (isNaN(date.getTime())) {
