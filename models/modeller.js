@@ -21,5 +21,6 @@ function registerModels() {
 	require('./schedule');
 	require('./sportsteam');
 	require('./user');
+	require('./survey');
 
 }

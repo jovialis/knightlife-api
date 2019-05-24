@@ -38,6 +38,8 @@ module.exports.init = () => {
 function registerRoutes(router) {
 
 	require('./backend').registerRoutes(router);
+	require('./survey').registerRoutes(router);
+
 	require('./bundle').registerRoutes(router);
 	require('./events').registerRoutes(router);
 
