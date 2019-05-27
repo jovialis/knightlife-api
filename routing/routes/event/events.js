@@ -28,8 +28,8 @@ module.exports = function (req, res) {
 				} else if (newEvent.schedule.start) {
 					// Fill in Times
 					basicDetails.time = {
-						start: newEvent.start,
-						end: newEvent.end
+						start: newEvent.schedule.start,
+						end: newEvent.schedule.end
 					};
 				}
 

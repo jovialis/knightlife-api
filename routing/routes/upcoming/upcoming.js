@@ -87,7 +87,7 @@ function getEvents(date, list, callback) {
 	axios.get(`https://api.bbnknightlife.com/m/events`).then(eventRes => {
 		if (eventRes.data) {
 			// Map list of events to usable ones for old versions of Knight Life.
-			eventRes.data.events.forEach(newEvent => {
+			eventRes.data.forEach(newEvent => {
 				let basicDetails = {
 					date: newEvent.date,
 					description: newEvent.title
@@ -99,9 +99,12 @@ function getEvents(date, list, callback) {
 				} else if (newEvent.schedule.start) {
 					// Fill in Times
 					basicDetails.time = {
-						start: newEvent.start,
-						end: newEvent.end
+						start: newEvent.schedule.start,
+						end: newEvent.schedule.end
 					};
+				} else {
+					// If there's nothing being scheduled, this Event effectively doesn't exist.
+					return;
 				}
 
 				// If there is an audience specifieds
