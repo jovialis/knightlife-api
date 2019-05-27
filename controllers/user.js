@@ -194,6 +194,41 @@ function userHasPermission(account, required) {
 	});
 }
 
+module.exports.getUserPermissionsMap = getUserPermissionsMap;
+
+function getUserPermissionsMap(user) {
+	return new Promise((resolve, reject) => {
+		const allPermissions = require('../assets/possiblePermissions');
+		const flattenedPermissions = flattenPermissionDepth(allPermissions);
+
+		for (const permission of flattenedPermissions) {
+
+		}
+	});
+}
+
+// Recursively add all possible permissions to a map of Has, Inherits, Has Not.
+function flattenPermissionDepth(mapLevel) {
+	let allPermissions = [];
+
+	for (const permissionKey in mapLevel) {
+		// Push the parent to the list
+		allPermissions.push(permissionKey);
+
+		// No permissions below this one
+		if (Object.keys(mapLevel[permissionKey]).length > 0) {
+			let lowerLevelList = flattenPermissionDepth(mapLevel[permissionKey]);
+			// Prepend current level permission to each subservient permission
+			lowerLevelList = lowerLevelList.map(i => `${ permissionKey }.${ i }`);
+
+			// Append all children to list
+			allPermissions.push(...lowerLevelList);
+		}
+	}
+
+	return allPermissions;
+}
+
 module.exports.userHasPermissionFromToken = userHasPermissionFromToken;
 
 function userHasPermissionFromToken(token, permissions) {

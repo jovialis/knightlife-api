@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	usernameLower: String,
 	name: String,
+	nameLower: String,
 	image: String,
 	tokens: {
 		type: [String],
@@ -23,6 +25,19 @@ const userSchema = new mongoose.Schema({
 	}
 }, {
 	collection: "users"
+});
+
+// Lowercase name/userrname for indexing in suggestions
+userSchema.pre('save', function (next) {
+	this.usernameLower = this.username.toLowerCase();
+
+	if (this.name) {
+		this.nameLower = this.name.toLowerCase();
+	} else {
+		this.nameLower = null;
+	}
+
+	next();
 });
 
 const User = mongoose.model("User", userSchema);

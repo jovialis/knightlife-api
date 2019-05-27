@@ -51,5 +51,6 @@ function registerRoutes(router) {
 
 	require('./user').registerRoutes(router);
 	require('./userDashboard').registerRoutes(router);
+	require('./userPermissionsDashboard').registerRoutes(router);
 
 }
