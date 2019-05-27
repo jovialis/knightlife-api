@@ -26,10 +26,13 @@ module.exports = function (req, res) {
 				if (newEvent.schedule.blocks.length !== 0) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
+					const startDate = new Date(newEvent.schedule.start);
+					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end) : null;
+
 					// Fill in Times
 					basicDetails.time = {
-						start: `${ newEvent.schedule.start.getHours() }-${ newEvent.schedule.start.getMinutes() }`,
-						end: newEvent.schedule.end ? ( `${ newEvent.schedule.end.getHours() }-${ newEvent.schedule.end.getMinutes() }` ) : undefined
+						start: `${ startDate.getHours() }-${ startDate.getMinutes() }`,
+						end: endDate ? ( `${ endDate.getHours() + 1 }-${ endDate.getMinutes() }` ) : undefined
 					};
 				}
 
