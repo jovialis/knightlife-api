@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
 
@@ -11,23 +13,44 @@ module.exports = function (req, res) {
 
 	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
-	require(`${__basedir}/database/models/event`).find({
-		date: date
-	}, { _id: 0, date: 0 }, function (error, events) {
-		if (error) {
-			console.log(error);
+	axios.get(`https://api.bbnknightlife.com/m/events/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(eventRes => {
+		if (eventRes.data) {
+			// Map list of events to usable ones for old versions of Knight Life.
+			const convertedEvents = eventRes.data.events.map(newEvent => {
+				let basicDetails = {
+					date: newEvent.date,
+					description: newEvent.title
+				};
 
-			res.json(formatter.error(error));
-			return;
+				/// If it's a Block event, we convert the Block over
+				if (newEvent.schedule.blocks.length !== 0) {
+					basicDetails.block = newEvent.schedule.blocks[0];
+				} else if (newEvent.schedule.start) {
+					// Fill in Times
+					basicDetails.time = {
+						start: newEvent.start,
+						end: newEvent.end
+					};
+				}
+
+				// If there is an audience specifieds
+				if (newEvent.audience && newEvent.audience.length > 0) {
+					basicDetails.audience = newEvent.audience.map(audience => {
+						return {
+							mandatory: audience.mandatory,
+							grade: audience.grade + 1 // Old system has All School as 0, Freshman as 1, etc.
+						};
+					});
+				}
+
+				return basicDetails;
+			});
+
+			res.json(formatter.success(convertedEvents, "events", dateString));
 		}
+	}).catch(error => {
+		console.log(error);
 
-		let resultList = [];
-		events.forEach(function(event) {
-            delete event.date;
-			resultList.push(event);
-		});
-
-		res.json(formatter.success(resultList, "events", dateString));
-		return;
+		res.json(formatter.error(error));
 	});
 };

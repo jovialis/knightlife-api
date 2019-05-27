@@ -2,6 +2,7 @@
 // Schedule notices
 // Upcoming events
 // upcomingType: 'schedule' ; 'notice' ; 'event'
+const axios = require('axios');
 
 module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
@@ -83,26 +84,46 @@ function getScheduleNotices(date, list, callback) {
 }
 
 function getEvents(date, list, callback) {
-    require(`${__basedir}/database/models/event`).find({
-		date: {
-            $gte: date, 
-        },
-    }).lean().select({ _id: 0 }).exec(function (error, events) {
-        if (error) {
-            callback(error, null);
-            return;
-        }
-        
-        events.forEach(function(event) {
-            let eventDate = event["date"];
+	axios.get(`https://api.bbnknightlife.com/m/events`).then(eventRes => {
+		if (eventRes.data) {
+			// Map list of events to usable ones for old versions of Knight Life.
+			eventRes.data.events.forEach(newEvent => {
+				let basicDetails = {
+					date: newEvent.date,
+					description: newEvent.title
+				};
 
-            delete event['date'];
-            
-			list.push(buildItem("event", eventDate, event));
-		});
+				/// If it's a Block event, we convert the Block over
+				if (newEvent.schedule.blocks.length !== 0) {
+					basicDetails.block = newEvent.schedule.blocks[0];
+				} else if (newEvent.schedule.start) {
+					// Fill in Times
+					basicDetails.time = {
+						start: newEvent.start,
+						end: newEvent.end
+					};
+				}
+
+				// If there is an audience specifieds
+				if (newEvent.audience && newEvent.audience.length > 0) {
+					basicDetails.audience = newEvent.audience.map(audience => {
+						return {
+							mandatory: audience.mandatory,
+							grade: audience.grade + 1 // Old system has All School as 0, Freshman as 1, etc.
+						};
+					});
+				}
+
+				list.push(buildItem("event", basicDetails.date, basicDetails));
+			});
+		}
 
 		callback(null, list);
+	}).catch(error => {
+		console.log(error);
+		callback(error, null);
 	});
+
 }
 
 
