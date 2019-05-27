@@ -20,9 +20,9 @@ const mongoose = require("./database/mongoose"); // Start mongo connection
 require("./routing/routeloader")(app); // Initializes the route loader
 require('./google/googleloader')(); // Initializes the google passport module
 
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
-// });
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 var port = process.env.PORT || 5000;
 //app.listen(port, function () {
