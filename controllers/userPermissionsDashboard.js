@@ -37,16 +37,27 @@ module.exports.routeGetUserOverview = (req, res) => {
 	const User = mongoose.model('User');
 	User.findOne({
 		badge: badge
-	}).then(doc => {
+	}).then(async doc => {
 		if (!doc) {
 			res.status(404).send('Invalid badge');
 			return;
 		}
 
+		let userDoc = doc.toObject();
+		removeKey(userDoc, [ '_id', '__v', '__t', 'usernameLower', 'nameLower', 'tokens', 'devices' ], {copy: false});
+
 		// Find out which permissions the user has, which are inherited, which aren't available
-		users.getUserPermissionsMap(doc).then(permissions => {
-			res.json(permissions);
-		});
+		try {
+			const permissions = await users.getUserPermissionsMap(doc);
+
+			res.json({
+				...userDoc,
+				permissions: permissions
+			});
+		} catch (err) {
+			console.log(err);
+			res.status(500).send('An internal error occurred.');
+		}
 	}).catch(err => {
 		console.log(err);
 		res.status(500).send('An internal error occurred.');

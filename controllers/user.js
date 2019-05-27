@@ -143,6 +143,73 @@ module.exports.routeUserLoginGoogle = async (req, res) => {
 	});
 };
 
+module.exports.getUserPermissionsMap = getUserPermissionsMap;
+
+// Returns a map of which available permissions the user has.
+function getUserPermissionsMap(user) {
+	return new Promise(async (resolve, reject) => {
+		const allPermissions = require('../assets/possiblePermissions');
+		const flattenedPermissions = flattenPermissionDepth(allPermissions);
+
+		const Permission = mongoose.model('Permission');
+
+		let allUserPermissions;
+		try {
+			allUserPermissions = await Permission.find({user: user._id});
+		} catch (error) {
+			reject(error);
+			return;
+		}
+
+		let finishedPermissionMap = {};
+
+		for (const permissionName of flattenedPermissions) {
+			let value = 'false';
+
+			for (const userPermission of allUserPermissions) {
+				if (!permissionStillValid(userPermission)) {
+					continue;
+				}
+
+				// First we check to see if the user has this permission directly (i.e. the actual permission, not just inherited)
+				if (userPermission.permission === permissionName) {
+					value = 'true';
+				} else if (value !== 'true' && permissionIsAdequate(userPermission.permission, permissionName)) {
+					// If they don't have it, we check if the user inherits this permission
+					value = 'inherited';
+				}
+			}
+
+			// Convert string values of true/false to boolean
+			finishedPermissionMap[permissionName] = ( value === 'true' ? true : ( value === 'false' ? false : value ) );
+		}
+
+		resolve(finishedPermissionMap);
+	});
+}
+
+// Recursively add all possible permissions to a map of Has, Inherits, Has Not.
+function flattenPermissionDepth(mapLevel) {
+	let allPermissions = [];
+
+	for (const permissionKey in mapLevel) {
+		// Push the parent to the list
+		allPermissions.push(permissionKey);
+
+		// No permissions below this one
+		if (Object.keys(mapLevel[permissionKey]).length > 0) {
+			let lowerLevelList = flattenPermissionDepth(mapLevel[permissionKey]);
+			// Prepend current level permission to each subservient permission
+			lowerLevelList = lowerLevelList.map(i => `${permissionKey}.${i}`);
+
+			// Append all children to list
+			allPermissions.push(...lowerLevelList);
+		}
+	}
+
+	return allPermissions;
+}
+
 module.exports.userHasPermission = userHasPermission;
 
 function userHasPermission(account, required) {
@@ -194,39 +261,18 @@ function userHasPermission(account, required) {
 	});
 }
 
-module.exports.getUserPermissionsMap = getUserPermissionsMap;
+module.exports.permissionStillValid = permissionStillValid;
 
-function getUserPermissionsMap(user) {
-	return new Promise((resolve, reject) => {
-		const allPermissions = require('../assets/possiblePermissions');
-		const flattenedPermissions = flattenPermissionDepth(allPermissions);
+function permissionStillValid(userPermission) {
+	const now = new Date();
 
-		for (const permission of flattenedPermissions) {
-
-		}
-	});
-}
-
-// Recursively add all possible permissions to a map of Has, Inherits, Has Not.
-function flattenPermissionDepth(mapLevel) {
-	let allPermissions = [];
-
-	for (const permissionKey in mapLevel) {
-		// Push the parent to the list
-		allPermissions.push(permissionKey);
-
-		// No permissions below this one
-		if (Object.keys(mapLevel[permissionKey]).length > 0) {
-			let lowerLevelList = flattenPermissionDepth(mapLevel[permissionKey]);
-			// Prepend current level permission to each subservient permission
-			lowerLevelList = lowerLevelList.map(i => `${ permissionKey }.${ i }`);
-
-			// Append all children to list
-			allPermissions.push(...lowerLevelList);
+	if (userPermission.expiration !== undefined && userPermission.expiration !== null) {
+		if (userPermission.expiration < now) {
+			return false;
 		}
 	}
 
-	return allPermissions;
+	return true;
 }
 
 module.exports.userHasPermissionFromToken = userHasPermissionFromToken;

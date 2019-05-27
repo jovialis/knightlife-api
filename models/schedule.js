@@ -42,11 +42,43 @@ const Block = new mongoose.Schema({
 	time: {
 		start: {
 			type: String,
-			required: true
+			required: true,
+			validate: {
+				validator: function(v) {
+					// Ensure it follows the two digit, dash, two digit format
+					if (!/(\d{2})-(\d{2})/.test(v)) {
+						return false;
+					}
+
+					// Ensure the time isn't over 24 hours
+					const split = v.split('-');
+					const hours = Number(split[0]);
+					const minutes = Number(split[1]);
+
+					return hours >= 0 && hours <= 24 && minutes >= 0 && minutes <= 59;
+				},
+				message: props => `${ props.value } is not a valid time.`
+			}
 		},
 		end: {
 			type: String,
-			required: true
+			required: true,
+			validate: {
+				validator: function(v) {
+					// Ensure it follows the two digit, dash, two digit format
+					if (!/(\d{2})-(\d{2})/.test(v)) {
+						return false;
+					}
+
+					// Ensure the time isn't over 24 hours
+					const split = v.split('-');
+					const hours = Number(split[0]);
+					const minutes = Number(split[1]);
+
+					return hours >= 0 && hours <= 24 && minutes >= 0 && minutes <= 59;
+				},
+				message: props => `${ props.value } is not a valid time.`
+			}
 		}
 	},
 	annotations: {

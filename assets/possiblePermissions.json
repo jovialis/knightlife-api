@@ -4,6 +4,8 @@
 	"users": {
 		"overview": {}
 	},
-	"messaging": {},
+	"messaging": {
+		"global": {}
+	},
 	"event": {}
 }

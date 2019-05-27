@@ -20,7 +20,6 @@
 		"moment-timezone": "^0.5.25",
 		"semver": "^6.0.0",
 		"express-session": "^1.16.1",
-		"connect-mongo": "^2.0.3",
 		"cookies": "^0.7.3",
 		"keygrip": "^1.0.3"
 	},

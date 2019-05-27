@@ -48,6 +48,7 @@ function registerRoutes(router) {
 
 	// require('./push').registerRoutes(router);
 	require('./schedule').registerRoutes(router);
+	require('./scheduleDashboard').registerRoutes(router);
 
 	require('./user').registerRoutes(router);
 	require('./userDashboard').registerRoutes(router);

@@ -12,7 +12,7 @@ module.exports.routeGetMenu = (req, res) => {
 
 		res.json({
 			menu: menu
-		})
+		});
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send("An Internal Error Occurred");
@@ -95,8 +95,6 @@ module.exports.routePutMenu = (req, res) => {
 			try {
 				const result = await require('./push').sendTargetedRefresh(document.date, "lunch");
 				console.log("Successfully updated lunch menu, pushed refresh to " + result.sent.length + " devices and failed to send to " + result.failed.length + " devices.");
-
-				console.log(result.failed);
 
 				res.json({
 					success: true
