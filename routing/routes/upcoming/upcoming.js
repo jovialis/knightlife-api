@@ -117,7 +117,11 @@ function getEvents(date, list, callback) {
 					});
 				}
 
-				list.push(buildItem("event", basicDetails.date, basicDetails));
+				list.push({
+					"upcomingType": "event",
+					"date": `${ date.getFullYear() }-${ date.getMonth() + 1 }-${ date.getDate() }`,
+					"data": basicDetails
+				});
 			});
 		}
 

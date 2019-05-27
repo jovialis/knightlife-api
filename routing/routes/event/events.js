@@ -28,8 +28,8 @@ module.exports = function (req, res) {
 				} else if (newEvent.schedule.start) {
 					// Fill in Times
 					basicDetails.time = {
-						start: newEvent.schedule.start,
-						end: newEvent.schedule.end
+						start: `${ newEvent.schedule.start.getHours() }-${ newEvent.schedule.start.getMinutes() }`,
+						end: newEvent.schedule.end ? ( `${ newEvent.schedule.end.getHours() }-${ newEvent.schedule.end.getMinutes() }` ) : undefined
 					};
 				}
 
