@@ -98,9 +98,15 @@ function getEvents(date, list, callback) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
 					// Fill in Times
+					const startDate = new Date(newEvent.schedule.start);
+					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end) : null;
+
+					//("0" + myNumber).slice(-2)
+
+					// Fill in Times
 					basicDetails.time = {
-						start: newEvent.schedule.start,
-						end: newEvent.schedule.end
+						start: `${ ("0" + startDate.getHours()).slice(-2) }-${ ("0" + startDate.getMinutes()).slice(-2) }`,
+						end: endDate ? ( `${ ("0" + (endDate.getHours() + 1)).slice(-2) }-${ ("0" + endDate.getMinutes()).slice(-2) }` ) : undefined
 					};
 				} else {
 					// If there's nothing being scheduled, this Event effectively doesn't exist.
