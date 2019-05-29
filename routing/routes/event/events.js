@@ -1,5 +1,4 @@
 const axios = require('axios');
-require('datejs');
 
 module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
@@ -27,8 +26,8 @@ module.exports = function (req, res) {
 				if (newEvent.schedule.blocks.length !== 0) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
-					const startDate = Date.parse(newEvent.schedule.start);
-					const endDate = newEvent.schedule.end ? Date.parse(newEvent.schedule.end) : null;
+					const startDate = new Date(newEvent.schedule.start.split('+')[0]);
+					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end.split('+')[0]) : null;
 
 					//("0" + myNumber).slice(-2)
 
