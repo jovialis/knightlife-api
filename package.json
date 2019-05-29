@@ -16,7 +16,6 @@
 		"datejs": "^1.0.0-rc3"
 	},
 	"scripts": {
-		"heroku-postbuild": "cd client && npm install && npm run build",
 		"start": "node index.js"
 	},
 	"engines": {

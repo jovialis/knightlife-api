@@ -1,19 +1,31 @@
 {
-	"name": "client",
-	"version": "0.1.0",
-	"dependencies": {
-		"react": "latest",
-		"react-dom": "latest",
-		"react-scripts": "latest",
-        "react-router-dom": "latest",
-        "passport": "latest",
-        "passport-google-oauth": "latest"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject"
-	},
-	"proxy": "https://www.bbnknightlife.com"
+  "name": "client",
+  "version": "0.1.0",
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest",
+    "react-router-dom": "latest",
+    "passport": "latest",
+    "passport-google-oauth": "latest"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "https://www.bbnknightlife.com",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
