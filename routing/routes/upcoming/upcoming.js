@@ -93,7 +93,7 @@ function getEvents(date, list, callback) {
 			eventRes.data.forEach(newEvent => {
 				let basicDetails = {
 					date: formatter(new Date(newEvent.date.split('T')[0])),
-					description: newEvent.title
+					description: newEvent.title + (newEvent.location ? `. ${ newEvent.location }` : '')
 				};
 
 				/// If it's a Block event, we convert the Block over
