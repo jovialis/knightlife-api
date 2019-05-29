@@ -84,12 +84,14 @@ function getScheduleNotices(date, list, callback) {
 }
 
 function getEvents(date, list, callback) {
+	const dateFormatter = require('../../../utils/date-formatter');
+
 	axios.get(`https://api.bbnknightlife.com/m/events`).then(eventRes => {
 		if (eventRes.data) {
 			// Map list of events to usable ones for old versions of Knight Life.
 			eventRes.data.forEach(newEvent => {
 				let basicDetails = {
-					date: newEvent.date,
+					date: dateFormatter(new Date(newEvent.date)),
 					description: newEvent.title
 				};
 

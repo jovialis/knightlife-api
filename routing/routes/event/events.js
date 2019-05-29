@@ -18,7 +18,7 @@ module.exports = function (req, res) {
 			// Map list of events to usable ones for old versions of Knight Life.
 			const convertedEvents = eventRes.data.events.map(newEvent => {
 				let basicDetails = {
-					date: newEvent.date,
+					date: dateString,
 					description: newEvent.title
 				};
 
