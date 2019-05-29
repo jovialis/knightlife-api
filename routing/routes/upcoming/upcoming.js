@@ -91,7 +91,7 @@ function getEvents(date, list, callback) {
 			// Map list of events to usable ones for old versions of Knight Life.
 			eventRes.data.forEach(newEvent => {
 				let basicDetails = {
-					date: formatter(new Date(newEvent.date.split('+')[0])),
+					date: formatter(new Date(newEvent.date.split('T')[0])),
 					description: newEvent.title
 				};
 
@@ -100,8 +100,8 @@ function getEvents(date, list, callback) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
 					// Fill in Times
-					const startDate = new Date(newEvent.schedule.start.split('+')[0]);
-					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end.split('+')[0]) : null;
+					const startDate = new Date(newEvent.schedule.start.split('+')[0] + "Z");
+					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end.split('+')[0] + "Z") : null;
 
 					//("0" + myNumber).slice(-2)
 
