@@ -100,8 +100,8 @@ function getEvents(date, list, callback) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
 					// Fill in Times
-					const startDate = new Date(newEvent.schedule.start);
-					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end) : null;
+					const startDate = Date.parse(newEvent.schedule.start);
+					const endDate = newEvent.schedule.end ? Date.parse(newEvent.schedule.end) : null;
 
 					//("0" + myNumber).slice(-2)
 

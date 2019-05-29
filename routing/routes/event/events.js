@@ -26,8 +26,8 @@ module.exports = function (req, res) {
 				if (newEvent.schedule.blocks.length !== 0) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
-					const startDate = new Date(newEvent.schedule.start);
-					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end) : null;
+					const startDate = Date.parse(newEvent.schedule.start);
+					const endDate = newEvent.schedule.end ? Date.parse(newEvent.schedule.end) : null;
 
 					//("0" + myNumber).slice(-2)
 
@@ -46,6 +46,14 @@ module.exports = function (req, res) {
 							grade: audience.grade + 1 // Old system has All School as 0, Freshman as 1, etc.
 						};
 					});
+				}
+
+				// Default Event audience
+				if (!newEvent.audience) {
+					newEvent.audience = [{
+						grade: 0,
+						mandatory: false
+					}];
 				}
 
 				return basicDetails;

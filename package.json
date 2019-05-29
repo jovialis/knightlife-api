@@ -12,7 +12,8 @@
 		"passport-google-oauth20": "latest",
 		"express-sslify": "latest",
 		"cors": "latest",
-		"axios": "^0.18.0"
+		"axios": "^0.18.0",
+		"datejs": "^1.0.0-rc3"
 	},
 	"scripts": {
 		"heroku-postbuild": "cd client && npm install && npm run build",
