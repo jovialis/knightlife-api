@@ -50,12 +50,12 @@ module.exports = function (req, res) {
 				}
 
 				// Default Event audience
-				// if (!basicDetails.audience) {
-				// 	basicDetails.audience = [{
-				// 		grade: 0,
-				// 		mandatory: false
-				// 	}];
-				// }
+				if (!basicDetails.audience) {
+					basicDetails.audience = [{
+						grade: 0,
+						mandatory: false
+					}];
+				}
 
 				return basicDetails;
 			});

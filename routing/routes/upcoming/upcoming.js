@@ -127,12 +127,12 @@ function getEvents(date, list, callback) {
 				}
 
 				// Default Event audience
-				// if (!basicDetails.audience) {
-				// 	basicDetails.audience = [{
-				// 		grade: 0,
-				// 		mandatory: false
-				// 	}];
-				// }
+				if (!basicDetails.audience) {
+					basicDetails.audience = [{
+						grade: 0,
+						mandatory: false
+					}];
+				}
 
 				list.push(buildItem("event", date, basicDetails));
 			});
