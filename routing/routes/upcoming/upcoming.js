@@ -134,7 +134,7 @@ function getEvents(date, list, callback) {
 					}];
 				}
 
-				list.push(buildItem("event", date, basicDetails));
+				list.push(buildItem("event", new Date(newEvent.date.split('T')[0]), basicDetails));
 			});
 		}
 
