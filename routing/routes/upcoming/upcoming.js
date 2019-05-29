@@ -85,14 +85,14 @@ function getScheduleNotices(date, list, callback) {
 }
 
 function getEvents(date, list, callback) {
-	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
+	let formatter = require(`${__basedir}/utils/date-formatter`);
 
-	axios.get(`https://api.bbnknightlife.com/m/events/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(eventRes => {
+	axios.get(`https://api.bbnknightlife.com/m/events`).then(eventRes => {
 		if (eventRes.data) {
 			// Map list of events to usable ones for old versions of Knight Life.
-			eventRes.data.events.forEach(newEvent => {
+			eventRes.data.forEach(newEvent => {
 				let basicDetails = {
-					date: dateString,
+					date: formatter(Date.parse(newEvent.date)),
 					description: newEvent.title
 				};
 
@@ -127,12 +127,12 @@ function getEvents(date, list, callback) {
 				}
 
 				// Default Event audience
-				if (!newEvent.audience) {
-					newEvent.audience = [{
-						grade: 0,
-						mandatory: false
-					}];
-				}
+				// if (!basicDetails.audience) {
+				// 	basicDetails.audience = [{
+				// 		grade: 0,
+				// 		mandatory: false
+				// 	}];
+				// }
 
 				list.push(buildItem("event", date, basicDetails));
 			});
