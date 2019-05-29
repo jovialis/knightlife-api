@@ -20,7 +20,7 @@ module.exports = function (req, res) {
 			const convertedEvents = eventRes.data.events.map(newEvent => {
 				let basicDetails = {
 					date: dateString,
-					description: newEvent.title
+					description: newEvent.title + (newEvent.location ? `. ${ newEvent.location }` : '')
 				};
 
 				/// If it's a Block event, we convert the Block over
