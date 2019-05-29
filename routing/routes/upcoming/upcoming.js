@@ -84,14 +84,14 @@ function getScheduleNotices(date, list, callback) {
 }
 
 function getEvents(date, list, callback) {
-	const dateFormatter = require('../../../utils/date-formatter');
+	let dateString = require(`${__basedir}/utils/date-formatter`)(date);
 
-	axios.get(`https://api.bbnknightlife.com/m/events`).then(eventRes => {
+	axios.get(`https://api.bbnknightlife.com/m/events/${ date.getFullYear() }/${ date.getMonth() + 1 }/${ date.getDate() }`).then(eventRes => {
 		if (eventRes.data) {
 			// Map list of events to usable ones for old versions of Knight Life.
-			eventRes.data.forEach(newEvent => {
+			eventRes.data.events.forEach(newEvent => {
 				let basicDetails = {
-					date: dateFormatter(new Date(newEvent.date)),
+					date: dateString,
 					description: newEvent.title
 				};
 
@@ -123,6 +123,14 @@ function getEvents(date, list, callback) {
 							grade: audience.grade + 1 // Old system has All School as 0, Freshman as 1, etc.
 						};
 					});
+				}
+
+				// Default Event audience
+				if (!newEvent.audience) {
+					newEvent.audience = [{
+						grade: 0,
+						mandatory: false
+					}];
 				}
 
 				list.push(buildItem("event", date, basicDetails));
