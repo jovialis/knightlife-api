@@ -5,7 +5,7 @@ const dateZone = 'US/Eastern';
 // Set up prototype
 Date.prototype.toISOString = function() {
 	const date = moment(this);
-	return date.format();
+	return date.format("YYYY-MM-DDTHH:mm:ss.SSSZ");
 };
 
 module.exports.parseInEST = (string, format) => {
