@@ -13,7 +13,7 @@
 		"express-sslify": "latest",
 		"cors": "latest",
 		"axios": "^0.18.0",
-		"datejs": "^1.0.0-rc3"
+		"moment": "^2.24.0"
 	},
 	"scripts": {
 		"start": "node index.js"

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const moment = require('moment');
 
 module.exports = function (req, res) {
 	let formatter = require(`${__basedir}/utils/response-formatter`);
@@ -26,8 +27,8 @@ module.exports = function (req, res) {
 				if (newEvent.schedule.blocks.length !== 0) {
 					basicDetails.block = newEvent.schedule.blocks[0];
 				} else if (newEvent.schedule.start) {
-					const startDate = new Date(newEvent.schedule.start);
-					const endDate = newEvent.schedule.end ? new Date(newEvent.schedule.end) : null;
+					const startDate = moment(newEvent.schedule.start).toDate();
+					const endDate = newEvent.schedule.end ? moment(newEvent.schedule.end).toDate() : null;
 
 					//("0" + myNumber).slice(-2)
 
