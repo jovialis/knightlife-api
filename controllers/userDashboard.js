@@ -66,7 +66,7 @@ function userHasModule(user, moduleName) {
 	});
 }
 
-module.exports.routeGetUserModules = (req, res) => {
+module.exports.routeGetUserModules = (req, res, next) => {
 	const user = req.user;
 
 	retrieveUserModules(user).then(modules => {
@@ -75,8 +75,5 @@ module.exports.routeGetUserModules = (req, res) => {
 		res.json({
 			modules: moduleObjects
 		});
-	}).catch(error => {
-		res.status(500).send("An Internal Error Occurred");
-		console.log(error);
-	})
+	}).catch(next);
 };

@@ -3,7 +3,7 @@ const removeKey = require('key-del');
 const allPermissions = require('../assets/possiblePermissions');
 const users = require('./user');
 
-module.exports.routeGetSearchedUser = (req, res) => {
+module.exports.routeGetSearchedUser = (req, res, next) => {
 	const name = req.query.term;
 
 	const User = mongoose.model('User');
@@ -25,13 +25,10 @@ module.exports.routeGetSearchedUser = (req, res) => {
 		removeKey(docsList, [ '_id', '__v', '__t', 'usernameLower', 'nameLower', 'tokens', 'devices' ], {copy: false});
 
 		res.json(docsList);
-	}).catch(err => {
-		console.log(err);
-		res.status(500).send('An internal error occurred.');
-	});
+	}).catch(next);
 };
 
-module.exports.routeGetUserOverview = (req, res) => {
+module.exports.routeGetUserOverview = (req, res, next) => {
 	const badge = req.params.badge;
 
 	const User = mongoose.model('User');
@@ -55,11 +52,7 @@ module.exports.routeGetUserOverview = (req, res) => {
 				permissions: permissions
 			});
 		} catch (err) {
-			console.log(err);
-			res.status(500).send('An internal error occurred.');
+			next(err);
 		}
-	}).catch(err => {
-		console.log(err);
-		res.status(500).send('An internal error occurred.');
-	});
+	}).catch(next);
 };

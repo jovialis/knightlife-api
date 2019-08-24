@@ -1,17 +1,15 @@
 const mongoose = require('mongoose');
+const DetailedError = require('../util/detailedError');
 
 const removeKey = require('key-del');
 
 // Retrieve lunch for a day
-module.exports.routeGetScheduleForDate = (req, res) => {
+module.exports.routeGetScheduleForDate = (req, res, next) => {
 	const date = req.date;
 
 	retrieveScheduleObjectForDate(date, true).then(schedule => {
 		res.json(schedule);
-	}).catch(error => {
-		res.status(500).send("An Internal Error Occurred");
-		console.log(error);
-	});
+	}).catch(next);
 };
 
 module.exports.getScheduleForDate = retrieveScheduleForDate;
@@ -89,7 +87,7 @@ function createScheduleForDate(date) {
 	});
 }
 
-module.exports.routeGetScheduleByBadge = (req, res) => {
+module.exports.routeGetScheduleByBadge = (req, res, next) => {
 	const badge = req.param('badge');
 
 	getScheduleByBadge(badge).then(doc => {
@@ -109,11 +107,8 @@ module.exports.routeGetScheduleByBadge = (req, res) => {
 		}
 
 		// Invalid badge
-		res.status(400).send('Invalid Badge Provided');
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send('An Internal Error Occurred');
-	});
+		next(new DetailedError(400, 'error_invalid_badge', 'Invalid badge provided.'));
+	}).catch(next);
 };
 
 function getScheduleByBadge(badge) {

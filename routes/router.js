@@ -1,3 +1,5 @@
+const DetailedError = require("./utils/detailedError");
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const expressSsl = require('express-sslify');
@@ -23,6 +25,25 @@ module.exports.init = () => {
 	}
 
 	registerRoutes(router);
+
+	// Handle errors with express
+	router.use((err, req, res, next) => {
+		console.log(err);
+
+		// If detailed error available
+		if (err instanceof DetailedError) {
+			// Send JSON response
+			res.status(err.errorCode).send({
+				error: err.errorId,
+				errorMessage: err.errorMessage
+			});
+		} else {
+			res.status(500).send({
+				error: 'err_server',
+				errorMessage: 'An internal error occurred. Please contact an administrator.'
+			});
+		}
+	});
 
 	router.all('*', (req, res) => {
 		res.status(404).send("Not Found")

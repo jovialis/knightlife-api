@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const removeKey = require('key-del');
+const DetailedError = require('../util/detailedError');
 
-module.exports.routeGetSurvey = (req, res) => {
+module.exports.routeGetSurvey = (req, res, next) => {
 	const version = req.get('Version');
 
 	const Survey = mongoose.model('Survey');
@@ -9,7 +10,7 @@ module.exports.routeGetSurvey = (req, res) => {
 		version: version
 	}).then(doc => {
 		if (!doc) {
-			res.status(404).send('Could not find a relevant survey.');
+			next(new DetailedError(404, 'error_not_found', 'Could not find a relevant survey.'));
 			return;
 		}
 
@@ -17,8 +18,5 @@ module.exports.routeGetSurvey = (req, res) => {
 		removeKey(docObject, [ '__v', '_id' ], {copy: false});
 
 		res.json(docObject);
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };

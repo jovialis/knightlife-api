@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const Event = mongoose.model('Event');
 
 const removeKey = require('key-del');
+const DetailedError = require('../util/detailedError');
 
 // Retrieve all future events
-module.exports.routeGetEvents = (req, res) => {
+module.exports.routeGetEvents = (req, res, next) => {
 	const date = new Date();
 	date.setUTCHours(0, 0, 0, 0);
 
@@ -29,14 +30,11 @@ module.exports.routeGetEvents = (req, res) => {
 
 	fetchEventsObject(query, true).then(events => {
 		res.json(events);
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
 // Retrieve events for a day
-module.exports.routeGetEventsForDate = (req, res) => {
+module.exports.routeGetEventsForDate = (req, res, next) => {
 	const date = req.date;
 	const filters = req.filters;
 	const categories = req.categories;
@@ -57,10 +55,7 @@ module.exports.routeGetEventsForDate = (req, res) => {
 			date: date.toISOString(),
 			events: events
 		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
 module.exports.fetchEventsFromQuery = fetchEventsFromQuery;
@@ -112,7 +107,7 @@ function fetchEventsObject(query, sanitize) {
 	});
 }
 
-module.exports.routeGetEventByBadge = (req, res) => {
+module.exports.routeGetEventByBadge = (req, res, next) => {
 	const badge = req.param('badge');
 
 	getEventByBadge(badge).then(doc => {
@@ -125,11 +120,8 @@ module.exports.routeGetEventByBadge = (req, res) => {
 		}
 
 		// Invalid badge
-		res.status(400).send('Invalid Badge Provided');
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send('An Internal Error Occurred');
-	});
+		next(new DetailedError(400, 'error_invalid_badge', 'Invalid badge provided.'));
+	}).catch(next);
 };
 
 function getEventByBadge(badge) {

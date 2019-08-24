@@ -1,15 +1,12 @@
 const mongoose = require('mongoose');
+const DetailedError = require('../util/detailedError');
 
-module.exports.routeRegisterDeviceId = (req, res) => {
+module.exports.routeRegisterDeviceId = (req, res, next) => {
 	const token = req.get('Device');
 	const version = req.get('Version');
 
 	if (!token || !version) {
-		res.status(401);
-		res.json({
-			success: false,
-			error: "Incomplete information provided"
-		});
+		next(new DetailedError(401, 'error_incomplete_request', 'Device ID or software version not provided.'));
 		return;
 	}
 
@@ -17,10 +14,7 @@ module.exports.routeRegisterDeviceId = (req, res) => {
 		res.json({
 			success: true
 		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send('An Internal Error Occurred');
-	});
+	}).catch(next);
 };
 
 function registerDeviceId(token, version) {

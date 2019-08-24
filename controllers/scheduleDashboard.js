@@ -1,7 +1,8 @@
 const schedules = require('./schedule');
 const removeKey = require('key-del');
+const DetailedError = require('../util/detailedError');
 
-module.exports.routeGetSchedule = (req, res) => {
+module.exports.routeGetSchedule = (req, res, next) => {
 	const date = req.date;
 
 	schedules.getScheduleForDate(date).then(schedule => {
@@ -11,13 +12,10 @@ module.exports.routeGetSchedule = (req, res) => {
 		res.json({
 			schedule: scheduleObject
 		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
-module.exports.routePutSchedule = (req, res) => {
+module.exports.routePutSchedule = (req, res, next) => {
 	const date = req.date;
 	const timetables = req.body.timetables;
 
@@ -29,7 +27,7 @@ module.exports.routePutSchedule = (req, res) => {
 		// Manually validate
 		schedule.validate(error => {
 			if (error) {
-				res.status(403).send(error);
+				next(new DetailedError(403, 'error_validation', 'Submitted data failed validation.'));
 				return;
 			}
 
@@ -42,19 +40,9 @@ module.exports.routePutSchedule = (req, res) => {
 						success: true
 					});
 				} catch (error) {
-					console.log(error);
-					res.json({
-						success: false
-					});
+					next(error);
 				}
-			}).catch(err => {
-				console.log(err);
-				res.status(500).send("An Internal Error Occurred");
-			})
+			}).catch(next);
 		});
-
-	}).catch(err => {
-		console.log(err);
-		res.status(500).send("An Internal Error Occurred");
-	})
+	}).catch(next);
 };

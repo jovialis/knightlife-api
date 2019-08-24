@@ -13,7 +13,7 @@ const provider = new apn.Provider({
 	production: process.env.NODE_ENV === 'production' // Set to true if sending a notification to a production iOS app
 });
 
-module.exports.routeGlobalMessage = (req, res) => {
+module.exports.routeGlobalMessage = (req, res, next) => {
 	const user = req.user;
 	const anonymous = req.body.anonymous ? req.body.anonymous : false;
 	const title = req.body.title;
@@ -29,10 +29,7 @@ module.exports.routeGlobalMessage = (req, res) => {
 		res.json({
 			index: messageResult
 		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
 module.exports.globalMessage = globalMessage;

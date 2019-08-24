@@ -1,4 +1,4 @@
-module.exports.routeGetUpcoming = (req, res) => {
+module.exports.routeGetUpcoming = (req, res, next) => {
 
 
 

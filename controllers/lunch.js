@@ -4,17 +4,14 @@ const Lunch = mongoose.model('Lunch');
 const removeKey = require('key-del');
 
 // Retrieve lunch for a day
-module.exports.routeGetLunchForDate = (req, res) => {
+module.exports.routeGetLunchForDate = (req, res, next) => {
 	const date = req.date;
 
 	retrieveLunchObjectForDate(date, true).then(menu => {
 		removeKey(menu.items, [ 'badge', 'suggest', 'nameLower', 'allergyLower' ], { copy: false });
 
 		res.json(menu);
-	}).catch(error => {
-		res.status(500).send("An Internal Error Occurred");
-		console.log(error);
-	});
+	}).catch(next);
 };
 
 module.exports.getLunchForDate = retrieveLunchMenuForDay;
@@ -37,9 +34,7 @@ function retrieveLunchMenuForDay(date) {
 			}
 
 			resolve(menu);
-		}).catch(error => {
-			reject(error);
-		});
+		}).catch(reject);
 	});
 }
 
@@ -55,9 +50,7 @@ function retrieveLunchObjectForDate(date, sanitize) {
 			}
 
 			resolve(menuObject);
-		}).catch(error => {
-			reject(error);
-		});
+		}).catch(reject);
 	});
 }
 

@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Food = mongoose.model('Food');
 const lunchController = require('./lunch');
 const removeKey = require('key-del');
+const DetailedError = require('../util/detailedError');
 
-module.exports.routeGetMenu = (req, res) => {
+module.exports.routeGetMenu = (req, res, next) => {
 	const date = req.date;
 
 	lunchController.getLunchObjectForDate(date, false).then(menu => {
@@ -13,13 +14,10 @@ module.exports.routeGetMenu = (req, res) => {
 		res.json({
 			menu: menu
 		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
-module.exports.routePutMenu = (req, res) => {
+module.exports.routePutMenu = (req, res, next) => {
 	const date = req.date;
 
 	// const version = req.body.__v;
@@ -79,9 +77,7 @@ module.exports.routePutMenu = (req, res) => {
 				foodIdList.push(newFood._id);
 			}
 		} catch (err) {
-			console.log(err);
-			res.status(500).send("An Internal Error Occurred");
-
+			next(err);
 			return;
 		}
 
@@ -105,17 +101,11 @@ module.exports.routePutMenu = (req, res) => {
 					success: false
 				});
 			}
-		}).catch(error => {
-			console.log(error);
-			res.status(500).send("An Internal Error Occurred");
-		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+		}).catch(next);
+	}).catch(next);
 };
 
-module.exports.routeGetSuggestion = (req, res) => {
+module.exports.routeGetSuggestion = (req, res, next) => {
 	const name = req.query.term;
 
 	Food.find({
@@ -130,13 +120,10 @@ module.exports.routeGetSuggestion = (req, res) => {
 		res.json({
 			items: foods
 		});
-	}).catch(err => {
-		console.log(err);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
-module.exports.routeHideSuggestion = (req, res) => {
+module.exports.routeHideSuggestion = (req, res, next) => {
 	const badge = req.params.badge;
 
 	Food.findOneAndUpdate({
@@ -155,8 +142,5 @@ module.exports.routeHideSuggestion = (req, res) => {
 		res.json({
 			success: true
 		});
-	}).catch(err => {
-		console.log(err);
-		res.status(500).send("An Internal Error Occurred");
-	})
+	}).catch(next);
 };

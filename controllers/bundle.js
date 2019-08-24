@@ -2,26 +2,21 @@ const scheduleController = require('./schedule');
 const lunchController = require('./lunch');
 const eventController = require('./events');
 const removeKey = require('key-del');
+const DetailedError = require('../util/detailedError');
 
-module.exports.routeGetBundleForDate = (req, res) => {
+module.exports.routeGetBundleForDate = (req, res, next) => {
 	getBundleForDate(req.date).then(bundle => {
 		res.json(bundle);
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
-module.exports.routeGetWeekBundles = (req, res) => {
+module.exports.routeGetWeekBundles = (req, res, next) => {
 	const date = new Date();
 	date.setHours(0,0,0,0);
 
 	getWeekBundle(date, 7).then(bundle => {
 		res.json(bundle);
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
 

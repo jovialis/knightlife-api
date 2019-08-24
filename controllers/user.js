@@ -22,7 +22,7 @@ function getUserFromToken(token) {
 	});
 }
 
-module.exports.routeValidateUserSession = async (req, res) => {
+module.exports.routeValidateUserSession = async (req, res, next) => {
 	const user = req.user;
 
 	if (!user) {
@@ -39,7 +39,7 @@ module.exports.routeValidateUserSession = async (req, res) => {
 	});
 };
 
-module.exports.routeValidateUserSessionPermission = async (req, res) => {
+module.exports.routeValidateUserSessionPermission = async (req, res, next) => {
 	const user = req.user;
 
 	if (!user) {
@@ -61,10 +61,7 @@ module.exports.routeValidateUserSessionPermission = async (req, res) => {
 		} else {
 			res.json({valid: false});
 		}
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+	}).catch(next);
 };
 
 module.exports.routeLogoutUser = (req, res) => {
@@ -84,7 +81,7 @@ module.exports.routeUserOpenGoogleLogin = (req, res) => {
 	res.redirect(googleUtil.urlGoogle());
 };
 
-module.exports.routeUserLoginGoogle = async (req, res) => {
+module.exports.routeUserLoginGoogle = async (req, res, next) => {
 	const code = req.query.code;
 	if (!code) {
 		res.redirect(`${process.env.LOGIN_FAILURE_REDIRECT}?error=${req.query.error}`);
@@ -129,18 +126,9 @@ module.exports.routeUserLoginGoogle = async (req, res) => {
 				});
 
 				res.redirect(process.env.LOGIN_SUCCESS_REDIRECT);
-			}).catch(error => {
-				console.log(error);
-				res.status(500).send("An Internal Error Occurred");
-			})
-		}).catch(error => {
-			console.log(error);
-			res.status(500).send("An Internal Error Occurred");
-		});
-	}).catch(error => {
-		console.log(error);
-		res.status(500).send("An Internal Error Occurred");
-	});
+			}).catch(next);
+		}).catch(next);
+	}).catch(next);
 };
 
 module.exports.getUserPermissionsMap = getUserPermissionsMap;
