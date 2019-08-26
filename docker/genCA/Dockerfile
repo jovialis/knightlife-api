@@ -1,21 +1,11 @@
-FROM ubuntu:xenial
-
 #  genca is for 'generate CA', a DIY certificate authority.
 
 # Install SSL and generate a certificate.
-# To install this certificate into the iOS simulator so it's trusted:
+# See "DEVELOPMENT ENVIRONMENT HOWTO" in README.
+# to  install and trust this root certificate in the
+# iOS simulator.
 
-# Copy the root CA out of the container with these commands:
-
-# $ id=$(docker create knightlife-api_klapi:latest)
-# $ docker cp $id:/home/node/rootCA.key ~/ssl
-# $ docker cp $id:/home/node/rootCA.cer ~/ssl
-# $ docker rm -v $id
-
-# Drag the rootCA.cer file onto the simulator,
-# Go to  Settings > About > Certificate Trust Settings and install.
-# You may need to revisit that page to turn trusting 'Self CA' back on.
-
+FROM ubuntu:xenial
 WORKDIR /tmp
 RUN apt-get update
 RUN apt-get install -y openssl
