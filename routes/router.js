@@ -1,4 +1,4 @@
-const DetailedError = require("./utils/detailedError");
+const DetailedError = require("../util/detailedError");
 
 const express = require('express');
 const bodyParser = require('body-parser');
