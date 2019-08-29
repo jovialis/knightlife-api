@@ -127,3 +127,23 @@ Params:
 ```
 Returns a compiled list of all Upcoming Items, sorted by date. These are of three types: Event, Schedule Change, Notice. There can be multiple Items for a single date.
 ```
+## DEVELOPMENT ENVIRONMENT HOWTO
+
+1. Install Docker Desktop.
+https://www.docker.com/products/docker-desktop
+
+2.  At the terminal, build the images, export the root certificate
+for installing into the iOS simulator, then launch the containers.
+
+```
+$ cd knightlife-api
+$ docker-compose build
+$ docker/genca/export_ca.sh
+$ docker-compose up
+```
+
+3. Open a Finder window, navigate to /Users/[you]/tempCA, and drag rootCA.cer
+to the Simulator window.
+
+4.  The simulator will tell you to finish installing it in Settings.
+Navigate to Settings > About > Certificate Trust Settings and install.

@@ -1,0 +1,31 @@
+version: '3'
+services:
+  genca:
+    build:
+      context: .
+      dockerfile: ./docker/genca/Dockerfile
+  kldb:
+    build:
+      context: .
+      dockerfile: ./docker/kldb/Dockerfile
+    ports:
+    - "27017:27017"
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=admin
+    - MONGO_INITDB_ROOT_PASSWORD=foo
+    - MONGO_INITDB_DATABASE=dev
+  klapi:
+    build:
+      context: .
+      dockerfile: ./docker/klapi/Dockerfile
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/code
+    environment:
+    - MONGODB_URI=mongodb://kl:foo@kldb:27017/dev
+    - NODE_ENV=development
+    depends_on:
+    - genca
+    - kldb
+    restart: on-failure

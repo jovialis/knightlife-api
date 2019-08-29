@@ -1,11 +1,24 @@
 const mongoose = require('mongoose');
 
-module.exports.init = () => {
-	// Start DB connection
-	mongoose.connect(process.env.MONGODB_URI, {
-		useNewUrlParser: true
-	});
+const options = {
+	useNewUrlParser: true,
+	reconnectInterval: 500,
+	reconnectTries: 30
+};
 
+const connectWithRetry = () => {
+	console.log('MongoDB connection with retry')
+	mongoose.connect(process.env.MONGODB_URI, options).then(()=>{
+	  console.log('MongoDB is connected')
+	}).catch(err=>{
+	  console.log('MongoDB connection unsuccessful, retry (' + err + ')')
+	  setTimeout(connectWithRetry, 5000)
+	})
+}
+
+module.exports.init = () => {
+	//Start DB connection
+	connectWithRetry();
 	registerModels();
 };
 
