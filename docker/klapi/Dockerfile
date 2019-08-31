@@ -1,5 +1,5 @@
 # Specify genca as a previous build stage.
-FROM genca as ca
+FROM knightlife-api_genca as ca
 
 # Specify the node base image (verison 10)
 FROM node:10
