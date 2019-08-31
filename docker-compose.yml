@@ -1,10 +1,12 @@
 version: '3'
 services:
   genca:
+    image: genca:latest
     build:
       context: .
       dockerfile: ./docker/genca/Dockerfile
   kldb:
+    image: kldb:latest
     build:
       context: .
       dockerfile: ./docker/kldb/Dockerfile
@@ -15,6 +17,7 @@ services:
     - MONGO_INITDB_ROOT_PASSWORD=foo
     - MONGO_INITDB_DATABASE=dev
   klapi:
+    image: klapi:latest
     build:
       context: .
       dockerfile: ./docker/klapi/Dockerfile
