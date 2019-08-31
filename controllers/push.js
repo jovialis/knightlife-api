@@ -32,6 +32,25 @@ module.exports.routeGlobalMessage = (req, res, next) => {
 	}).catch(next);
 };
 
+// Attempt to push a piece of dummy data to a given token, verifying the token's authenticity
+module.exports.sendDummyData = sendDummyData;
+function sendDummyData(token) {
+	return new Promise((resolve, reject) => {
+		// Instantiate notification with no content
+		let notification = new apn.Notification();
+
+		notification.topic = process.env.APN_BUNDLE;
+		notification.payload = {};
+
+		// Send notification
+		try {
+			provider.send(notification, token).then(resolve).catch(reject);
+		} catch (error) {
+			reject(error);
+		}
+	});
+}
+
 module.exports.globalMessage = globalMessage;
 function globalMessage(user, anonymous, title, message, badge, sound, payload) {
 	return new Promise((resolve, reject) => {

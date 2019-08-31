@@ -8,13 +8,13 @@ const options = {
 
 const connectWithRetry = () => {
 	console.log('MongoDB connection with retry')
-	mongoose.connect(process.env.MONGODB_URI, options).then(()=>{
-	  console.log('MongoDB is connected')
-	}).catch(err=>{
-	  console.log('MongoDB connection unsuccessful, retry (' + err + ')')
-	  setTimeout(connectWithRetry, 5000)
+	mongoose.connect(process.env.MONGODB_URI, options).then(() => {
+		console.log('MongoDB is connected')
+	}).catch(err => {
+		console.log('MongoDB connection unsuccessful, retry (' + err + ')')
+		setTimeout(connectWithRetry, 5000)
 	})
-}
+};
 
 module.exports.init = () => {
 	//Start DB connection
@@ -25,6 +25,7 @@ module.exports.init = () => {
 function registerModels() {
 
 	require('./device');
+	require('./deviceProfile');
 	require('./event');
 	require('./food');
 	require('./lunch');

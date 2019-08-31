@@ -8,9 +8,27 @@ const Device = new mongoose.Schema({
     version: {
         type: String,
         required: true
+    },
+    profile: {
+        type: mongoose.Types.ObjectId,
+        ref: 'DeviceProfile',
+        default: async function() {
+            // Generate ObjectId for the profile
+            const profileId = mongoose.Types.ObjectId();
+            const DeviceProfile = mongoose.model('DeviceProfile');
+
+            // Create profile document
+            await DeviceProfile.create({
+                _id: profileId
+            });
+
+            return profileId
+        }
     }
 }, {
-    collection: 'devices'
+    collection: 'devices',
+    setDefaultsOnInsert: true // Needed to ensure DeviceProfile is saved
 });
 
 mongoose.model('Device', Device);
+
