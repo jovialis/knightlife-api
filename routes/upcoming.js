@@ -11,7 +11,7 @@ module.exports.registerRoutes = (router) => {
 		controller.getUpcoming(grade).then(items => {
 			res.json({
 				upcoming: items
-			})
+			});
 		}).catch(next);
 	});
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bundleController = require('./bundle');
+const scheduleController = require('./schedule');
 
 // How many days in the future to look for upcoming events
 const UPCOMING_PROJECTION = 14;
@@ -24,7 +25,12 @@ module.exports.getUpcoming = (grade) => {
 		let upcomingDays = {};
 
 		// Filter through days
-		for (let bundle of bundles) {
+		for (let bundleKey in bundles) {
+			if (!bundles.hasOwnProperty(bundleKey)) {
+				continue;
+			}
+
+			const bundle = bundles[bundleKey];
 
 			let dayUpcomingItems = [];
 
@@ -33,7 +39,8 @@ module.exports.getUpcoming = (grade) => {
 			let schedule = bundle.schedule;
 
 			// Obtain user's timetable to see if it is marked as a special schedule
-			let userTimetable = schedule.getTimetableForGrade(grade);
+			let userTimetable = scheduleController.getTimetableForGradeFromSchedule(schedule, grade);
+
 			if (userTimetable && userTimetable.special === true) {
 				// Append this as an upcoming item of the special-schedule type
 				dayUpcomingItems.push({
@@ -92,7 +99,7 @@ module.exports.getUpcoming = (grade) => {
 				});
 
 				// Push the day's upcoming items to the master list
-				upcomingDays[bundle.date] = dayUpcomingItems;
+				upcomingDays[bundleKey] = dayUpcomingItems;
 			}
 		}
 

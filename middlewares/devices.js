@@ -13,7 +13,7 @@ module.exports.captureDevice = (req, res, next) => {
 
 	controller.retrieveDeviceFromToken(deviceToken, deviceVersion).then(device => {
 		// Successfully found device
-		req.device = device;ß
+		req.device = device;
 	}).catch(err => {
 		console.log(`Attempted to discover Device. Encountered an error: ${ err }`);
 		req.device = null;

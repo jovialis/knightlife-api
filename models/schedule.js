@@ -172,32 +172,4 @@ const Schedule = new mongoose.Schema({
 	collection: 'schedules'
 });
 
-Schedule.methods.getTimetableForGrade = function(grade) {
-	// User has a grade
-	if (grade != null) {
-		// Search schedule for a grade-specific timetable
-		for (const timetable of this.timetables) {
-			// Ensure that it's a grade-specific timetable
-			if (timetable.kind === 'GradeSpecificTimetable') {
-				// Make sure the grade lines up
-				if (timetable.grade === grade) {
-					return timetable;
-				}
-			}
-		}
-
-		// No grade-specific timetables found.
-	}
-
-	// Return a non grade-specific timetable
-	for (const timetable of this.timetables) {
-		if (timetable.kind === 'Timetable') {
-			return timetable;
-		}
-	}
-
-	// No non grade specific timetable find. This should never happen.
-	return null;
-};
-
 mongoose.model('Schedule', Schedule);

@@ -111,6 +111,35 @@ module.exports.routeGetScheduleByBadge = (req, res, next) => {
 	}).catch(next);
 };
 
+module.exports.getTimetableForGradeFromSchedule = getTimetableForGradeFromSchedule;
+function getTimetableForGradeFromSchedule(schedule, grade) {
+	// User has a grade
+	if (grade != null) {
+		// Search schedule for a grade-specific timetable
+		for (const timetable of schedule.timetables) {
+			// Ensure that it's a grade-specific timetable
+			if (timetable.kind === 'GradeSpecificTimetable') {
+				// Make sure the grade lines up
+				if (timetable.grade === grade) {
+					return timetable;
+				}
+			}
+		}
+
+		// No grade-specific timetables found.
+	}
+
+	// Return a non grade-specific timetable
+	for (const timetable of schedule.timetables) {
+		if (timetable.kind === 'Timetable') {
+			return timetable;
+		}
+	}
+
+	// No non grade specific timetable find. This should never happen.
+	return null;
+}
+
 function getScheduleByBadge(badge) {
 	return new Promise((resolve, reject) => {
 		const Schedule = mongoose.model('Schedule');

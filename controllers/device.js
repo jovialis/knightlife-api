@@ -8,7 +8,7 @@ module.exports.retrieveDeviceFromToken = (token, version) => {
 		const Device = mongoose.model('Device');
 		Device.findOne({
 			token: token
-		}).populate('profile').execute().then(async doc => {
+		}).populate('profile').exec().then(async doc => {
 			// No document found
 			if (!doc) {
 				// Validate token with Apple's push servers.
@@ -42,6 +42,7 @@ module.exports.retrieveDeviceFromToken = (token, version) => {
 						}).catch(reject);
 					}).catch(reject);
 				}).catch(reject);
+				return;
 			}
 
 			try {
