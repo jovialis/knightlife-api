@@ -59,7 +59,7 @@ module.exports.getUpcoming = (grade) => {
 				let additionalDetails = {};
 
 				// If there are specific audiences specified, we check to ensure that the user's grade settings permit viewing this event
-				if (event.audience !== null) {
+				if (event.audience && event.audience.length > 0) {
 					let userIncluded = false;
 
 					// Check if the user's grade is included in the audience
@@ -97,8 +97,10 @@ module.exports.getUpcoming = (grade) => {
 						...additionalDetails
 					}
 				});
+			}
 
-				// Push the day's upcoming items to the master list
+			// Push the day's upcoming items to the master list if there were upcoming items
+			if (dayUpcomingItems.length > 0) {
 				upcomingDays[bundleKey] = dayUpcomingItems;
 			}
 		}

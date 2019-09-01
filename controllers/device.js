@@ -45,6 +45,26 @@ module.exports.retrieveDeviceFromToken = (token, version) => {
 				return;
 			}
 
+			// If no profile, we create a profile object for the Device.
+			if (!doc.profile) {
+				// Create profile document
+				const DeviceProfile = mongoose.model('DeviceProfile');
+				const profile = await DeviceProfile.create({});
+
+				// Set the profile ObjectId
+				doc.profile = profile._id;
+
+				try {
+					await doc.save();
+				} catch (err) {
+					reject(err);
+					return;
+				}
+
+				// Set the profile object so it'll be populated when we return the doc
+				doc.profile = profile;
+			}
+
 			try {
 				// Update and save doc with latest version information. This also ensures that the device profile will be automatically generated and saved if it isn't already present.
 				doc.version = version;

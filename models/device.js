@@ -11,19 +11,7 @@ const Device = new mongoose.Schema({
     },
     profile: {
         type: mongoose.Types.ObjectId,
-        ref: 'DeviceProfile',
-        default: async function() {
-            // Generate ObjectId for the profile
-            const profileId = mongoose.Types.ObjectId();
-            const DeviceProfile = mongoose.model('DeviceProfile');
-
-            // Create profile document
-            await DeviceProfile.create({
-                _id: profileId
-            });
-
-            return profileId
-        }
+        ref: 'DeviceProfile'
     }
 }, {
     collection: 'devices',
