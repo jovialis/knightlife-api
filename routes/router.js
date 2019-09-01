@@ -86,7 +86,7 @@ module.exports.init = () => {
 
 function registerRoutes(router) {
 
-	require('./backend').registerRoutes(router);
+	require('./device').registerRoutes(router);
 	require('./survey').registerRoutes(router);
 
 	require('./bundle').registerRoutes(router);
@@ -98,6 +98,8 @@ function registerRoutes(router) {
 	// require('./push').registerRoutes(router);
 	require('./schedule').registerRoutes(router);
 	require('./scheduleDashboard').registerRoutes(router);
+
+	require('./upcoming').registerRoutes(router);
 
 	require('./user').registerRoutes(router);
 	require('./userDashboard').registerRoutes(router);

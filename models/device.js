@@ -8,9 +8,15 @@ const Device = new mongoose.Schema({
     version: {
         type: String,
         required: true
+    },
+    profile: {
+        type: mongoose.Types.ObjectId,
+        ref: 'DeviceProfile'
     }
 }, {
-    collection: 'devices'
+    collection: 'devices',
+    setDefaultsOnInsert: true // Needed to ensure DeviceProfile is saved
 });
 
 mongoose.model('Device', Device);
+

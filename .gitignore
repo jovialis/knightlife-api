@@ -1,7 +1,8 @@
 .idea
+.env
+*.p8
 node_modules
 npm-debug.log
 apn/credentials
-.env
 snowdaycalc.html
 credentials

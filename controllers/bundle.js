@@ -39,6 +39,7 @@ function getBundleForDate(date) {
 	});
 }
 
+module.exports.getWeekBundle = getWeekBundle;
 function getWeekBundle(date, days) {
 	return new Promise(async (resolve, reject) => {
 		let packaged = {};

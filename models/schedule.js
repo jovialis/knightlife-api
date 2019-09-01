@@ -114,6 +114,8 @@ Block.methods.populateDates = function(date) {
 	}
 };
 
+//
+
 const Timetable = new mongoose.Schema({
 	badge: {
 		type: String,
@@ -122,16 +124,17 @@ const Timetable = new mongoose.Schema({
 	blocks: {
 		type: [Block]
 	},
-	grades: { // 0 = freshman, etc.
-		type: [ Number ],
-		default: [  ]
-	},
 	title: {
 		type: String,
 		default: null
-	} // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
+	}, // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
+	special: { // Whether to display this as a 'special schedule' to the user.
+		type: Boolean,
+		default: false
+	}
 }, {
-	_id: false
+	_id: false,
+	discriminatorKey: 'kind'
 });
 
 const Schedule = new mongoose.Schema({
@@ -144,13 +147,26 @@ const Schedule = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
-	timetables: {
-		type: [Timetable],
+	timetables: [{
+		type: Timetable,
 		required: true
-	},
+	}],
 	day: Number
 }, {
 	collection: 'schedules'
 });
+
+Schedule.path('timetables').discriminator('GradeSpecificTimetable', new mongoose.Schema({
+	grade: { // 0 = freshman, etc.
+		type: Number,
+		required: true,
+		validate: {
+			validator: function(v) {
+				return v >= 0 && v <= 3;
+			},
+			message: props => `${props.value} is not a valid grade!`
+		},
+	},
+}));
 
 mongoose.model('Schedule', Schedule);
