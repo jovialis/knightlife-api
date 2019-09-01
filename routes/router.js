@@ -99,6 +99,8 @@ function registerRoutes(router) {
 	require('./schedule').registerRoutes(router);
 	require('./scheduleDashboard').registerRoutes(router);
 
+	require('./upcoming').registerRoutes(router);
+
 	require('./user').registerRoutes(router);
 	require('./userDashboard').registerRoutes(router);
 	require('./userPermissionsDashboard').registerRoutes(router);
