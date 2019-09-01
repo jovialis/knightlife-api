@@ -114,6 +114,8 @@ Block.methods.populateDates = function(date) {
 	}
 };
 
+//
+
 const Timetable = new mongoose.Schema({
 	badge: {
 		type: String,
@@ -122,17 +124,34 @@ const Timetable = new mongoose.Schema({
 	blocks: {
 		type: [Block]
 	},
-	grades: { // 0 = freshman, etc.
-		type: [ Number ],
-		default: [  ]
-	},
 	title: {
 		type: String,
 		default: null
-	} // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
+	}, // For specific names: e.g. instead of Freshman block schedule, Freshman Exam Schedule
+	special: { // Whether to display this as a 'special schedule' to the user.
+		type: Boolean,
+		default: false
+	}
 }, {
-	_id: false
+	_id: false,
+	discriminatorKey: 'kind'
 });
+
+const TimetableModel = mongoose.model('Timetable', Timetable);
+
+// Represents a timetable specific to one grade.
+const GradeSpecificTimetable = TimetableModel.discriminator('GradeSpecificTimetable', new mongoose.Schema({
+	grade: { // 0 = freshman, etc.
+		type: Number,
+		required: true,
+		validate: {
+			validator: function(v) {
+				return v >= 0 && v <= 3;
+			},
+			message: props => `${props.value} is not a valid grade!`
+		},
+	},
+}));
 
 const Schedule = new mongoose.Schema({
 	badge: {
@@ -152,5 +171,33 @@ const Schedule = new mongoose.Schema({
 }, {
 	collection: 'schedules'
 });
+
+Schedule.methods.getTimetableForGrade = function(grade) {
+	// User has a grade
+	if (grade != null) {
+		// Search schedule for a grade-specific timetable
+		for (const timetable of this.timetables) {
+			// Ensure that it's a grade-specific timetable
+			if (timetable.kind === 'GradeSpecificTimetable') {
+				// Make sure the grade lines up
+				if (timetable.grade === grade) {
+					return timetable;
+				}
+			}
+		}
+
+		// No grade-specific timetables found.
+	}
+
+	// Return a non grade-specific timetable
+	for (const timetable of this.timetables) {
+		if (timetable.kind === 'Timetable') {
+			return timetable;
+		}
+	}
+
+	// No non grade specific timetable find. This should never happen.
+	return null;
+};
 
 mongoose.model('Schedule', Schedule);

@@ -63,10 +63,22 @@ module.exports.routeUpdateDeviceProfile = (req, res, next) => {
 	// Should have been populated in middleware
 	const device = req.device;
 
-	// Update profile with settings
-	device.profile.update({
+	let profileContent = {
 		...req.body.profile
-	}).then(() => {
+	};
 
+	// Ensure grade validity
+	if (profileContent.grade) {
+		// Invalid grade value means defaults to null
+		if (profileContent.grade < 0 || profileContent.grade > 3) {
+			profileContent.grade = null;
+		}
+	}
+
+	// Update profile with settings
+	device.profile.update(profileContent).then(() => {
+		res.json({
+			success: true
+		});
 	}).catch(next);
 };

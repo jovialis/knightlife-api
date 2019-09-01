@@ -121,18 +121,5 @@ function getScheduleByBadge(badge) {
 	});
 }
 
-module.exports.routeGetNextSchoolday = (req, res) => {
-
-};
-
-function getNextSchoolday() {
-	return new Promise((resolve, reject) => {
-		let date = new Date();
-		date.setUTCHours(0,0,0,0);
-
-		
-	});
-}
-
 const template = require('../assets/schedule-template');
 module.exports.template = template;

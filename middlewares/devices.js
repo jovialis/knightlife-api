@@ -6,7 +6,7 @@ module.exports.captureDevice = (req, res, next) => {
 	const deviceToken = req.get('Device');
 	const deviceVersion = req.get('Version');
 
-	if (!token || !version) {
+	if (!deviceToken || !deviceVersion) {
 		next(new DetailedError(401, 'error_incomplete_request', 'Device ID or software version not provided.'));
 		return;
 	}
@@ -27,7 +27,7 @@ module.exports.requireDevice = (req, res, next) => {
 	const deviceToken = req.get('Device');
 	const deviceVersion = req.get('Version');
 
-	if (!token || !version) {
+	if (!deviceToken || !deviceVersion) {
 		next(new DetailedError(401, 'error_incomplete_request', 'Device ID or software version not provided.'));
 		return;
 	}
