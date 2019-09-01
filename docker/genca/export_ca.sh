@@ -9,6 +9,6 @@ mkdir $TMPDIR
 
 # Copy the certificate out of the container into 
 # your temporary directory.
-id=$(docker create knightlife-api_klapi:latest)
+id=$(docker create klapi:latest)
 docker cp $id:/home/node/rootCA.cer $TMPDIR
 docker rm -v $id
