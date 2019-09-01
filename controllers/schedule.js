@@ -131,7 +131,7 @@ function getTimetableForGradeFromSchedule(schedule, grade) {
 
 	// Return a non grade-specific timetable
 	for (const timetable of schedule.timetables) {
-		if (timetable.kind === 'Timetable') {
+		if (!timetable.kind || timetable.kind === 'Timetable') {
 			return timetable;
 		}
 	}

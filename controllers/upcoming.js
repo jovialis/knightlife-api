@@ -56,8 +56,6 @@ module.exports.getUpcoming = (grade) => {
 			let events = bundle.events;
 
 			for (const event of events) {
-				let additionalDetails = {};
-
 				// If there are specific audiences specified, we check to ensure that the user's grade settings permit viewing this event
 				if (event.audience && event.audience.length > 0) {
 					let userIncluded = false;
@@ -66,11 +64,6 @@ module.exports.getUpcoming = (grade) => {
 					for (const audience of event.audience) {
 						if (audience.grade === grade) {
 							userIncluded = true;
-
-							// Include mandatory settings from the audience
-							additionalDetails = {
-								mandatory: audience.mandatory
-							};
 
 							// Break from audience search
 							break;
@@ -88,13 +81,7 @@ module.exports.getUpcoming = (grade) => {
 					type: 'event',
 					details: {
 						badge: event.badge,
-						kind: event.kind,
-						categories: event.categories,
-						schedule: event.schedule,
-						title: event.title,
-						description: event.description,
-						location: event.location,
-						...additionalDetails
+						event: event
 					}
 				});
 			}

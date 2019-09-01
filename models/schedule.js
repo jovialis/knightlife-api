@@ -137,10 +137,26 @@ const Timetable = new mongoose.Schema({
 	discriminatorKey: 'kind'
 });
 
-const TimetableModel = mongoose.model('Timetable', Timetable);
+const Schedule = new mongoose.Schema({
+	badge: {
+		type: String,
+		default: uuid
+	},
+	date: {
+		type: Date,
+		required: true,
+		unique: true
+	},
+	timetables: [{
+		type: Timetable,
+		required: true
+	}],
+	day: Number
+}, {
+	collection: 'schedules'
+});
 
-// Represents a timetable specific to one grade.
-const GradeSpecificTimetable = TimetableModel.discriminator('GradeSpecificTimetable', new mongoose.Schema({
+Schedule.path('timetables').discriminator('GradeSpecificTimetable', new mongoose.Schema({
 	grade: { // 0 = freshman, etc.
 		type: Number,
 		required: true,
@@ -152,24 +168,5 @@ const GradeSpecificTimetable = TimetableModel.discriminator('GradeSpecificTimeta
 		},
 	},
 }));
-
-const Schedule = new mongoose.Schema({
-	badge: {
-		type: String,
-		default: uuid
-	},
-	date: {
-		type: Date,
-		required: true,
-		unique: true
-	},
-	timetables: {
-		type: [Timetable],
-		required: true
-	},
-	day: Number
-}, {
-	collection: 'schedules'
-});
 
 mongoose.model('Schedule', Schedule);
