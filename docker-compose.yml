@@ -26,6 +26,9 @@ services:
     volumes:
     - .:/code
     environment:
+    - APN_KEY=${APN_KEY}
+    - APN_KEYID=${APN_KEYID}
+    - APN_TEAMID=${APN_TEAMID}
     - MONGODB_URI=mongodb://kl:foo@kldb:27017/dev
     - NODE_ENV=development
     depends_on:
