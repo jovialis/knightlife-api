@@ -45,8 +45,8 @@ module.exports.getUpcoming = (grade) => {
 				// Append this as an upcoming item of the special-schedule type
 				dayUpcomingItems.push({
 					type: 'special-schedule',
+					badge: schedule.badge,
 					details: {
-						badge: schedule.badge
 					}
 				});
 			}
@@ -79,9 +79,9 @@ module.exports.getUpcoming = (grade) => {
 				// Push event to upcoming items
 				dayUpcomingItems.push({
 					type: 'event',
+					badge: event.badge,
 					details: {
-						badge: event.badge,
-						event: event
+						...event
 					}
 				});
 			}
