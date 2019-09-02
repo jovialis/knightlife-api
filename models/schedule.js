@@ -131,6 +131,11 @@ const Timetable = new mongoose.Schema({
 	special: { // Whether to display this as a 'special schedule' to the user.
 		type: Boolean,
 		default: false
+	},
+	grades: { // This variable should never be used. Instead, GradeSpecificTimetable should be used. This is merely being left here to support legacy versions of the iOS client
+		      // which expect a grades variable.
+		type: [Number],
+		default: []
 	}
 }, {
 	_id: false,
