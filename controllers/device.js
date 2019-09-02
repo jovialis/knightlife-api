@@ -85,7 +85,7 @@ module.exports.routeUpdateDeviceProfile = (req, res, next) => {
 	const device = req.device;
 
 	let profileContent = {
-		...req.body.profile
+		...req.body
 	};
 
 	// Ensure grade validity
