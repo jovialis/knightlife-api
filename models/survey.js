@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const Survey = new mongoose.Schema({
-	version: {
+	versions: [{
 		type: String,
 		required: true
-	},
+	}],
 	url: {
 		type: String,
 		required: true
