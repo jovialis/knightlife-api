@@ -25,7 +25,7 @@ function getBundleForDate(date) {
 		try {
 			const schedule = await scheduleController.getScheduleObjectForDate(date, true);
 			const lunch = await lunchController.getLunchObjectForDate(date, true);
-			const events = await eventController.fetchEventsObjectForDay(date, {}, true);
+			const events = await eventController.fetchEventsObjectForDay(date, {hidden:false}, true);
 
 			resolve({
 				date: date,
