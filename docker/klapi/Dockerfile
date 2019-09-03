@@ -1,7 +1,7 @@
 # Specify genca as a previous build stage.
 FROM genca as ca
 
-# Specify the node base image (verison 10)
+# Specify the node base image (version 10)
 FROM node:10
 
 # Copy in the rootCA files from the genca image
