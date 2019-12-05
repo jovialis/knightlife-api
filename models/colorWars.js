@@ -11,7 +11,7 @@ const ColorWars = new mongoose.Schema({
 		default: null
 	},
 	points: {
-        type: Int32Array,
+        type: Number,
         default: 0
     }
 }, {
