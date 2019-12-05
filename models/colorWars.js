@@ -18,18 +18,6 @@ const ColorWars = new mongoose.Schema({
 	collection: 'surveys'
 });
 
-const WarColor = new mongoose.Schema({
-	badge: {
-		type: String,
-		default: uuid
-	},
-	points: [{
-		type: TeamPoints
-	}]
-}, {
-	collection: 'surveys'
-});
-
 const TeamPoints = new mongoose.Schema({
 	badge: {
 		type: String,
@@ -55,6 +43,20 @@ const TeamPoints = new mongoose.Schema({
 }, {
 	_id: false
 });
+
+const WarColor = new mongoose.Schema({
+	badge: {
+		type: String,
+		default: uuid
+	},
+	points: [{
+		type: TeamPoints
+	}]
+}, {
+	collection: 'surveys'
+});
+
+
 
 mongoose.model('WarColor', WarColor);
 mongoose.model('ColorWars', ColorWars);
