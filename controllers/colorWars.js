@@ -86,7 +86,7 @@ function getPointsByTeam(team) {
 
 module.exports.routeGetTeamByBadge = (req, res) => {
 	const badge = req.param('badge');
-
+	console.log(badge);
 	getTeamByBadge(badge).then(doc => {
 		if (doc) {
 			let teamObject = doc.toObject();
