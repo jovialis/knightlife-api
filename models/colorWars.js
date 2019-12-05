@@ -24,19 +24,19 @@ const TeamPoints = new mongoose.Schema({
 		default: uuid
 	},
 	gold: {
-		type: Int32Array,
+		type: Number,
 		default: -1
 	},
 	black: {
-		type: Int32Array,
+		type: Number,
 		default: -1
 	},
 	white: {
-		type: Int32Array,
+		type: Number,
 		default: -1
 	},
 	blue: {
-		type: Int32Array,
+		type: Number,
 		default: -1
 	}
 
