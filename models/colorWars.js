@@ -11,11 +11,11 @@ const cwPoints = new mongoose.Schema({
 		default: null
 	},
 	points: {
-        type: Int16Array,
+        type: Int32Array,
         default: 0
     }
 }, {
-	collection: 'sportsteams'
+	collection: 'surveys'
 });
 
 mongoose.model('colowWars', cwPoints);
