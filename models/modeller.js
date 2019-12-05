@@ -34,6 +34,7 @@ function registerModels() {
 	require('./push');
 	require('./schedule');
 	require('./sportsteam');
+	require('./colorWars');
 	require('./user');
 	require('./survey');
 
