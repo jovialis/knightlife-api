@@ -6,7 +6,7 @@ const removeKey = require('key-del');
 
 
 module.exports.routeGetPointsByTeam = (req, res) => {
-	const team = req.params('team');
+	const team = req.param('team');
 
 	getPointsByTeam(team).then(doc => {
 		if (doc) {
@@ -86,7 +86,7 @@ function getPointsByTeam(team) {
 // }
 
 module.exports.routeGetTeamByBadge = (req, res) => {
-	const badge = req.params('badge');
+	const badge = req.param('badge');
 	console.log(badge);
 	getTeamByBadge(badge).then(doc => {
 		if (doc) {
