@@ -46,7 +46,6 @@ function retrieveLunchObjectForDate(date, sanitize) {
 			let menuObject = object.toObject();
 
 			if (sanitize) {
-				console.log('sanitize');
 				removeKey(menuObject, ['_id', '__t', '__v', 'suggest', 'allergyLower', 'nameLower'], {copy: false});
 			}
 
