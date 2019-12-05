@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const ColorWars = mongoose.model('ColorWars');
-const WarColor = mongoose.model('WarColor');
+// const WarColor = mongoose.model('WarColor');
 
 const removeKey = require('key-del');
 
@@ -107,7 +107,7 @@ module.exports.routeGetTeamByBadge = (req, res) => {
 
 function getTeamByBadge(badge) {
 	return new Promise((resolve, reject) => {
-		WarColor.findOne({
+		ColorWars.findOne({
 			badge: badge
 		}).then(resolve).catch(reject);
 	});
