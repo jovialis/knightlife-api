@@ -99,6 +99,7 @@ module.exports.routeGetTeamByBadge = (req, res) => {
 
 		// Invalid badge
 		res.status(400).send('Invalid Badge Provided');
+		res.status(400).send(badge)
 	}).catch(error => {
 		console.log(error);
 		res.status(500).send('An Internal Error Occurred');
