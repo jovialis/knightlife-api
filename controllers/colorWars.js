@@ -28,7 +28,7 @@ module.exports.routeGetPointsByTeam = (req, res) => {
 function getPointsByTeam(team) {
 	return new Promise((resolve, reject) => {
 		ColorWars.findOne({
-			team: team
+			ARnum: team
 		}).then(resolve).catch(reject);
 	});
 }
