@@ -89,10 +89,10 @@ module.exports.routeGetTeamByBadge = (req, res) => {
 
 	getTeamByBadge(badge).then(doc => {
 		if (doc) {
-			let menuObject = doc.toObject();
-			removeKey(menuObject, ['_id', '__t', '__v'], {copy: false});
+			let teamObject = doc.toObject();
+			removeKey(teamObject, ['_id', '__t', '__v'], {copy: false});
 
-			res.json(menuObject);
+			res.json(teamObject);
 			return;
 		}
 
