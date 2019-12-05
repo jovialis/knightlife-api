@@ -18,4 +18,4 @@ const cwPoints = new mongoose.Schema({
 	collection: 'surveys'
 });
 
-mongoose.model('colowWars', cwPoints);
+mongoose.model('ColorWars', ColorWars);

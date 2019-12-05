@@ -1,59 +1,88 @@
 const mongoose = require('mongoose');
-const ColorWars = mongoose.model('colorWars');
+const ColorWars = mongoose.model('ColorWars');
 
 const removeKey = require('key-del');
 
-// Retrieve lunch for a day
-module.exports.routeGetPointsForTeam = (req, res, next) => {
-	const team = req.team;
 
-	retrievePointObjectForTeam(team, true).then(points => {
-		removeKey(points.items, [ 'badge', 'team' ], { copy: false });
-		// ^ Not sure if I need these in but I'm not going to mess with removing them yet
-		res.json(points);
-	}).catch(next);
+module.exports.routeGetPointsByTeam = (req, res) => {
+	const team = req.param('team');
+
+	getPointsByTeam(team).then(doc => {
+		if (doc) {
+			let menuObject = doc.toObject();
+			removeKey(menuObject, ['_id', '__t', '__v'], {copy: false});
+
+			res.json(menuObject);
+			return;
+		}
+
+		// Invalid badge
+		res.status(400).send('Invalid Badge Provided');
+	}).catch(error => {
+		console.log(error);
+		res.status(500).send('An Internal Error Occurred');
+	});
 };
 
-module.exports.getPointsForTeam = retrievePointsForTeam;
-
-function retrievePointsForTeam(team) {
+function getPointsByTeam(team) {
 	return new Promise((resolve, reject) => {
 		ColorWars.findOne({
 			team: team
-		}).populate('points').exec().then(async menu => {
-			if (!menu) {
-				// Used by lower function, for creating team object to clear
-				try {
-					menu = await ColorWars.create({
-						team: team
-					});
-				} catch (error) {
-					reject(error);
-					return;
-				}
-			}
-
-			resolve(menu);
-		}).catch(reject);
+		}).then(resolve).catch(reject);
 	});
 }
 
-module.exports.getLunchObjectForDate = retrievePointObjectForTeam;
+// Retrieve lunch for a day
+// module.exports.routeGetPointsForTeam = (req, res, next) => {
+// 	const team = req.param('team');
 
-function retrievePointObjectForTeam(team, sanitize) {
-	return new Promise((resolve, reject) => {
-		retrievePointsForTeam(team).then(object => {
-			let PointObject = object.toObject();
+// 	retrievePointObjectForTeam(team, true).then(points => {
+// 		removeKey(points.items, [ 'badge', 'team' ], { copy: false });
+// 		// ^ Not sure if I need these in but I'm not going to mess with removing them yet
+// 		res.json(points);
+// 	}).catch(next);
+// };
 
-			if (sanitize) {
-				removeKey(PointObject, ['_id', '__t', '__v', 'suggest', 'allergyLower', 'nameLower'], {copy: false});
-				// ^ Not sure if I need these in but I'm not going to mess with removing them yet
-			} // Returns name and allergy of food doc
+// module.exports.getPointsForTeam = retrievePointsForTeam;
 
-			resolve(PointObject);
-		}).catch(reject);
-	});
-}
+// function retrievePointsForTeam(team) {
+// 	return new Promise((resolve, reject) => {
+// 		ColorWars.findOne({
+// 			team: team
+// 		}).populate('points').exec().then(async menu => {
+// 			if (!menu) {
+// 				// Used by lower function, for creating team object to clear
+// 				try {
+// 					menu = await ColorWars.create({
+// 						team: team
+// 					});
+// 				} catch (error) {
+// 					reject(error);
+// 					return;
+// 				}
+// 			}
+
+// 			resolve(menu);
+// 		}).catch(reject);
+// 	});
+// }
+
+// module.exports.getLunchObjectForDate = retrievePointObjectForTeam;
+
+// function retrievePointObjectForTeam(team, sanitize) {
+// 	return new Promise((resolve, reject) => {
+// 		retrievePointsForTeam(team).then(object => {
+// 			let PointObject = object.toObject();
+
+// 			if (sanitize) {
+// 				removeKey(PointObject, ['_id', '__t', '__v', 'suggest', 'allergyLower', 'nameLower'], {copy: false});
+// 				// ^ Not sure if I need these in but I'm not going to mess with removing them yet
+// 			} // Returns name and allergy of food doc
+
+// 			resolve(PointObject);
+// 		}).catch(reject);
+// 	});
+// }
 
 module.exports.routeGetTeamByBadge = (req, res) => {
 	const badge = req.param('badge');
