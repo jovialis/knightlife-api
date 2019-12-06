@@ -6,24 +6,7 @@ const ColorWars = new mongoose.Schema({
 		type: String,
 		default: uuid
 	},
-	team: {
-		gold: {
-			type: Number,
-			default: -1
-		},
-		black: {
-			type: Number,
-			default: -1
-		},
-		white: {
-			type: Number,
-			default: -1
-		},
-		blue: {
-			type: Number,
-			default: -1
-		}
-	},
+	team: {	type: Array, default: []},
 	bigcall: {
 		type: String,
 		default: null
@@ -32,45 +15,4 @@ const ColorWars = new mongoose.Schema({
 	collection: 'surveys'
 });
 
-const TeamPoints = new mongoose.Schema({
-	badge: {
-		type: String,
-		default: uuid
-	},
-	gold: {
-		type: Number,
-		default: -1
-	},
-	black: {
-		type: Number,
-		default: -1
-	},
-	white: {
-		type: Number,
-		default: -1
-	},
-	blue: {
-		type: Number,
-		default: -1
-	}
-
-}, {
-	_id: false
-});
-
-const WarColor = new mongoose.Schema({
-	badge: {
-		type: String,
-		default: uuid
-	},
-	points: [{
-		type: TeamPoints
-	}]
-}, {
-	collection: 'surveys'
-});
-
-
-
-mongoose.model('WarColor', WarColor);
 mongoose.model('ColorWars', ColorWars);
