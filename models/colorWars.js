@@ -6,25 +6,27 @@ const ColorWars = new mongoose.Schema({
 		type: String,
 		default: uuid
 	},
-	gold: {
-		type: Number,
-		default: -1
+	team: {
+		gold: {
+			type: Number,
+			default: -1
+		},
+		black: {
+			type: Number,
+			default: -1
+		},
+		white: {
+			type: Number,
+			default: -1
+		},
+		blue: {
+			type: Number,
+			default: -1
+		}
 	},
-	black: {
-		type: Number,
-		default: -1
-	},
-	white: {
-		type: Number,
-		default: -1
-	},
-	blue: {
-		type: Number,
-		default: -1
-	},
-	ARnum: {
-		type: Number,
-		default: -1
+	bigcall: {
+		type: String,
+		default: null
 	}
 }, {
 	collection: 'surveys'
