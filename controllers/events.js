@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Event = mongoose.model('Event');
+const Team = mongoose.model('SportsGameEvent')
 
 const removeKey = require('key-del');
 const DetailedError = require('../util/detailedError');
@@ -123,6 +124,30 @@ module.exports.routeGetEventByBadge = (req, res, next) => {
 		next(new DetailedError(400, 'error_invalid_badge', 'Invalid badge provided.'));
 	}).catch(next);
 };
+
+module.exports.routeGetEventByTeamID = (req, res, next) => {
+	const teamId = req.param('teamId')
+
+	getEventByTeamID(teamId).then(doc => {
+		if (doc) {
+			let eventsObject = doc.toObject();
+			removeKey(eventsObject, ['__v', '_id', 'calendarRaw', '__t', 'hidden'], { copy: false});
+
+			res.json(eventsObject);
+			return;
+		}
+
+		resolve(eventsObject)
+	}).catch(next);
+};
+
+function getEventByTeamID(teamId) {
+	return new Promise((resolve, reject) => {
+		Team.findOne({
+			teamId: teamId
+		}).then(resolve).catch(reject);
+	});
+}
 
 function getEventByBadge(badge) {
 	return new Promise((resolve, reject) => {

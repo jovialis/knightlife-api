@@ -182,43 +182,43 @@ Event.discriminator('UpperSchoolEvent', new mongoose.Schema({
 // 	}
 // }));
 //
-// Event.discriminator('SportsGameEvent', new mongoose.Schema({
-// 	team: {
-// 		type: mongoose.Schema.Types.ObjectId,
-// 		ref: 'SportsTeam',
-// 		required: true
-// 	},
-// 	teamId: {
-// 		type: Number
-// 	},
-// 	opponents: {
-// 		type: [String],
-// 		default: []
-// 	},
-// 	home: {
-// 		type: Boolean,
-// 		required: true
-// 	},
-// 	score: {
-// 		type: new mongoose.Schema({
-// 			bbn: {
-// 				type: Number,
-// 				default: -1
-// 			},
-// 			opponent: {
-// 				type: Number,
-// 				default: -1
-// 			}
-// 		}, {
-// 			_id: false
-// 		}),
-// 		default: () => ({})
-// 	},
-// 	categories: {
-// 		type: [String],
-// 		default: ['sports', 'sports-game']
-// 	}
-// }));
+Event.discriminator('SportsGameEvent', new mongoose.Schema({
+	team: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'SportsTeam',
+		required: true
+	},
+	teamId: {
+		type: Number
+	},
+	opponents: {
+		type: [String],
+		default: []
+	},
+	home: {
+		type: Boolean,
+		required: true
+	},
+	score: {
+		type: new mongoose.Schema({
+			bbn: {
+				type: Number,
+				default: -1
+			},
+			opponent: {
+				type: Number,
+				default: -1
+			}
+		}, {
+			_id: false
+		}),
+		default: () => ({})
+	},
+	categories: {
+		type: [String],
+		default: ['sports', 'sports-game']
+	}
+}));
 //
 // Event.discriminator('SportsTournamentEvent', new mongoose.Schema({
 // 	team: {
